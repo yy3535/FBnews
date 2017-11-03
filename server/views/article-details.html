@@ -1,0 +1,22 @@
+
+{% extends './layout.html' %} 
+{% block title %} 文章详情 {% endblock %} 
+{% block content%}
+<div id="content" class="post-single">
+    <div id="singular-content">
+        <article>
+            <header class="entry-header">
+                <h1>{{article.title}}</h1>
+            </header>
+            <!-- 
+                raw()  确保html代码不会被转义  swig过滤器
+             -->
+            <div class="entry-content">{{article.body|raw()}}</div>
+            <div class="clear"></div>
+        </article>
+    </div>
+</div>
+{% endblock %} 
+{% block js %}
+<script data-main="index/index" src="/public/common/main.js"></script>
+{% endblock %}

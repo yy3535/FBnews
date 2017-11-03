@@ -1,0 +1,21 @@
+{% extends './layout.html' %}
+
+{% block title %} 文章列表2  {% endblock%}
+
+{% block content %}   
+    <!-- 表格 -->
+    <div class="container">
+        <h1>文章列表</h1>
+        <div id="toolbar">
+            <a href="/admin/article/add" class="btn btn-primary">
+                <i class="glyphicon glyphicon-plus"></i> 添加
+            </a>
+        </div>
+        <table id="table">      
+        </table>
+    </div>
+{% endblock%}       
+    
+{% block js %}  
+    <script data-main="admin/article/list" src="/public/common/main.js"></script>
+{% endblock%}

@@ -1,0 +1,20 @@
+body.login{
+    background: url(//cn.bing.com/az/hprichbg/rb/TubeAnemone_ZH-CN8077113499_1366x768.jpg);
+    background-attachment: fixed;
+}
+.login .container{
+    margin-top: 100px;
+}
+.login .avatar{
+    display: block;
+    width:80px;
+    height: 80px;
+    background: url(./avatar.jpg) no-repeat;
+    background-size: contain;
+    border-radius: 50%;
+    margin: 20px auto;
+}
+.login form{
+    padding: 26px 24px 46px;
+    background-color: rgba(251,251,251,0.3);
+}

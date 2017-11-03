@@ -1,0 +1,75 @@
+
+{% if isAjax %}
+    {% block content %} {% endblock%}
+{% else %}
+    <!DOCTYPE html>
+    <html>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <!-- 父亲模板占位，可以被子模板覆盖的东西 -->
+        <title>{% block title %}首页{% endblock%}</title>
+        {% if !isDev %}
+            <link rel="stylesheet" href="/public/css/lib.css">
+        {% endif %}
+        {% block css %} {% endblock%}
+    </head>
+
+    <body>
+        <div id="wrap">
+            <header id="main-header">
+                <div id="header-wrap">
+                    <div id="logo">
+                        <div class="logo-img">
+                            <img class="avatar" src="//o0xihan9v.qnssl.com/wp-content/uploads/2017/01/avatar.jpg" title="喵大攻城狮">
+                        </div>
+                    </div>
+                    <nav id="main-nav"> 
+                        <ul class="nav-menu">
+                            <li class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home"><a href="/">首页</a></li>
+                            <li class="menu-item menu-item-type-post_type menu-item-object-page "><a href="">关於</a></li>
+                            <li class="menu-item menu-item-type-taxonomy menu-item-object-category "><a href="">洒家茶話</a></li>
+                            <li class="menu-item menu-item-type-custom menu-item-object-custom"><a title="_blank" href="">文艺少年</a></li>
+                            <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="">归档</a></li>
+                        </ul>  
+                    </nav>
+        
+                    <form role="search" method="get" id="search-form" action="https://bigmeow.cn/" style="margin-bottom: 12px; opacity: 1;">
+                        <div>
+                            <input type="text" value="Search" name="s" id="s" onblur="if ( this.value == '' ){this.value='Search';}" onfocus="if ( this.value == 'Search' ){this.value = '';}">
+                        </div>
+                    </form>
+        
+                </div>
+            </header>
+            <div class="topfixed_bg"></div>
+            <main id="main">
+                {% block content %} {% endblock%}
+            </main>
+
+            <footer id="main-footer">
+                <div id="footer-copy">
+                    <div class="social">
+                        <a rel="nofollow" target="_blank" href="/feed" class="dwtip-top" title="RSS订阅我"><i class="iconfont icon-rss"></i></a> 
+                        <a rel="nofollow" href="mailto:running@vip.163.com" class="dwtip-top" title="电子邮件"><i class="iconfont icon-mail"></i></a>
+                        <a rel="nofollow" target="_blank" href="http://weibo.com/mrlizong" class="dwtip-top" title="新浪微博"><i class="iconfont icon-weibo"></i></a>
+                        <a rel="nofollow" target="_blank" href="https://github.com/bigmeow/" class="dwtip-top" title="Github"><i class="iconfont icon-github"></i></a>
+                    </div>
+                    copyright ©2015-2017&nbsp;&nbsp;喵大攻城狮&nbsp;&nbsp;湘ICP备15002244号&nbsp;&nbsp;			</div>
+                <div class="clear"></div>
+            </footer>
+
+        </div>
+        <script src="/public/common/lib.js"></script>
+        {% block js %} {% endblock%}
+        {% if isDev %}
+        <!-- 服务器启动后浏览器页面自动刷新 -->
+        <script src="/reload/reload.js"></script>
+        {% endif %}
+    </body>
+
+    </html>
+
+{% endif %}
