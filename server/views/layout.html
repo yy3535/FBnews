@@ -13,53 +13,44 @@
         <title>{% block title %}首页{% endblock%}</title>
         {% if !isDev %}
             <link rel="stylesheet" href="/public/css/lib.css">
+            <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
         {% endif %}
         {% block css %} {% endblock%}
     </head>
 
     <body>
         <div id="wrap">
-            <header id="main-header">
-                <div id="header-wrap">
-                    <div id="logo">
-                        <div class="logo-img">
-                            <img class="avatar" src="//o0xihan9v.qnssl.com/wp-content/uploads/2017/01/avatar.jpg" title="喵大攻城狮">
-                        </div>
-                    </div>
-                    <nav id="main-nav"> 
-                        <ul class="nav-menu">
-                            <li class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home"><a href="/">首页</a></li>
-                            <li class="menu-item menu-item-type-post_type menu-item-object-page "><a href="">关於</a></li>
-                            <li class="menu-item menu-item-type-taxonomy menu-item-object-category "><a href="">洒家茶話</a></li>
-                            <li class="menu-item menu-item-type-custom menu-item-object-custom"><a title="_blank" href="">文艺少年</a></li>
-                            <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="">归档</a></li>
-                        </ul>  
-                    </nav>
-        
-                    <form role="search" method="get" id="search-form" action="https://bigmeow.cn/" style="margin-bottom: 12px; opacity: 1;">
-                        <div>
-                            <input type="text" value="Search" name="s" id="s" onblur="if ( this.value == '' ){this.value='Search';}" onfocus="if ( this.value == 'Search' ){this.value = '';}">
-                        </div>
-                    </form>
-        
+            <div class="header_top">
+                <div class="header_links fr">
+                    <a href="">品牌介绍</a>
+                    <span class="split_icon"></span>
+                    <a href="">侵权投诉</a>
+                    <span class="split_icon"></span>
+                    <a href="">代理合作</a>
+                    <span class="split_icon"></span>
+                    <a href="">校园大使</a>
                 </div>
-            </header>
-            <div class="topfixed_bg"></div>
+            </div>
+            <div class="header_search">
+                <div class="content">
+                    <a href="" class="logo iconfont icon-logo"></a>
+                    <input type="text" class="input input_search" placeholder="大家都在搜:郎永淳妻子致歉">
+                    <button class="btn btn_search">搜索</button>
+                    <div class="fr header_links">
+                        <a href="http://download.yidianzixun.com/" class="link link_download">下载APP</a>
+                        <span class="split_icon"></span>
+                        <a href="http://mp.yidianzixun.com/" class="link link_ydhao">一点号</a>
+                        <span class="split_icon"></span>
+                        <button class="btn btn_login js-to-login">登录</button>
+                    </div>
+                </div>
+            </div>
+            
+            
             <main id="main">
                 {% block content %} {% endblock%}
             </main>
 
-            <footer id="main-footer">
-                <div id="footer-copy">
-                    <div class="social">
-                        <a rel="nofollow" target="_blank" href="/feed" class="dwtip-top" title="RSS订阅我"><i class="iconfont icon-rss"></i></a> 
-                        <a rel="nofollow" href="mailto:running@vip.163.com" class="dwtip-top" title="电子邮件"><i class="iconfont icon-mail"></i></a>
-                        <a rel="nofollow" target="_blank" href="http://weibo.com/mrlizong" class="dwtip-top" title="新浪微博"><i class="iconfont icon-weibo"></i></a>
-                        <a rel="nofollow" target="_blank" href="https://github.com/bigmeow/" class="dwtip-top" title="Github"><i class="iconfont icon-github"></i></a>
-                    </div>
-                    copyright ©2015-2017&nbsp;&nbsp;喵大攻城狮&nbsp;&nbsp;湘ICP备15002244号&nbsp;&nbsp;			</div>
-                <div class="clear"></div>
-            </footer>
 
         </div>
         <script src="/public/common/lib.js"></script>

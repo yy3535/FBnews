@@ -2,41 +2,7 @@
 {% block title %} 首页 {% endblock %} 
 {% block content%}
 
-        <div id="content" class="post-index">
-            {% for article in articles %}
-            <article  class="post type-post status-publish format-standard hentry category-tea-words" style="opacity: 1;">
-                <div class="article-wrap">
-            
-                    <header class="entry-header">
-                        <h1>
-                            <a href="/article/detail/{{ article.id }}" rel="bookmark" class="post-title pjax" title="{{ article.title }}">
-                                {{ article.title }}									
-                            </a>
-                            <span class="meta-time">{{ article.time.toISOString().substring(0,10) }}</span>
-                        </h1>
-                        
-                    </header>
-                    
-                    <div class="entry-content">
-                        <p>
-                            <a href="/article/detail/{{ article.id }}" class="post-title has-img-a pjax" title="{{ article.title }}" rel="bookmark">
-                                <img src="{{ article.cover }}">
-                            </a>
-                        </p>
-                        <p>
-                            {{ article.body }}
-                        </p>		
-                    </div>
-                    
-                </div>
-            </article>
-            {% endfor %}
-            
-
-            
-
-
-        </div>
+        
     
 {% endblock %} 
 {% block js %}
