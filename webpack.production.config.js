@@ -12,7 +12,7 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 module.exports={
     entry: {
         'common/main': srcPath + '/common/main.js', //4  指定重载策略，修改了前端代码js,css后，浏览器会自动刷新
-        'common/admin-lib':['jquery','bootstrap','BOOTSTRAP_CSS'] ,//public/common/admin-lib.js public/common/admin-lib.css
+        'common/admin-lib':['jquery','bootstrap','BOOTSTRAP_CSS','STYLE_CSS'] ,//public/common/admin-lib.js public/common/admin-lib.css
         'common/lib':['jquery','APP_CSS']
     },
     output:{
@@ -28,7 +28,8 @@ module.exports={
             SRC:srcPath ,
             BOOTSTRAP_CSS:'bootstrap/dist/css/bootstrap.css',
             BOOTSTRAP_TABLE_CSS:'bootstrap-table/dist/bootstrap-table.css',
-            APP_CSS: 'SRC/common/app.less'
+            APP_CSS: 'SRC/common/app.less',
+            STYLE_CSS: 'SRC/common/admin/style.less'
         }
     },
     module:{
