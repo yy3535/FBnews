@@ -12,13 +12,13 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 module.exports={
     entry: {
         'common/main': srcPath + '/common/main.js', //4  指定重载策略，修改了前端代码js,css后，浏览器会自动刷新
-        'common/admin-lib':['jquery','bootstrap','BOOTSTRAP_CSS','STYLE_CSS'] ,//public/common/admin-lib.js public/common/admin-lib.css
+        'common/admin-lib':['jquery','bootstrap','BOOTSTRAP_CSS','FONTAWESOME','STYLE_CSS'] ,//public/common/admin-lib.js public/common/admin-lib.css
         'common/lib':['jquery','APP_CSS']
     },
     output:{
         path:__dirname+'/public',
         filename:'[name].js',
-        publicPath:'http://localhost:8080/public/',
+        publicPath:'http://116.62.207.166/public/',
         //发布到线上的时候需要配置下，换成线上的域名地址  https://bigmeow.cn/public/
     },
     resolve:{
@@ -28,6 +28,7 @@ module.exports={
             SRC:srcPath ,
             BOOTSTRAP_CSS:'bootstrap/dist/css/bootstrap.css',
             BOOTSTRAP_TABLE_CSS:'bootstrap-table/dist/bootstrap-table.css',
+            FONTAWESOME:'font-awesome/css/font-awesome.min.css',
             APP_CSS: 'SRC/common/app.less',
             STYLE_CSS: 'SRC/common/admin/style.less'
         }
@@ -35,7 +36,7 @@ module.exports={
     module:{
         rules:[
             {
-                test:/\.(png|jpg)$/,
+                test:/\.(png|jpg|gif)$/,
                 //如果图片小于8k  8192byte  就将图片Base64编码成字符串
                 use:'url-loader?limit=8192&context=client&name=/img/[name].[ext]'
             },

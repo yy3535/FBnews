@@ -1,7 +1,7 @@
 const express=require('express');
 const router=express.Router();
 let Article = require('../dbModels/Article');
-
+let User = require('../dbModels/User');
 /**
  * 判断是ajax请求还是  页面直接刷新的请求 的中间件
  * 如果是ajax请求则返回片段
@@ -63,6 +63,60 @@ router.get('/', (req, res, next) => {
     })
    
 });
+
+/**
+ * 添加用户
+ */
+// router.get('/user/add',(request,response,next)=>{
+//     new User({
+//         username:"yy",
+//         password:'c1096d2671f98c869e72b0c4b35c7894',//yinyiyy01
+//         email:"137186247@qq.com"
+//     }).save().then(user=>{
+//         response.json(user);
+//     }).catch(error=>{
+//         console.log('报错了',error);
+//     })
+// });
+
+
+/**
+ * 查询用户
+ */
+router.get('/user/list',(req,res,next)=>{
+    //获取下前端传给后端的分页数据
+    
+    let page = Number(req.query.page)||1; //第几页
+    let limit = 9 ; //每页固定显示的数据条数
+
+    let offset = (page-1)*limit;
+
+    //          0      9      ==>第1页  page
+    //          9     9      ==>第2页  
+    //          18     9      ==>第3页
+    //  offset/limit  +1  = page
+    // offset= （ page-1）* limit 
+
+    //查询数据总共有多少条
+    User.count().then(count => {
+        responseMesg.data.total = count;
+    });
+    //skip  limit  跳过前面skip条数据，然后往后取limit条数据
+    //sort({ 要排序的字段:+1||-1 })   +1代表升序  -1代表降序
+    User.find().sort({
+        '_id':-1
+    }).skip(offset).limit(limit).then(users => {
+        res.json(users);
+    })
+});
+
+
+
+
+
+
+
+
 
 /**
  * 文章详情

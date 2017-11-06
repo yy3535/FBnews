@@ -59,17 +59,28 @@ router.post('/user/check',(request,response,next)=>{
 /**
  * 注册（注册完成后记得注释这个代码）
  */
-router.get('/user/registe',(request,response,next)=>{
-    new User({
-        username:"yy",
-        password:'c1096d2671f98c869e72b0c4b35c7894',//yinyiyy01
-        email:"137186247@qq.com"
-    }).save().then(user=>{
-        response.json(user);
-    }).catch(error=>{
-        console.log('报错了',error);
-    })
+// router.get('/user/registe',(request,response,next)=>{
+//     new User({
+//         username:"yy",
+//         password:'c1096d2671f98c869e72b0c4b35c7894',//yinyiyy01
+//         email:"137186247@qq.com"
+//     }).save().then(user=>{
+//         response.json(user);
+//     }).catch(error=>{
+//         console.log('报错了',error);
+//     })
+// });
+
+
+/**
+ * 查询用户列表
+ */
+router.get('/user/list', (req, res, next) => {
+    Article.find().then(users => {
+        res.json(users);
+    });
 });
+
 
 
 module.exports=router;

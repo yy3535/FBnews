@@ -3,25 +3,25 @@
 {% block content %} 
     
     
-    <div class="container">
-        
-        <form >
-            <input id="id" type="hidden" value="{{article.id}}">
-            <div class="form-group">
-                <label for="title">文章标题</label>
-                <input value="{{article.title}}" type="text" class="form-control" id="title" name="title" placeholder="请输入文章标题">
-            </div>
-            <div class="form-group">
-                <label for="body">文章内容</label> 
-                <textarea name="body" id="body" style="height:500px;">{{article.body}}</textarea>
-                
-            </div>
-        
+    <div class="row">
+        <div class="list-wrapper">
+            <form >
+                <input id="id" type="hidden" value="{{article.id}}">
+                <div class="form-group">
+                    <label for="title">文章标题</label>
+                    <input value="{{article.title}}" type="text" class="form-control" id="title" name="title" placeholder="请输入文章标题">
+                </div>
+                <div class="form-group">
+                    <label for="body">文章内容</label> 
+                    <textarea name="body" id="body" style="height:500px;">{{article.body}}</textarea>
+                    
+                </div>
             
-        
-            <button type="submit" class="btn btn-primary pull-right">修改</button>
-        </form>
-        
+                
+            
+                <button type="submit" class="btn btn-primary pull-right">修改</button>
+            </form>
+        </div>
     </div>
     
     {% endblock%}    

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 let Article = require('../dbModels/Article');
+let User = require('../dbModels/User');
 
 //后端响应给前端的数据格式
 let responseMesg;
@@ -26,6 +27,8 @@ router.get('/index', (req, res, next) => {
         user: req.session.user
     });
 });
+
+
 
 /**
  * 查询列表（一次性查出所有数据）
@@ -153,6 +156,87 @@ router.post('/article/save', (req, res, next) => {
         res.json(responseMesg);
     });
 });
+
+
+/**
+ * 跳转到用户管理
+ */
+router.get('/user', (req, res, next) => {
+    res.render('admin/user', {
+        user: req.session.user
+    });
+});
+
+/**
+ * 添加用户
+ */
+// router.get('/user/add',(request,response,next)=>{
+//     new User({
+//         username:"yy",
+//         password:'c1096d2671f98c869e72b0c4b35c7894',//yinyiyy01
+//         email:"137186247@qq.com"
+//     }).save().then(user=>{
+//         response.json(user);
+//     }).catch(error=>{
+//         console.log('报错了',error);
+//     })
+// });
+
+
+/**
+ * 查询用户
+ */
+router.get('/user/pagination', (req, res, next) => {
+    //获取下前端传给后端的分页数据
+    let offset = Number(req.query.offset);
+    let limit = Number(req.query.limit); //每页固定显示的数据条数（10）
+    let sort = req.query.sort || '_id' ; //按哪个字段进行排序
+    let order =( req.query.order === 'asc' ? 1 : -1 ); //排序方式  asc代表升序    desc降序
+
+    console.log(sort, order);
+    //          0      10      ==>第1页  page
+    //          10     10      ==>第2页  
+    //          20     10      ==>第3页
+    //  offset/limit  +1  = page       
+    //查询数据总共有多少条
+    User.count().then(count => {
+        responseMesg.data.total = count;
+    });
+    //skip  limit  跳过前面skip条数据，然后往后取limit条数据
+    //sort({ 要排序的字段:+1||-1 })   +1代表升序  -1代表降序
+    User.find().sort({
+        [sort]:order
+    }).skip(offset).limit(limit).then(users => {
+        // articles.map((item,index)=>{
+        //     console.log(item);
+        //     item.body=item.body.substring(0,50);
+        //     return 
+        // });
+        responseMesg.success = true;
+        responseMesg.data.rows = users;
+        res.json(responseMesg);
+    })
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /**
  * 退出
