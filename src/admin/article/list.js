@@ -1,6 +1,6 @@
 console.log('文章列表');
 require('bootstrap-table');
-require('bootstrap-table/dist/locale/bootstrap-table-zh-CN');
+//require('bootstrap-table/dist/locale/bootstrap-table-zh-CN');
 require('BOOTSTRAP_TABLE_CSS');
 //格式化日期  yyyy-MM-dd hh:mm:ss
 Date.prototype.format = function (format) {

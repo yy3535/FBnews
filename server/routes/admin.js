@@ -218,20 +218,27 @@ router.get('/user/pagination', (req, res, next) => {
     })
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/**
+ * 修改用户
+ */
+router.post('/user/update',(request,response,next)=>{
+    let parms = request.body;
+    console.log(parms);
+    User.findByIdAndUpdate(parms._id,{
+        username:parms.username,
+        password:parms.password,
+        email:parms.email,
+        level:parms.level
+    }).then(user=>{
+        if(user){
+            responseMesg.success=true;
+            responseMesg.message='保存成功';
+        }else{
+            responseMesg.message='保存失败';
+        }
+        response.json(responseMesg);
+    });
+});
 
 
 

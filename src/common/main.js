@@ -18,7 +18,6 @@ if(!location.pathname.startsWith('/admin')&&!location.pathname.startsWith('/logi
    $(document).pjax('a.pjax','#main');
 }
 
- 
 
 
 

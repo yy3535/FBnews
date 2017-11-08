@@ -1,4 +1,6 @@
-console.log('用户列表');
+require('jquery');
+require('bootstrap');
+require('BOOTSTRAP_CSS');
 require('bootstrap-table');
 require('bootstrap-table/dist/locale/bootstrap-table-zh-CN');
 require('BOOTSTRAP_TABLE_CSS');
@@ -24,29 +26,21 @@ Date.prototype.format = function (format) {
 };
 
 //http://bootstrap-table.wenzhixin.net.cn/zh-cn/documentation/
+
+
+
 $('#table').bootstrapTable({
     //url: '/admin/article/list',//客户端分页对应的url
     url: '/admin/user/pagination',//服务端分页的url
     sortOrder: 'desc',
-    columns: [{
-        field: '_id',
-        title: 'ID',
-        width: 100,
-        //visible:false,//默认隐藏该字段
-        sortable:true,//允许该字段进行排序
-    }, {
-        field: 'username',
-        title: '用户名'
-    }, {
-        field: 'password',
-        title: '密码'
-    }, {
-        field: 'email',
-        title: '邮箱'
-    }, {
-        field: 'level',
-        title: '等级'
-    }, {
+    editable:true,//开启编辑模式
+    columns: [
+        {field: '_id',title: 'ID',width: 100},//visible:false,//默认隐藏该字段sortable:true,//允许该字段进行排序 
+        {field: 'username',title: '用户名'}, 
+        {field: 'password',title: '密码'}, 
+        {field: 'email',title: '邮箱'}, 
+        {field: 'level',title: '等级'}, 
+        {
         field: 'oprate',
         title: '操作',
         align: 'center',
@@ -58,13 +52,38 @@ $('#table').bootstrapTable({
                 </div>`;
         },
         events:{
-            'click [data-action="edit"]':function(e,value,row ,index){
+            'click [data-action="edit"]':function(e,value,row,index){
                 //e  ==>事件源对象
                 //value  ==>  当前字段
                 //row   ==>  这一行的数据
                 // index  ==>  当前数据的索引
-                console.log(e,value,row ,index);
-                location.href='/admin/article/'+row['_id']; //参数url路径化
+                $('#exampleModal').modal({
+                    keyboard: false
+                });
+                $("#id").val(row._id).attr("disabled","disabled");
+                $("#username").val(row.username);
+                $("#password").val(row.password);
+                $("#email").val(row.email);
+                $("#level").val(row.level);
+                console.log(this);
+                //保存
+                $('#exampleModal').find("#userSave").on('click',function(){
+                    row.username=$("#username").val();
+                    row.password=$("#password").val();
+                    row.email=$("#email").val();
+                    row.level=$("#level").val();
+                    $.ajax({
+                        url:'/admin/user/update',
+                        method: 'post',
+                        data:row,
+                        success:function(resp){
+                            if (resp.success) {
+                                $('#exampleModal').modal('hide')
+                                $('#table').bootstrapTable('updateRow',{index,row});
+                            }
+                        }
+                    })
+                });
             },
             'click [data-action="delete"]':function(e,value,row ,index){
                 let isSrure=window.confirm('您确认要删除文章 ['+row['title']+'] 吗？');
@@ -87,7 +106,6 @@ $('#table').bootstrapTable({
             }
         }
     }],
-
     pagination:true,//是否开启分页
     classes:'table table-hover table-no-bordered',//覆盖默认的表格样式
     showRefresh:true,
@@ -96,25 +114,6 @@ $('#table').bootstrapTable({
     paginationNextText:'下一页',
     sidePagination:'server',//启用服务端分页
     responseHandler:function(resp){//加载后端数据成功后会调用的函数
-        /*
-        resp==>
-        {
-            success:true,
-            message:'',
-            data:{
-                total:0,
-                rows:[]
-            }
-        }
-        */
-
-
-        /*  //前端要求的格式
-        return {
-            total:15,//满足条件的数据总共有多少条
-            rows:[{_id:1,title:'标题',body:'内容',time:Date.now()}]
-        }
-        */
         if(!resp.success){
             return {
                 total:0,
@@ -124,3 +123,9 @@ $('#table').bootstrapTable({
         return resp.data;
     }
 });
+
+
+
+
+
+
