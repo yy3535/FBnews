@@ -47,50 +47,16 @@ $('#table').bootstrapTable({
         sortable:true,
         formatter: function (value) {
            return `<div class="btn-group" >
-                    <button data-action="edit" type="button" class="btn btn-primary">编辑</button>
                     <button data-action="delete" type="button" class="btn btn-danger">删除</button>
                 </div>`;
         },
         events:{
-            'click [data-action="edit"]':function(e,value,row,index){
-                //e  ==>事件源对象
-                //value  ==>  当前字段
-                //row   ==>  这一行的数据
-                // index  ==>  当前数据的索引
-                $('#exampleModal').modal({
-                    keyboard: false
-                });
-                $("#id").val(row._id).attr("disabled","disabled");
-                $("#username").val(row.username);
-                $("#password").val(row.password);
-                $("#email").val(row.email);
-                $("#level").val(row.level);
-                console.log(this);
-                //保存
-                $('#exampleModal').find("#userSave").on('click',function(){
-                    row.username=$("#username").val();
-                    row.password=$("#password").val();
-                    row.email=$("#email").val();
-                    row.level=$("#level").val();
-                    $.ajax({
-                        url:'/admin/user/update',
-                        method: 'post',
-                        data:row,
-                        success:function(resp){
-                            if (resp.success) {
-                                $('#exampleModal').modal('hide')
-                                $('#table').bootstrapTable('updateRow',{index,row});
-                            }
-                        }
-                    })
-                });
-            },
             'click [data-action="delete"]':function(e,value,row ,index){
-                let isSrure=window.confirm('您确认要删除文章 ['+row['title']+'] 吗？');
+                let isSrure=window.confirm('您确认要用户 ['+row['username']+'] 吗？');
                 if(isSrure){
                     //alert('确定删除');
                     $.ajax({
-                        url:'/admin/article/'+row['_id'],
+                        url:'/admin/user/'+row['_id'],
                         method:'delete',
                         success:function(resp){
                             alert(resp.message);
@@ -106,6 +72,36 @@ $('#table').bootstrapTable({
             }
         }
     }],
+    onDblClickRow:function(row, $element,field){
+        var index=$element.data('index');
+        $('#exampleModal').modal({
+            keyboard: false
+        });
+        $("#id").val(row._id).attr("disabled","disabled");
+        $("#username").val(row.username);
+        $("#password").val(row.password);
+        $("#email").val(row.email);
+        $("#level").val(row.level);
+        console.log(this);
+        //保存
+        $('#exampleModal').find("#userSave").on('click',function(){
+            row.username=$("#username").val();
+            row.password=$("#password").val();
+            row.email=$("#email").val();
+            row.level=$("#level").val();
+            $.ajax({
+                url:'/admin/user/update',
+                method: 'post',
+                data:row,
+                success:function(resp){
+                    if (resp.success) {
+                        $('#exampleModal').modal('hide')
+                        $('#table').bootstrapTable('updateRow',{index,row});
+                    }
+                }
+            })
+        });
+    },
     pagination:true,//是否开启分页
     classes:'table table-hover table-no-bordered',//覆盖默认的表格样式
     showRefresh:true,
@@ -125,6 +121,23 @@ $('#table').bootstrapTable({
 });
 
 
+$("#adduser").on('click',function(e){
+    var jsonData={
+        
+    }
+
+    $.ajax({
+        url:'/admin/user/update',
+        method: 'post',
+        data:row,
+        success:function(resp){
+            if (resp.success) {
+                $('#exampleModal').modal('hide')
+                $('#table').bootstrapTable('updateRow',{index,row});
+            }
+        }
+    })
+})
 
 
 

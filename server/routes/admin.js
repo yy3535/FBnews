@@ -170,17 +170,18 @@ router.get('/user', (req, res, next) => {
 /**
  * 添加用户
  */
-// router.get('/user/add',(request,response,next)=>{
-//     new User({
-//         username:"yy",
-//         password:'c1096d2671f98c869e72b0c4b35c7894',//yinyiyy01
-//         email:"137186247@qq.com"
-//     }).save().then(user=>{
-//         response.json(user);
-//     }).catch(error=>{
-//         console.log('报错了',error);
-//     })
-// });
+router.get('/user/add',(request,response,next)=>{
+    new User({
+        username:request.username,
+        password:request.password,//yinyiyy01
+        email:request.email,
+        level:request.level
+    }).save().then(user=>{
+        response.json(user);
+    }).catch(error=>{
+        console.log('报错了',error);
+    })
+});
 
 
 /**
@@ -241,6 +242,18 @@ router.post('/user/update',(request,response,next)=>{
 });
 
 
+/**
+ * 删除文章
+ */
+router.delete('/user/:id',(req, res, next) => {
+    //首先获取到id
+    User.findByIdAndRemove(req.params.id).then(user=>{
+        responseMesg.message = '删除成功';
+        responseMesg.success = true ;
+        res.json(responseMesg);
+    });
+    
+});
 
 
 
