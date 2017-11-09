@@ -8,7 +8,8 @@ const srcPath = path.resolve(__dirname, 'src');
 module.exports = {
     entry: {
         'common/main': [srcPath + '/common/main.js', 'webpack-hot-middleware/client?reload=true'], //4  指定重载策略，修改了前端代码js,css后，浏览器会自动刷新
-        'common/admin-lib':['jquery','bootstrap','BOOTSTRAP_CSS','FONTAWESOME','STYLE_CSS'] ,//public/common/admin-lib.js public/common/admin-lib.css
+        //'common/admin-lib':['jquery','bootstrap','BOOTSTRAP_CSS','FONTAWESOME','STYLE_CSS'] ,//public/common/admin-lib.js public/common/admin-lib.css
+        'common/admin-lib':['jquery'] ,//public/common/admin-lib.js public/common/admin-lib.css
         'common/lib':['jquery','APP_CSS']
     },
     output: {

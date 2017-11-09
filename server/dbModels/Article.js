@@ -4,6 +4,7 @@
 const mongoose = require('mongoose');
 let userSchema= new mongoose.Schema({
     title:String,//文章标题
+    author:String,//文章作者
     body:String,//文章内容
     cover:String,//文章封面
     comments:[  //文章评论

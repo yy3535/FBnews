@@ -30,6 +30,7 @@ router.get('/index', (req, res, next) => {
 
 
 
+
 /**
  * 查询列表（一次性查出所有数据）
  */
@@ -168,15 +169,29 @@ router.get('/user', (req, res, next) => {
 });
 
 /**
+ * 查询列表（一次性查出所有数据）
+ */
+router.get('/user/list', (req, res, next) => {
+    User.find().then(users => {
+        res.json(users);
+    });
+});
+
+/**
  * 添加用户
  */
-router.get('/user/add',(request,response,next)=>{
+router.post('/user/add',(request,response,next)=>{
+    //获取
+    let parms = request.body;
+    parms.level=Number(parms.level);
+    console.log(parms);
     new User({
-        username:request.username,
-        password:request.password,//yinyiyy01
-        email:request.email,
-        level:request.level
+        username:parms.username,
+        password:parms.password,//yinyiyy01
+        email:parms.email,
+        level:parms.level
     }).save().then(user=>{
+        console.log(user);
         response.json(user);
     }).catch(error=>{
         console.log('报错了',error);

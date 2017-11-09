@@ -1,6 +1,6 @@
 console.log('文章列表');
 require('bootstrap-table');
-//require('bootstrap-table/dist/locale/bootstrap-table-zh-CN');
+require('bootstrap-table/dist/locale/bootstrap-table-zh-CN');
 require('BOOTSTRAP_TABLE_CSS');
 //格式化日期  yyyy-MM-dd hh:mm:ss
 Date.prototype.format = function (format) {
@@ -25,8 +25,8 @@ Date.prototype.format = function (format) {
 
 //http://bootstrap-table.wenzhixin.net.cn/zh-cn/documentation/
 $('#table').bootstrapTable({
-    //url: '/admin/article/list',//客户端分页对应的url
-    url: '/admin/article/pagination',//服务端分页的url
+    url: '/admin/article/list',//客户端分页对应的url
+    //url: '/admin/article/pagination',//服务端分页的url
     sortOrder: 'desc',
     columns: [{
         field: '_id',
@@ -91,37 +91,9 @@ $('#table').bootstrapTable({
 
     pagination:true,//是否开启分页
     classes:'table table-hover table-no-bordered',//覆盖默认的表格样式
+    search:true,
     showRefresh:true,
     showColumns:true,
     paginationPreText:'上一页',
-    paginationNextText:'下一页',
-    sidePagination:'server',//启用服务端分页
-    responseHandler:function(resp){//加载后端数据成功后会调用的函数
-        /*
-        resp==>
-        {
-            success:true,
-            message:'',
-            data:{
-                total:0,
-                rows:[]
-            }
-        }
-        */
-
-
-        /*  //前端要求的格式
-        return {
-            total:15,//满足条件的数据总共有多少条
-            rows:[{_id:1,title:'标题',body:'内容',time:Date.now()}]
-        }
-        */
-        if(!resp.success){
-            return {
-                total:0,
-                rows:[]
-            }
-        }
-        return resp.data;
-    }
+    paginationNextText:'下一页'
 });
