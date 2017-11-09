@@ -81,7 +81,7 @@
                     </a>
                 
                     <a class="doc item-2 " href="/article/0HcBhmEk">
-                        <div class="index iconfont icon-3"></div>
+                        <div class="index iconfont icon-31"></div>
                         <div class="doc-title">携35万现金“仗剑走天涯”老人”：战友没找到 十几个“妻子”打来电话</div>
                     </a>
                 
@@ -91,7 +91,7 @@
                     </a>
                 
                     <a class="doc item-4 last" href="/article/0Hc5g56s">
-                        <div class="index iconfont icon-5"></div>
+                        <div class="index iconfont icon-52"></div>
                         <div class="doc-title">英国十年来首次加息 美国马上又要加息 中国呢？</div>
                     </a>
                     
@@ -272,32 +272,35 @@
         </div>
     <div class="channel-news channel-news-0">
 
+        {% for article in articles %}
+
         <a class="item doc style-small-image style-content-middle" href="/article/0HcP5x1I?_t_t_t=0.7833449961557446" target="_blank" data-docid="0HcP5x1I">
             <div class="doc-image-small-wrapper">
                 <div class="doc-image-box">
-                    <img class="doc-image doc-image-small" src="http://i1.go2yd.com/image.php?type=thumbnail_336x216&amp;url=http://si1.go2yd.com/get-image/0I1xo2mSXCq">
+                    <img class="doc-image doc-image-small" src="{{article.cover}}">
                 </div>
             </div>
             <div class="doc-content">
                 <div class="doc-content-inline">
-                <div class="doc-title">原声！习近平讲述精准扶贫这4年</div>
+                <div class="doc-title">{{article.title}}</div>
                 <div class="doc-info">
                     
-                    <img src="//s.go2yd.com/c/t14.png">
+                    <img src="{{article.cover}}">
                     
                     
                     
-                    <span class="source">人民日报客户端</span>
+                    <span class="source">article.author</span>
                     
                     
                     <span class="comment-count">110评</span>
-                    <span class="date">14分钟前</span>
+                    <span class="date">{{ article.time.toISOString().substring(0,10) }}</span>
                     <div class="doc-remove">不感兴趣<span class="iconfont icon-close-half"></span></div>
                 </div>
                 </div>
             </div>
         </a>
 
+        {% endfor %}
         <!-- <a class="item doc style-small-image style-content-middle split-refresh-btn-pre-doc no-bottom-border" href="/article/0HcJxsrM?_t_t_t=0.7833449961557446" target="_blank" data-docid="0HcJxsrM">
             <div class="doc-image-small-wrapper">
                 <div class="doc-image-box">

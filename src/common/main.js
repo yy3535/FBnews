@@ -1,8 +1,7 @@
 
 require('bootstrap');
-require('BOOTSTRAP_CSS');
-require('FONTAWESOME');
-require('STYLE_CSS');
+// require('BOOTSTRAP_CSS');
+// require('FONTAWESOME');
 
 //实现：访问login  就自动帮我引入login.js
 //按需加载

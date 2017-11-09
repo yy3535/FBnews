@@ -1,3 +1,7 @@
+// require('bootstrap');
+// require('BOOTSTRAP_CSS');
+// require('FONTAWESOME');
+// require('STYLE_CSS');
 require('bootstrap-table');
 require('bootstrap-table/dist/locale/bootstrap-table-zh-CN');
 require('BOOTSTRAP_TABLE_CSS');
