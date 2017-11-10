@@ -51,8 +51,11 @@ router.get('/', (req, res, next) => {
             
             //过滤html并且截取前76个字符
             item.body = item.body.replace(/<[^>]+>/g,'').substring(0,77)+'...';
-
-            console.log(item.cover)
+            let timenow=new Date().getTime();
+            console.log("发布时间：",item.time.getTime());
+            console.log("现在时间：",timenow);
+            item.time=(timenow-item.time.getTime())/1000;
+            console.log("距离现在秒数：",item.time);
             return  item;
         });
        
@@ -150,14 +153,20 @@ router.get('/article/list',(req,res,next)=>{
             
             //过滤html并且截取前76个字符
             item.body = item.body.replace(/<[^>]+>/g,'').substring(0,77)+'...';
-
-            console.log(item.cover)
+            //var datenow=new Date().getTime();
+            
             return  item;
         });
        
         
+        
         res.json(articles);
-    })
+    });
+
+    //let date=new Date();
+    //console.log("时间为：",Article.time.toISOString());
+    //console.log("新闻封面：",Article.cover);
+    console.log("测试");
 });
 
 
