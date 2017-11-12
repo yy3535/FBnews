@@ -1,112 +1,118 @@
-function reset(){
-    //获取卡片父级
-    let $content = $('#content.post-index');
-    //获取所有的卡片(集合)
-    let $articles = $content.find('article');
-
-    let _margin = 6* 2; //卡片左右的两个margin值\或者是上下的两个margin值
-
-    //获取父级宽度
-    let content_width = $content.width();
-    //获取卡片原先的宽度(初始化宽度)（包含了margin）
-    //let article_width_old = $articles.eq(0).width() + _margin;
-    let article_width_old = 249 + _margin;
-    console.log("卡片原先的宽度",article_width_old);
-
-    //一行最多能显示多少个卡片
-    let max_column = parseInt(content_width/article_width_old);
-    console.log('一行最多能显示多少个卡片',max_column);
-
-    //每个卡片的宽度（新的、包括margin）
-    let article_width_new = content_width/max_column ;
-    //每个卡片内容占多少宽度
-    $articles.css('width',content_width/max_column - _margin );
-
-
-    //获取父级元素的高度（是有卡片撑起来的高度）
-    let content_height = $content.height();
-
-    $content.css('height',content_height);//为了防止给卡片加了绝对定位以后，父级高度被改变
-    //给卡片绝对定位，以方便挪移
-    $articles.css({
-        'position':'absolute',
-        'left':'0',
-        'top':'0'
+let MD5=require('md5.js');
+//定义变量
+var timer;
+var index=0;
+var items=imgs=$(".slide-list .slide-item");
+var imgs=$(".slide-list").find("img");
+var flags=$(".flag-wrapper .flag");
+//自动播放
+isAutoPlay();
+/**
+ * 绑定事件
+ */
+$(".slide").on('mouseenter',function(){
+    clearInterval(timer);
+});
+$(".slide").on('mouseleave',function(){
+    isAutoPlay();
+});
+flags.on('click',function(){
+    console.log(index);
+    console.log($(this).index());
+    hideShowImg(index,$(this).index());
+    index=$(this).index();
+});
+$(".btn_login").on('click',function(){
+    $(".mask").css('display','block');
+    $(".login-dialog").css('display','block');
+    $(".mask").on('click',function(){
+        $(".mask").css('display','none');
+        $(".login-dialog").css('display','none');
+    })
+    $(".icon-close48").on('click',function(){
+        $(".mask").css('display','none');
+        $(".login-dialog").css('display','none');
+    })
+})
+$('.login-form').on('submit',function(e){
+    e.preventDefault();
+    let [username,password]=[this.username.value.trim(),this.psw.value.trim()];
+    if(!username||!password){
+        $('.error-msg').text('用户名或密码不能为空！').show();
+        return;
+    }
+    password=new MD5().update(password).digest('hex');
+    $.ajax({
+        url:'/api/user/check',
+        method:'post',
+        data:{
+            username,
+            password
+        },
+        success:function(data){
+            //{ success:false ,message:''}
+            if(data.success){
+                console.log(data);
+                $('.error-msg').hide();
+                location.reload();
+            }else{
+                $('.error-msg').text('用户名或密码不正确！').show();
+            }
+           // console.log('后端返回给前端的数据',data);
+        }
     });
 
-    let all_height = [] ;//所有卡片的高度都放这集合里
-
-    $articles.each(function(index,item){
-        /*
-        //console.log(index,item);
-        //已知条件 ：  索引index  、每行放多少个卡片max_column
-        //公式：  left = article_width_new *列数
-        
-        //列数    索引   每行数量
-        0          0     3        0%3 = 0
-        1          1     3        1%3 = 1
-        2          2     3        2%3 = 2 
-        0          3     3        3%3 = 0
-        1          4     3        4%3 = 1
-        2          5     3        5%3 = 2
-        //列数  =  索引 % max_column
-        
-        */
-        //列数
-        let column = index % max_column ;
-
-        let left = article_width_new * column;
+});
+$(".user-info-box").on('mouseenter',function(){
+    $(".user-info-menu").css('display','block');
+})
+$(".user-info-box").on('mouseleave',function(){
+    $(".user-info-menu").css('display','none');
+})
 
 
-        //行数
-        /**
-        行数    索引   每行数量   
-        0          0     3        parseInt(0/3) = 0
-        0          1     3        parseInt(1/3) = 0
-        0          2     3        parseInt(2/3) = 0 
-        1          3     3        parseInt(3/3) = 1
-        1          4     3        parseInt(4/3) = 1
-        1          5     3        parseInt(5/3) = 1
-        行数 =  parseInt(index/max_column) 
-        */
-        let row = parseInt(index/max_column) ;
 
-        console.log('第'+row+'行第'+column+'列');
 
-        all_height.push($(item).height()+_margin);
 
-        //已知行、列、每行多少个、   求与索引的关系
-        //  index  =  row * max_column + column 
-        //  0      =  0   *  3         +  0
-        //  1      =  0   *  3         +  1
-        //  2      =  0   *  3         +  2
-        //  3      =  1   *  3         +  0
-        //  4      =  1   *  3         +  1
-        //  5      =  1   *  3         +  2
-        let top = 0;
-        while(row>0){
-            row -- ;
-            top+=all_height[row * max_column + column]
+
+
+
+
+
+
+
+
+
+
+/**
+ * 自动播放
+ */
+function isAutoPlay(){
+    timer=setInterval(function(){
+        if(index!=3){            
+            hideShowImg(index,index+1);
+            index+=1;
+        }else{
+            hideShowImg(index,0);
+            index=0;
         }
 
-        //$(item).css('left',left);//left位移会触发浏览器的重绘
-        $(item).css({
-            'transform':'translate('+left+'px,'+top+'px)'
-        });
 
-    });
-
-
-};
-
-reset();
-//当浏览器窗口变化的时候 会触发这个事件
-window.onresize =function(){
-    //重新计算
-    reset();
-};
-
-
-
-
+        
+    },3000);
+}
+/**
+ * 轮播
+ */
+function hideShowImg(hideIndex,showIndex){         
+    $(imgs[hideIndex]).css('opacity',0);
+    $(imgs[showIndex]).css('opacity',0.3);
+    items[hideIndex].style.display='none';
+    items[showIndex].style.display='block';
+    $(flags[hideIndex]).removeClass("active");
+    $(flags[showIndex]).addClass("active");
+    $(imgs[showIndex]).animate({
+        opacity:1
+    },1500);
+}
 

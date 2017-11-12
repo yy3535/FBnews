@@ -14,44 +14,63 @@
         {% if !isDev %}
             <link rel="stylesheet" href="/public/css/lib.css">
             <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+            
         {% endif %}
         {% block css %} {% endblock%}
+        <link rel="stylesheet" href="//at.alicdn.com/t/font_464243_cwbvviyg3jvy4x6r.css">
+        
     </head>
 
     <body>
         <div id="wrap">
-            <div class="header_top">
+            <div class="header-top">
                 <div class="content">
-                        <div class="header_links fr">
+                        <div class="header-links fr">
                             <a href="">品牌介绍</a>
-                            <span class="split_icon"></span>
+                            <span class="split-icon"></span>
                             <a href="">侵权投诉</a>
-                            <span class="split_icon"></span>
+                            <span class="split-icon"></span>
                             <a href="">代理合作</a>
-                            <span class="split_icon"></span>
+                            <span class="split-icon"></span>
                             <a href="">校园大使</a>
                         </div>
                 </div>
             </div>
-            <div class="header_search">
+            <div class="header-search">
                 <div class="content">
-                    <a href="" class="logo iconfont icon-logo">
+                    <a href="" class="logo">
                         <img src="http://116.62.207.166/public/img/FBzixun_logo.png" alt="">
                     </a>
-                    <input type="text" class="input input_search" placeholder="大家都在搜:郎永淳妻子致歉">
-                    <button class="btn btn_search">搜 索</button>
-                    <div class="fr header_links">
-                        <a href="http://download.yidianzixun.com/" class="link link_download">下载APP</a>
-                        <span class="split_icon"></span>
-                        <a href="http://mp.yidianzixun.com/" class="link link_ydhao">一点号</a>
-                        <span class="split_icon"></span>
-                        <button class="btn btn_login js-to-login">登录</button>
+                    <input type="text" class="input input-search" placeholder="大家都在搜:郎永淳妻子致歉">
+                    <button class="btn btn-search">搜 索</button>
+                    <div class="fr header-links">
+                        <a href="http://download.yidianzixun.com/" class="link link-download">下载APP</a>
+                        <span class="split-icon"></span>
+                        <a href="http://mp.yidianzixun.com/" class="link link-ydhao">一点号</a>
+                        <span class="split-icon"></span>
+
+                        {% if user === 'null' %}
+                            <button class="btn btn-login js-to-login">登录</button>
+                        {% else %}
+                            <div class="user-info-box">
+                                <a href="/profile" class="user-info">
+                                    <img src="http://s.go2yd.com/a/head_shatannan.png" class="profile">
+                                    <span class="nickname">{{user.username}}</span>
+                                    <span class="iconfont icon-down1"></span>
+                                </a>
+                                <div class="user-info-menu" style="display: none;">
+                                    <a href="/profile">个人中心</a>
+                                    <a href="/channellist">添加频道</a>
+                                    <a href="javascript:void(0)" class="logout-btn">退出</a>
+                                </div>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
-            <div class="header_channel_nav">
+            <div class="header-channel-nav">
                 <div class="content">
-                    <div class="channel_nav">
+                    <div class="channel-nav">
                         <div class="down iconfont icon-arrow-down"></div>
                         <div class="list">
                                 <a data-index="0" href="/" data-channelid="best" class="item active">首页</a>
@@ -67,11 +86,66 @@
                 </div>
             </div>
             
-            <div id="main" class="main index_main">
+            <div id="main" class="main index-main">
                 {% block content %} {% endblock%}
             </div>
 
+            <div class="mask" style="display: none;"></div>
 
+            <div class="dialog login-register-dialog login-dialog" style="display: none;">
+                <div class="close iconfont icon-close48"></div>
+                <div class="logo iconfont icon-logo"></div>
+                <form class="login-form">
+                    <div class="input-box input-username-box">
+                    <input type="text" class="input-username" name="username" placeholder="手机号/邮箱">
+                    </div>
+                    <div class="input-box input-password-box">
+                    <input type="password" class="input-password" name="psw" placeholder="密码">
+                    </div>
+                    <p class="error-msg"></p>
+                    <button type="submit" class="btn-login">登录</button>
+                    <button type="button" class="btn-has-border btn-register">注册</button>
+                </form>
+                <p class="link-wrapper">
+                    <a class="to-login-mobile">手机快捷登录</a>
+                    <a class="forget-psw">忘记密码</a>
+                </p><p>
+                
+                </p><hr>
+                <p class="third-party-title">第三方平台登录</p>
+                <div class="third-party-box">
+                    <a class="iconfont icon-weibo" href="https://api.weibo.com/oauth2/authorize?client_id=1290308714&amp;redirect_uri=http%3A%2F%2Fwww.yidianzixun.com%2Fhome%3Fpage%3Dindex-weibo%26callback%3Dhttp%253A%252F%252Fwww.yidianzixun.com%252Fchannel%252Fc3" target="_blank"></a>
+                    <a class="iconfont icon-QQ1" href="https://graph.qq.com/oauth2.0/authorize?response_type=code&amp;client_id=100468103&amp;state=yidian&amp;redirect_uri=http%3A%2F%2Fwww.yidianzixun.com%2Fhome%3Fpage%3Dindex-qq%26callback%3Dhttp%253A%252F%252Fwww.yidianzixun.com%252Fchannel%252Fc3" target="_blank"></a>
+                    <a class="iconfont icon-weixin" href="https://open.weixin.qq.com/connect/qrconnect?appid=wx9a0b25d53c37ed77&amp;redirect_uri=http%3A%2F%2Fwww.yidianzixun.com%2Fhome%3Fpage%3Dindex-weixin%26callback%3Dhttp%253A%252F%252Fwww.yidianzixun.com%252Fchannel%252Fc3&amp;response_type=code&amp;scope=snsapi_login&amp;state=12345#wechat_redirect" target="_blank"></a>
+                    <a class="iconfont icon-mi" href="https://account.xiaomi.com/oauth2/authorize?client_id=2882303761517118382&amp;response_type=code&amp;redirect_uri=http%3A%2F%2Fwww.yidianzixun.com%2Fhome%3Fpage%3Dindex-xiaomi%26callback%3Dhttp%253A%252F%252Fwww.yidianzixun.com%252Fchannel%252Fc3" target="_blank"></a>
+                </div>
+            </div>
+            <div class="dialog login-register-dialog email-register-dialog" style="display: none;">
+                <div class="close iconfont icon-close"></div>
+                <div class="logo iconfont icon-logo"></div>
+                <form class="email-register-form">
+                    <div class="input-box input-email-box">
+                    <input type="text" class="input-email" name="email" placeholder="请输入邮箱账号">
+                    </div>
+                    <div class="input-box input-password-box">
+                    <input type="password" class="input-password" name="psw" placeholder="请输入密码">
+                    <span class="iconfont icon-see"></span>
+                    </div>
+                    <div class="input-box input-image-verification-code-box">
+                    <input type="text" class="input-image-verification-code" name="verification-code" placeholder="请输入验证码">
+                    <div class="verification-code">
+                        <!-- <img src="/captcha"> -->
+                    </div>
+                    </div>
+                    <p class="error-msg"></p>
+                    <button type="submit" class="btn-register">注册</button>
+                </form>
+                <p class="declare">点击注册按钮，即表示你同意<a href="http://www.yidianzixun.com/landing_agreement" target="_blank">《一点资讯用户协议》</a></p>
+                <p class="link-wrapper">
+                    <a class="link to-phone-register">使用手机号注册</a>
+                    <a class="link to-login">已有账号</a>
+                </p>
+            </div>
         </div>
         <script src="/public/common/lib.js"></script>
         {% block js %} {% endblock%}

@@ -233,8 +233,8 @@
     <div class="slide">
         <div class="slide-list">
             
-            <a class="slide-item item-0" href="http://www.yidianzixun.com/0HcHtvw5" style="display: none;">
-                <img src="http://si1.go2yd.com/get-image/0I1VOAY0btw" style="opacity: 0;">
+            <a class="slide-item item-0" href="http://www.yidianzixun.com/0HcHtvw5" style="display: block;">
+                <img src="http://si1.go2yd.com/get-image/0I1VOAY0btw" style="opacity: 1;">
                 <div class="slide-shadow"></div>
                 <p class="slide-item-title">德总统访澳 与考拉对视眼神亮了</p>
             </a>
@@ -245,8 +245,8 @@
                 <p class="slide-item-title">&#8203;伊万卡与安倍晋三出席论坛 大长腿抢镜&#8203;</p>
             </a>
             
-            <a class="slide-item item-2" href="http://www.yidianzixun.com/0Hbxy7vm" style="display: block;">
-                <img src="http://si1.go2yd.com/get-image/0I1V8fvSGA4" style="opacity: 1;">
+            <a class="slide-item item-2" href="http://www.yidianzixun.com/0Hbxy7vm" style="display: none;">
+                <img src="http://si1.go2yd.com/get-image/0I1V8fvSGA4" style="opacity: 0;">
                 <div class="slide-shadow"></div>
                 <p class="slide-item-title">七彩太阳！不同紫外线波长下的太阳表面照</p>
             </a>
@@ -260,11 +260,11 @@
         </div>
         <div class="flag-wrapper">
             
-            <div class="flag flag-0"></div>
+            <div class="flag flag-0 active"></div>
             
             <div class="flag flag-1"></div>
             
-            <div class="flag flag-2 active"></div>
+            <div class="flag flag-2"></div>
             
             <div class="flag flag-3"></div>
             
@@ -285,15 +285,15 @@
                 <div class="doc-title">{{article.title}}</div>
                 <div class="doc-info">
                     
-                    <img src="{{article.cover}}">
+                    <img class="source-profile" src="{{article.cover}}">
                     
                     
                     
-                    <span class="source">article.author</span>
+                    <span class="source">{{article.author}}</span>
                     
                     
                     <span class="comment-count">110评</span>
-                    <span class="date">{{ article.time }}</span>
+                    <span class="date">{{ article.duration }}</span>
                     <!-- article.time.toISOString().substring(0,10) -->
                     <div class="doc-remove">不感兴趣<span class="iconfont icon-close-half"></span></div>
                 </div>

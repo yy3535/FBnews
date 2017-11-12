@@ -51,20 +51,64 @@ router.get('/', (req, res, next) => {
             
             //过滤html并且截取前76个字符
             item.body = item.body.replace(/<[^>]+>/g,'').substring(0,77)+'...';
-            let timenow=new Date().getTime();
-            console.log("发布时间：",item.time.getTime());
-            console.log("现在时间：",timenow);
-            item.time=(timenow-item.time.getTime())/1000;
-            console.log("距离现在秒数：",item.time);
+            var end = new Date().getTime();
+            var duration=MillisecondToDate(end-item.time.getTime(),item.time);
+            item.duration=duration;
+            console.log("发布时间：",item.time);
             return  item;
         });
        
         res.render('index',{
             //articles:articles
-            articles
+            articles:articles,
+            user: req.session.user
         });
     })
    
+    function MillisecondToDate(msd,date) {
+		var time = parseFloat(msd) /1000;
+		if (null!= time &&""!= time) {
+            //console.log('时间换算中：',time);
+			if (time >60&& time <60*60) {
+                console.log('进了1');
+				time = parseInt(time /60.0) +"分钟前";
+			}else if (time >=60*60&& time <60*60*9) {
+                console.log('进了2');
+				time = parseInt(time /3600.0) +"小时前";
+			}else if (time >=60*60*9&& time <60*60*36) {
+                console.log('进了3');
+                time = "昨天";
+				//time = parseInt(time /(3600.0*24)) +"天"+parseInt((parseFloat(time /(3600.0*24)) -
+				//parseInt(time /(3600.0*24))) *24) +"小时"+ parseInt((parseFloat(time /3600.0) -parseInt(time /3600.0)) *60) +"分钟"+parseInt((parseFloat((parseFloat(time /3600.0) - parseInt(time /3600.0)) *60) -parseInt((parseFloat(time /3600.0) - parseInt(time /3600.0)) *60)) *60) +"秒";
+			}else if (time >=60*60*36&& time <60*60*60) {
+                console.log('进了4');
+                time = "2天前";
+				//time = parseInt(time /(3600.0*24)) +"天"+parseInt((parseFloat(time /(3600.0*24)) -
+				//parseInt(time /(3600.0*24))) *24) +"小时"+ parseInt((parseFloat(time /3600.0) -parseInt(time /3600.0)) *60) +"分钟"+parseInt((parseFloat((parseFloat(time /3600.0) - parseInt(time /3600.0)) *60) -parseInt((parseFloat(time /3600.0) - parseInt(time /3600.0)) *60)) *60) +"秒";
+			}else if (time >=60*60*60&& time <60*60*84) {
+                console.log('进了5');
+                time = "3天前";
+				//time = parseInt(time /(3600.0*24)) +"天"+parseInt((parseFloat(time /(3600.0*24)) -
+				//parseInt(time /(3600.0*24))) *24) +"小时"+ parseInt((parseFloat(time /3600.0) -parseInt(time /3600.0)) *60) +"分钟"+parseInt((parseFloat((parseFloat(time /3600.0) - parseInt(time /3600.0)) *60) -parseInt((parseFloat(time /3600.0) - parseInt(time /3600.0)) *60)) *60) +"秒";
+			}else if (time >=60*60*84) {
+                console.log('进了6');
+                console.log(date);
+                var y = date.getFullYear();  
+                var m = date.getMonth()+1;  
+                var d = date.getDate();
+                console.log(y,m,d);
+				time = y+'年'+m+'月'+d+'日';
+			}else {
+                console.log('进了7');
+				time = "刚刚";
+			}
+		}else{
+			time = "刚刚";
+		}
+		return time;
+
+	}
+
 });
 
 

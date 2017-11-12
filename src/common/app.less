@@ -7,6 +7,16 @@ ul{
     margin: 0;
     padding: 0
 }
+li, p, ul {
+    margin: 0;
+}
+p {
+    display: block;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+}
 a {
     color: #999;
     text-decoration: none;
@@ -34,7 +44,9 @@ h1, h2, h3, h4, h5, h6 {
 .fr{
     float:right;
 }
-
+hr {
+    margin: 0;
+}
 /*头部*/
 /*顶部链接*/
 .header-channel-nav .content, .header-mini .content, .header-search .content, .header-top .content {
@@ -42,7 +54,7 @@ h1, h2, h3, h4, h5, h6 {
     width: 1080px;
     margin: 0 auto;
 }
-.header_top{
+.header-top{
     width: 100%;
     height: 32px;
     border-bottom: 1px solid #eaeaea;
@@ -51,11 +63,11 @@ h1, h2, h3, h4, h5, h6 {
     top: 0;
     left: 0;
 }
-.header_top .header_links {
+.header-top .header-links {
     position: relative;
     right: -10px;
 }
-.header_top .header_links>*{
+.header-top .header-links>*{
     color: #999;
     font-size: 13px;
     padding: 0 10px;
@@ -63,22 +75,22 @@ h1, h2, h3, h4, h5, h6 {
     display: inline-block;
     vertical-align: middle;
 }
-.split_icon{
+.split-icon{
     height: 0px;
     width: 0;
     border-left: 1px solid #e0e0e0;
 }
-.header_top .split_icon{
+.header-top .split-icon{
     padding: 0;
     height: 14px;
 }
 /*搜索框*/
-.header_channel_nav .content, .header_mini .content, .header_search .content, .header_top .content {
+.header-channel-nav .content, .header-mini .content, .header-search .content, .header-top .content {
     display: block;
     width: 1080px;
     margin: 0 auto;
 }
-.header_search {
+.header-search {
     width: 100%;
     position: absolute;
     left: 0;
@@ -92,7 +104,7 @@ h1, h2, h3, h4, h5, h6 {
     max-height: 35px;
     overflow: hidden;
 }
-.header_search .input_search {
+.header-search .input-search {
     width: 422px;
     height: 34px;
     padding: 0 10px;
@@ -100,26 +112,26 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 16px;
     margin-right: 9px;
 }
-.header_search .btn_search {
+.header-search .btn-search {
     width: 90px;
     height: 36px;
     background-color: #129aee;
     color: #fff;
     border:0;
 }
-.header_search .btn.btn_search {
+.header-search .btn.btn-search {
     font-size: 16px;
 }
-.header_search a, .header_search span {
+.header-search a, .header-search span {
     color: #129aee;
     line-height: 36px;
     padding: 0 17px;
     vertical-align: middle;
 }
-.header_search .header_links>* {
+.header-search .header-links>* {
     font-size: 15px;
 }
-.header_search .content>*, .header_search .header_links>* {
+.header-search .content>*, .header-search .header-links>* {
     display: inline-block;
     vertical-align: middle;
 }
@@ -128,7 +140,7 @@ a, button {
     -webkit-transition: all .3s;
     transition: all .3s;
 }
-.btn_login {
+.btn-login {
     width: 60px;
     height: 25px;
     color: #129aee;
@@ -136,35 +148,100 @@ a, button {
     border: 1px solid #129aee;
     border-radius: 2px;
 }
-.header_search .btn_login {
+.header-search .btn-login {
     margin-left: 17px;
 }
-.header_search .split_icon {
+.header-search .split-icon {
     padding: 0;
     height: 14px;
 }
+.header-channel-nav .user-info-box, .header-mini .user-info-box, .header-search .user-info-box, .header-top .user-info-box {
+    height: 27px;
+    margin-left: 17px;
+    position: relative;
+    font-size: 0;
+}
+.header-search .content>*, .header-search .header-links>* {
+    display: inline-block;
+    vertical-align: middle;
+}
+.header-search .header-links>* {
+    font-size: 15px;
+}
+.header-search .user-info-box {
+    margin-top: -7px;
+}
+.header-channel-nav .user-info-box .user-info, .header-mini .user-info-box .user-info, .header-search .user-info-box .user-info, .header-top .user-info-box .user-info {
+    display: inline-block;
+    padding: 0;
+}
+.header-channel-nav .user-info-box .profile, .header-mini .user-info-box .profile, .header-search .user-info-box .profile, .header-top .user-info-box .profile {
+    width: 38px;
+    height: 38px;
+    border-radius: 100%;
+    border: 1px solid #f2f2f2;
+}
+.header-channel-nav .user-info-box .nickname, .header-mini .user-info-box .nickname, .header-search .user-info-box .nickname, .header-top .user-info-box .nickname {
+    color: #222;
+    padding: 0 0 0 7px;
+    width: 47px;
+    height: 30px;
+    line-height: 30px;
+    overflow: hidden;
+    margin-right: 7px;
+    white-space: nowrap;
+    font-size: 15px;
+}
+.header-channel-nav .user-info-box .user-info>*, .header-mini .user-info-box .user-info>*, .header-search .user-info-box .user-info>*, .header-top .user-info-box .user-info>* {
+    display: inline-block;
+    vertical-align: middle;
+}
+.header-channel-nav .user-info-box .icon-down1, .header-mini .user-info-box .icon-down1, .header-search .user-info-box .icon-down1, .header-top .user-info-box .icon-down1 {
+    padding: 0;
+    color: #222;
+    font-size: 12px;
+}
+.header-channel-nav .user-info-box .user-info-menu, .header-mini .user-info-box .user-info-menu, .header-search .user-info-box .user-info-menu, .header-top .user-info-box .user-info-menu {
+    width: 100px;
+    position: absolute;
+    background: #fbfbfb;
+    z-index: 10;
+    padding: 8px 0;
+    left: 50%;
+    margin-left: -50px;
+    top: 45px;
+    display: none;
+}
+.header-channel-nav .user-info-box .user-info-menu a, .header-mini .user-info-box .user-info-menu a, .header-search .user-info-box .user-info-menu a, .header-top .user-info-box .user-info-menu a {
+    display: block;
+    color: #222;
+    font-size: 14px;
+    line-height: 31px;
+    text-align: center;
+}
+
 /*导航条*/
-.header_channel_nav {
+.header-channel-nav {
     width: 100%;
     position: absolute;
     left: 0;
     top: 132px;
     border-bottom: 1px solid #e0e0e0;
 }
-.header_channel_nav .content {
+.header-channel-nav .content {
     position: relative;
     bottom: -1px;
 }
-.header_channel_nav .content, .header_mini .content, .header_search .content, .header_top .content {
+.header-channel-nav .content, .header-mini .content, .header-search .content, .header-top .content {
     display: block;
     width: 1080px;
     margin: 0 auto;
 }
-.channel_nav {
+.channel-nav {
     height: 52px;
     overflow: hidden;
 }
-.channel_nav .down {
+.channel-nav .down {
     width: 16px;
     height: 50px;
     padding-right: 25px;
@@ -173,15 +250,15 @@ a, button {
     cursor: pointer;
     line-height: 52px;
 }
-.channel_nav .list {
+.channel-nav .list {
     height: 52px;
     overflow: hidden;
 }
-.channel_nav .item.active {
+.channel-nav .item.active {
     color: #129aee;
     border-bottom-color: #129aee;
 }
-.channel_nav .item {
+.channel-nav .item {
     color: #222;
     font-size: 16px;
     padding: 0 25px;
@@ -194,7 +271,7 @@ a, button {
     -webkit-transition: all .3s;
     transition: all .3s;
 }
-.channel_nav .item:hover{
+.channel-nav .item:hover{
     color: #129aee;
 }
 /*主体部分*/
@@ -322,6 +399,10 @@ a, button {
 }
 .doc-info>img {
     height: 20px;
+}
+.source-profile {
+    height: 20px;
+    border-radius: 100%;
 }
 .doc-info .doc-remove {
     font-size: 12px;
@@ -573,11 +654,11 @@ a, button {
     line-height: 29px;
     color: #999;
 }
-.widget-about-yidian .official-info a.honest_icon {
+.widget-about-yidian .official-info a.honest-icon {
     float: left;
     margin-right: 7px;
 }
-.widget-about-yidian .official-info a.honest_icon img {
+.widget-about-yidian .official-info a.honest-icon img {
     height: 20px;
 }
 .widget-about-yidian .official-info .icon-jgw {
@@ -713,6 +794,180 @@ element.style {
     transition: all .3s;
 }
 
+/*弹出框*/
+.mask {
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    opacity: .3;
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30);
+    display: none;
+}
+#toast, .mask {
+    position: fixed;
+    background: #000;
+}
+.login-register-dialog {
+    width: 330px;
+    background: #fff;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    margin-left: -217px;
+    z-index: 1001;
+    padding: 0 52px;
+    display: none;
+}
+.login-dialog, .login-mobile-dialog {
+    min-height: 400px;
+    margin-top: -200px;
+    padding-bottom: 30px;
+}
+.login-register-dialog .close {
+    width: 17px;
+    height: 17px;
+    font-size: 17px;
+    line-height: 17px;
+    position: absolute;
+    right: 17px;
+    top: 16px;
+    color: #e5e5e5;
+    cursor: pointer;
+}
+.logo {
+    width: 131px;
+    height: 29px;
+    font-size: 131px;
+    line-height: 26px;
+    color: #129aee;
+}
+.login-register-dialog .logo {
+    width: 97px;
+    height: 23px;
+    margin: 0 auto;
+    background-size: 100%;
+    font-size: 97px;
+    line-height: 23px;
+}
+.login-register-dialog .input-box {
+    position: relative;
+}
+.login-dialog .input-username-box, .login-dialog .logo, .login-mobile-dialog .input-username-box, .login-mobile-dialog .logo {
+    margin-top: 30px;
+}
+.login-dialog .input-username-box, .login-dialog .logo, .login-mobile-dialog .input-username-box, .login-mobile-dialog .logo {
+    margin-top: 30px;
+}
+.login-register-dialog input {
+    font-size: 14px;
+    width: 300px;
+    height: 21px;
+    border: 1px solid #eaeaea;
+    padding: 10px 14px;
+}
+.login-register-dialog .error-msg {
+    margin: 13px 0;
+    color: #413b3a;
+}
+.btn-login {
+    width: 60px;
+    height: 25px;
+    color: #129aee;
+    background-color: transparent;
+    border: 1px solid #129aee;
+    border-radius: 2px;
+}
+.login-register-dialog button {
+    width: 330px;
+    height: 38px;
+    background: #4bb0f7;
+    color: #fff;
+    border: none;
+    font-size: 16px;
+}
+.login-register-dialog button {
+    width: 330px;
+    height: 38px;
+    background: #4bb0f7;
+    color: #fff;
+    border: none;
+    font-size: 16px;
+}
+.login-register-dialog .btn-has-border {
+    width: 328px;
+    height: 36px;
+    background: none;
+    color: #4bb0f7;
+    border: 1px solid #79c0f4;
+}
+.login-dialog .btn-register, .login-dialog .input-image-verification-code-box, .login-dialog .input-password-box, .login-dialog .input-phone-verification-code-box, .login-mobile-dialog .btn-register, .login-mobile-dialog .input-image-verification-code-box, .login-mobile-dialog .input-password-box, .login-mobile-dialog .input-phone-verification-code-box {
+    margin-top: 10px;
+}
+.login-dialog .link-wrapper, .login-mobile-dialog .link-wrapper {
+    overflow: hidden;
+}
+.login-dialog .third-party-title, .login-mobile-dialog .third-party-title {
+    width: 110px;
+    font-size: 14px;
+    color: #999;
+    line-height: 12px;
+    background: #fff;
+    text-align: center;
+    margin: -6px auto 0;
+}
+.login-dialog .third-party-box, .login-mobile-dialog .third-party-box {
+    width: 282px;
+    height: 40px;
+    margin: 20px auto 0;
+}
+.login-dialog .third-party-box .iconfont, .login-mobile-dialog .third-party-box .iconfont {
+    width: 33.3%;
+    line-height: 40px;
+    font-size: 27px;
+    display: inline-block;
+    float: left;
+    text-align: center;
+    color: #d3d3d3;
+}
+.login-dialog .third-party-box .icon-qq, .login-mobile-dialog .third-party-box .icon-qq {
+    font-size: 24px;
+}
+.login-dialog .third-party-box .icon-weixin, .login-mobile-dialog .third-party-box .icon-weixin {
+    display: none;
+}
+.login-dialog hr, .login-mobile-dialog hr {
+    border: none;
+    border-top: 1px solid #e6e6e6;
+    margin-top: 25px;
+}
+
+.login-dialog .link-wrapper, .login-mobile-dialog .link-wrapper {
+    overflow: hidden;
+}
+.login-dialog .to-login, .login-dialog .to-login-mobile, .login-mobile-dialog .to-login, .login-mobile-dialog .to-login-mobile {
+    float: left;
+}
+.login-dialog .link-wrapper a, .login-mobile-dialog .link-wrapper a {
+    font-size: 14px;
+    color: #999;
+    line-height: 12px;
+    margin: 15px 0;
+}
+.login-dialog .forget-psw, .login-mobile-dialog .forget-psw {
+    float: right;
+}
+.login-dialog .link-wrapper a, .login-mobile-dialog .link-wrapper a {
+    font-size: 14px;
+    color: #999;
+    line-height: 12px;
+    margin: 15px 0;
+}
+
+
+
+
 /*字体图标*/
 
 @font-face {font-family: "iconfont";
@@ -740,6 +995,10 @@ element.style {
   .icon-4:before { content: "\e604"; }
   
   .icon-52:before { content: "\e687"; }
+
+  .icon-close:before { content: "\e6b6"; }
+  
+  .icon-close48:before { content: "\e70c"; }
 
 // @font-face {font-family: "iconfont";
 //     src: url('../fonts/iconfont.eot?t=1504954552384'); /* IE9*/
