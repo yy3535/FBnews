@@ -37,15 +37,30 @@ h1, h2, h3, h4, h5, h6 {
     margin: 0;
     font-weight: 400;
 }
-.fl{
+.float-left{
     float:left;
 }
 
-.fr{
+.float-right{
     float:right;
 }
 hr {
     margin: 0;
+}
+.icon-arrow-down, .icon-arrow-up, .icon-back-up, .icon-down, .icon-qrcode, .icon-refresh, .icon-search {
+    font-weight: 700;
+}
+a, a:hover {
+    text-decoration: none;
+    outline: none;
+}
+a, fieldset, img {
+    border: none;
+}
+a, button {
+    cursor: pointer;
+    -webkit-transition: all .3s;
+    transition: all .3s;
 }
 /*头部*/
 /*顶部链接*/
@@ -221,6 +236,54 @@ a, button {
 }
 
 /*导航条*/
+:root .header-channel-nav .logo {
+    line-height: 34px\9;
+}
+.header-channel-nav.header-mini .logo {
+    width: 99px;
+    margin-right: 17px;
+}
+.header-channel-nav .logo {
+    height: 26px;
+    margin-top: 13px;
+    font-size: 99px;
+    line-height: 26px;
+    display: inline-block;
+}
+.anim {
+    -webkit-transition: all .2s;
+    transition: all .2s;
+}
+.header-channel-nav.header-mini .header-links {
+    width: 192px;
+    margin-left: 15px;
+    overflow: visible;
+}
+.header-channel-nav .header-links {
+    line-height: 32px;
+    padding-right: 0;
+    position: relative;
+    -webkit-transition: width .3s;
+    transition: width .3s;
+}
+.header-channel-nav .icon-search {
+    font-size: 17px;
+    line-height: 19px;
+    position: absolute;
+    left: 0;
+    top: 7px;
+    z-index: 1;
+}
+.header-channel-nav .header-links>* {
+    display: inline-block;
+    vertical-align: middle;
+}
+.header-channel-nav .header-links, .header-channel-nav .logo {
+    width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    margin-top: 10px;
+}
 .header-channel-nav {
     width: 100%;
     position: absolute;
@@ -236,6 +299,80 @@ a, button {
     display: block;
     width: 1080px;
     margin: 0 auto;
+}
+.header-channel-nav.header-mini {
+    width: 100%;
+    background: #fff;
+    border-bottom: 1px solid #e0e0e0;
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    opacity: 1;
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+    font-family: Microsoft YaHei;
+}
+.suggestion-search-box {
+    position: relative;
+}
+.header-channel-nav .header-links .suggestion-search-box .input-search {
+    width: 0;
+    height: 32px;
+    font-size: 14px;
+    border: 0 solid #e0e0e0;
+}
+.header-mini .suggestion {
+    top: 34px;
+}
+
+.suggestion {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 36px;
+    z-index: 2;
+    background: #fdfdfd;
+    display: none;
+}
+.suggestion .inner-block-box {
+    padding: 12px 0;
+    border: 1px solid #e0e0e0;
+    border-top: none;
+}
+.suggestion .item {
+    display: block;
+    line-height: 0;
+    padding: 0 20px;
+}
+.suggestion.hot-search-suggestion .index {
+    width: 8px;
+    height: 32px;
+    margin-right: 20px;
+    background: no-repeat 50%;
+    font-size: 13px;
+    line-height: 40px;
+}
+.suggestion .item-content {
+    overflow: hidden;
+}
+.suggestion.hot-search-suggestion .hot-search-word {
+    line-height: 37px;
+}
+.suggestion .item-content div, .suggestion span {
+    font-size: 14px;
+    padding: 0;
+    color: #222;
+}
+.suggestion .channel-name, .suggestion .hot-search-word {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.header-channel-nav .header-links .link-ydhao {
+    margin-left: 50px;
+    margin-right: 38px;
+    color: #129aee;
 }
 .channel-nav {
     height: 52px;
@@ -274,6 +411,19 @@ a, button {
 .channel-nav .item:hover{
     color: #129aee;
 }
+.header-channel-nav .user-info-box {
+    margin-left: 0;
+}
+.header-channel-nav .user-info-box .profile {
+    width: 27px;
+    height: 27px;
+}
+.header-channel-nav .user-info-box .icon-down, .header-mini .user-info-box .icon-down, .header-search .user-info-box .icon-down, .header-top .user-info-box .icon-down {
+    padding: 0;
+    color: #222;
+    font-size: 12px;
+}
+
 /*主体部分*/
 .main {
     width: 1080px;

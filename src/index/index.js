@@ -10,6 +10,14 @@ isAutoPlay();
 /**
  * 绑定事件
  */
+$(window).scroll(function(){
+    if($(window).scrollTop()>=142){
+        $(".header-channel-nav").addClass("header-mini");
+    }
+    if($(window).scrollTop()<142){
+        $(".header-channel-nav").removeClass("header-mini");
+    }
+})
 $(".slide").on('mouseenter',function(){
     clearInterval(timer);
 });
@@ -22,7 +30,8 @@ flags.on('click',function(){
     hideShowImg(index,$(this).index());
     index=$(this).index();
 });
-$(".btn_login").on('click',function(){
+$(".btn-login").on('click',function(){
+    console.log("进入登录");
     $(".mask").css('display','block');
     $(".login-dialog").css('display','block');
     $(".mask").on('click',function(){
