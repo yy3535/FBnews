@@ -1,4 +1,6 @@
 const express=require('express');
+var request = require('request');
+var cheerio = require('cheerio');
 const router=express.Router();
 let Article = require('../dbModels/Article');
 
@@ -28,12 +30,6 @@ router.get('/', (req, res, next) => {
     let limit = 9 ; //每页固定显示的数据条数
 
     let offset = (page-1)*limit;
-    /*
-    //查询数据总共有多少条
-    Article.count().then(count => {
-        responseMesg.data.total = count;
-    });
-    */
 
     Article.find().sort({
         '_id':-1
@@ -41,7 +37,6 @@ router.get('/', (req, res, next) => {
         articles = articles.map((item,index)=>{
             //获取body中的第一张图片地址作为封面
             let result = item.body.match(/<img [^>]*src=['"]([^'"]+)[^>]*>/);
-            //console.log(result);
             if(result){
                 item.cover = result[1];
             }else{
@@ -54,7 +49,6 @@ router.get('/', (req, res, next) => {
             var end = new Date().getTime();
             var duration=MillisecondToDate(end-item.time.getTime(),item.time);
             item.duration=duration;
-            console.log("发布时间：",item.time);
             return  item;
         });
        
@@ -65,41 +59,44 @@ router.get('/', (req, res, next) => {
         });
     })
    
+    
+    request('http://www.jd.com', function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            $ = cheerio.load(body);
+            console.log($('.cate_menu_item').length);
+            // res.json({
+            //     cat: $('.cate_menu_item').length
+            // });
+        }
+    })
+
+
+
     function MillisecondToDate(msd,date) {
 		var time = parseFloat(msd) /1000;
 		if (null!= time &&""!= time) {
-            //console.log('时间换算中：',time);
 			if (time >60&& time <60*60) {
-                console.log('进了1');
 				time = parseInt(time /60.0) +"分钟前";
 			}else if (time >=60*60&& time <60*60*9) {
-                console.log('进了2');
 				time = parseInt(time /3600.0) +"小时前";
 			}else if (time >=60*60*9&& time <60*60*36) {
-                console.log('进了3');
                 time = "昨天";
 				//time = parseInt(time /(3600.0*24)) +"天"+parseInt((parseFloat(time /(3600.0*24)) -
 				//parseInt(time /(3600.0*24))) *24) +"小时"+ parseInt((parseFloat(time /3600.0) -parseInt(time /3600.0)) *60) +"分钟"+parseInt((parseFloat((parseFloat(time /3600.0) - parseInt(time /3600.0)) *60) -parseInt((parseFloat(time /3600.0) - parseInt(time /3600.0)) *60)) *60) +"秒";
 			}else if (time >=60*60*36&& time <60*60*60) {
-                console.log('进了4');
                 time = "2天前";
 				//time = parseInt(time /(3600.0*24)) +"天"+parseInt((parseFloat(time /(3600.0*24)) -
 				//parseInt(time /(3600.0*24))) *24) +"小时"+ parseInt((parseFloat(time /3600.0) -parseInt(time /3600.0)) *60) +"分钟"+parseInt((parseFloat((parseFloat(time /3600.0) - parseInt(time /3600.0)) *60) -parseInt((parseFloat(time /3600.0) - parseInt(time /3600.0)) *60)) *60) +"秒";
 			}else if (time >=60*60*60&& time <60*60*84) {
-                console.log('进了5');
                 time = "3天前";
 				//time = parseInt(time /(3600.0*24)) +"天"+parseInt((parseFloat(time /(3600.0*24)) -
 				//parseInt(time /(3600.0*24))) *24) +"小时"+ parseInt((parseFloat(time /3600.0) -parseInt(time /3600.0)) *60) +"分钟"+parseInt((parseFloat((parseFloat(time /3600.0) - parseInt(time /3600.0)) *60) -parseInt((parseFloat(time /3600.0) - parseInt(time /3600.0)) *60)) *60) +"秒";
 			}else if (time >=60*60*84) {
-                console.log('进了6');
-                console.log(date);
                 var y = date.getFullYear();  
                 var m = date.getMonth()+1;  
                 var d = date.getDate();
-                console.log(y,m,d);
 				time = y+'年'+m+'月'+d+'日';
 			}else {
-                console.log('进了7');
 				time = "刚刚";
 			}
 		}else{
@@ -112,8 +109,14 @@ router.get('/', (req, res, next) => {
 });
 
 
-
-
+/**
+ * 个人中心
+ */
+router.get('/profile',(req,res,next)=>{
+    res.render('profile',{
+        user: req.session.user
+    });
+});
 
 
 
@@ -213,5 +216,13 @@ router.get('/article/list',(req,res,next)=>{
     console.log("测试");
 });
 
+
+
+/**
+ * 退出
+ */
+router.get('/logout',(req, res, next) => {
+    req.session.user=null;
+});
 
 module.exports=router;

@@ -1,4 +1,4 @@
-
+let MD5=require('md5.js');
 require('bootstrap');
 // require('BOOTSTRAP_CSS');
 // require('FONTAWESOME');
@@ -60,3 +60,86 @@ if(module.hot){
     module.hot.accept();
 }
 */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//前台页面layout.html
+/**
+ * 绑定事件
+ */
+//登录
+$(".btn-login").on('click',function(){
+    console.log("进入登录");
+    $(".mask").css('display','block');
+    $(".login-dialog").css('display','block');
+    $(".mask").on('click',function(){
+        $(".mask").css('display','none');
+        $(".login-dialog").css('display','none');
+    })
+    $(".icon-close48").on('click',function(){
+        $(".mask").css('display','none');
+        $(".login-dialog").css('display','none');
+    })
+})
+$('.login-form').on('submit',function(e){
+    e.preventDefault();
+    let [username,password]=[this.username.value.trim(),this.psw.value.trim()];
+    if(!username||!password){
+        $('.error-msg').text('用户名或密码不能为空！').show();
+        return;
+    }
+    password=new MD5().update(password).digest('hex');
+    $.ajax({
+        url:'/api/user/check',
+        method:'post',
+        data:{
+            username,
+            password
+        },
+        success:function(data){
+            //{ success:false ,message:''}
+            if(data.success){
+                console.log(data);
+                $('.error-msg').hide();
+                location.reload();
+            }else{
+                $('.error-msg').text('用户名或密码不正确！').show();
+            }
+           // console.log('后端返回给前端的数据',data);
+        }
+    });
+
+});
+$(".user-info, .user-info-menu").on('mouseenter',function(){
+    $(".user-info-menu").css('display','block');
+})
+$(".user-info, .user-info-menu").on('mouseleave',function(){
+    $(".user-info-menu").css('display','none');
+})
+

@@ -10,6 +10,10 @@ ul{
 li, p, ul {
     margin: 0;
 }
+li, ul {
+    list-style: none;
+    padding: 0;
+}
 p {
     display: block;
     -webkit-margin-before: 1em;
@@ -219,13 +223,12 @@ a, button {
 .header-channel-nav .user-info-box .user-info-menu, .header-mini .user-info-box .user-info-menu, .header-search .user-info-box .user-info-menu, .header-top .user-info-box .user-info-menu {
     width: 100px;
     position: absolute;
-    background: #fbfbfb;
     z-index: 10;
-    padding: 8px 0;
     left: 50%;
     margin-left: -50px;
-    top: 45px;
+    top: 40px;
     display: none;
+    padding-top: 5px;
 }
 .header-channel-nav .user-info-box .user-info-menu a, .header-mini .user-info-box .user-info-menu a, .header-search .user-info-box .user-info-menu a, .header-top .user-info-box .user-info-menu a {
     display: block;
@@ -233,8 +236,18 @@ a, button {
     font-size: 14px;
     line-height: 31px;
     text-align: center;
+    background: #fbfbfb;
 }
-
+.header-channel-nav .user-info-box .user-info-menu a:hover, .header-mini .user-info-box .user-info-menu a:hover, .header-search .user-info-box .user-info-menu a:hover, .header-top .user-info-box .user-info-menu a:hover{
+    color: #129aee;
+}
+.header-channel-nav .user-info-box .user-info-menu a:nth-child(1), .header-mini .user-info-box .user-info-menu a:nth-child(1), .header-search .user-info-box .user-info-menu a:nth-child(1), .header-top .user-info-box .user-info-menu a:nth-child(1){
+    padding-top:8px;
+    
+}
+.header-channel-nav .user-info-box .user-info-menu a:nth-child(3), .header-mini .user-info-box .user-info-menu a:nth-child(3), .header-search .user-info-box .user-info-menu a:nth-child(3), .header-top .user-info-box .user-info-menu a:nth-child(3){
+    padding-bottom:8px;
+}
 /*导航条*/
 :root .header-channel-nav .logo {
     line-height: 34px\9;

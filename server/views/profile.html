@@ -1,10 +1,418 @@
-{% extends './layout.html' %} 
-{% block title %} 首页 {% endblock %} 
-{% block content%}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>个人中心</title>
+    {% if !isDev %}
+    <link rel="stylesheet" href="/public/css/lib.css">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    {% endif %}
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_464243_cwbvviyg3jvy4x6r.css">
+</head>
+<body>
+    
+        <div class="header-channel-nav header-mini login">
+            <div class="content">
+                <a href="/" class="logo float-left anim iconfont icon-logo"></a>
+                <div class="float-right header-links anim">
+                    <div class="icon-search btn-search iconfont"></div>
+                    <div class="suggestion-search-box">
+                        <input placeholder="大家都在搜:言承旭林志玲复合" value="言承旭林志玲复合" class="input input-search" data-placeholder="大家都在搜:言承旭林志玲复合">
+                        <div class="suggestion hot-search-suggestion">
+                            <div class="inner-block-box">
+                                <a class="item item-1" href="/channel/w/言承旭林志玲复合?searchword=%E8%A8%80%E6%89%BF%E6%97%AD%E6%9E%97%E5%BF%97%E7%8E%B2%E5%A4%8D%E5%90%88">
+                                    <div class="float-left index icon iconfont icon-1"></div>
+                                    <div class="item-content">
+                                    <div class="hot-search-word">言承旭林志玲复合</div>
+                                    </div>
+                                </a>
+                                
+                                <a class="item item-2" href="/channel/w/马蓉现身机场?searchword=%E9%A9%AC%E8%93%89%E7%8E%B0%E8%BA%AB%E6%9C%BA%E5%9C%BA">
+                                    <div class="float-left index icon iconfont icon-2"></div>
+                                    <div class="item-content">
+                                    <div class="hot-search-word">马蓉现身机场</div>
+                                    </div>
+                                </a>
+                                
+                                <a class="item item-3" href="/channel/w/双11成交额?searchword=%E5%8F%8C11%E6%88%90%E4%BA%A4%E9%A2%9D">
+                                    <div class="float-left index icon iconfont icon-3"></div>
+                                    <div class="item-content">
+                                    <div class="hot-search-word">双11成交额</div>
+                                    </div>
+                                </a>
+                                
+                                <a class="item item-4" href="/channel/w/10万瓶假减肥药?searchword=10%E4%B8%87%E7%93%B6%E5%81%87%E5%87%8F%E8%82%A5%E8%8D%AF">
+                                    <div class="float-left index icon iconfont icon-4"></div>
+                                    <div class="item-content">
+                                    <div class="hot-search-word">10万瓶假减肥药</div>
+                                    </div>
+                                </a>
+                                
+                                <a class="item item-5" href="/channel/w/阿娇晒男友照?searchword=%E9%98%BF%E5%A8%87%E6%99%92%E7%94%B7%E5%8F%8B%E7%85%A7">
+                                    <div class="float-left index icon iconfont icon-5"></div>
+                                    <div class="item-content">
+                                    <div class="hot-search-word">阿娇晒男友照</div>
+                                    </div>
+                                </a>
+                                
+                                <a class="item item-6" href="/channel/w/孙红雷吓哭阿拉蕾?searchword=%E5%AD%99%E7%BA%A2%E9%9B%B7%E5%90%93%E5%93%AD%E9%98%BF%E6%8B%89%E8%95%BE">
+                                    <div class="float-left index icon iconfont icon-6"></div>
+                                    <div class="item-content">
+                                    <div class="hot-search-word">孙红雷吓哭阿拉蕾</div>
+                                    </div>
+                                </a>
+                                
+                                <a class="item item-7" href="/channel/w/亲子园虐童新视频?searchword=%E4%BA%B2%E5%AD%90%E5%9B%AD%E8%99%90%E7%AB%A5%E6%96%B0%E8%A7%86%E9%A2%91">
+                                    <div class="float-left index icon iconfont icon-7"></div>
+                                    <div class="item-content">
+                                    <div class="hot-search-word">亲子园虐童新视频</div>
+                                    </div>
+                                </a>
+                                
+                                <a class="item item-8" href="/channel/w/郑州破古墓被盗案?searchword=%E9%83%91%E5%B7%9E%E7%A0%B4%E5%8F%A4%E5%A2%93%E8%A2%AB%E7%9B%97%E6%A1%88">
+                                    <div class="float-left index icon iconfont icon-8"></div>
+                                    <div class="item-content">
+                                    <div class="hot-search-word">郑州破古墓被盗案</div>
+                                    </div>
+                                </a>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <a href="http://mp.yidianzixun.com/" class="link link-ydhao">一点号</a>
+                    {% if user === 'null' %}
+                        <button class="btn btn-login js-to-login">登录</button>
+                    {% else %}
+                        <div class="user-info-box">
+                            <a href="/profile" class="user-info">
+                                <img src="http://s.go2yd.com/a/head_shatannan.png" class="profile">
+                                <span class="nickname">{{user.username}}</span>
+                                <span class="iconfont icon-down1"></span>
+                            </a>
+                            <div class="user-info-menu" style="display: none;">
+                                <a href="/profile">个人中心</a>
+                                <a href="/channellist">添加频道</a>
+                                <a href="javascript:void(0)" class="logout-btn">退出</a>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="channel-nav">
+                    <div class="down iconfont icon-arrow-down"></div>
+                    <div class="list">
+                            <a data-index="0" href="/" data-channelid="best" class="item active">首页</a>
+                            <a data-index="0" href="/" data-channelid="best" class="item">要闻</a>
+                            <a data-index="0" href="/" data-channelid="best" class="item">一点号</a>
+                            <a data-index="0" href="/" data-channelid="best" class="item">视频</a>
+                            <a data-index="0" href="/" data-channelid="best" class="item">段子</a>
+                            <a data-index="0" href="/" data-channelid="best" class="item">汽车</a>
+                            <a data-index="0" href="/" data-channelid="best" class="item">社会</a>
+                            <a data-index="0" href="/" data-channelid="best" class="item">娱乐</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="main">
+            <div class="left-wrapper">
+                <div class="profile-wrapper">
+                    <img src="http://s.go2yd.com/a/head_shatannan.png">
+                    <p class="nickname">jpg___</p>
+                    <p>137186247@qq.com</p>
+                </div>
+                <ul class="nav-list">
+                    <li class="active">个人收藏</li>
+                    <li>账号信息</li>
+                    <li class="subscribe-li">我参与的</li>
+                    <li>与我相关</li>
+                    <span></span>
+                </ul>
+            </div>
+            <div class="right-wrapper">
+                <div class="nav-show active">
+                    <div style="display:block" class="no-like">
+                        <img src="//staticimg.yidianzixun.com/modules/build/images/no_collection-80c23449.png">
+                        <p>暂无收藏，赶紧去看看吧</p>
+                    </div>
+                </div>
+                <div class="nav-show profile-edit-wrapper">
+                        <div class="profile-account">
+                            <div class="account-box">
+                                <label class="img-label">头像</label>
+                                <div class="account-op">
+                                    <img id="profile_url" src="http://s.go2yd.com/a/head_shatannan.png">
+                                    <form id="upload_photo" action="/home/q/?type=uploadphoto" method="post" target="avatar-iframe" enctype="multipart/form-data">
+                                        <a class="upload-title">上传头像</a>
+                                        <p class="upload-tip">支持.jpg .jepg .gif .png格式照片，大小不超过512K</p>
+                                        <input id="upload" type="file" name="pic" class="upload">
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="account-box">
+                                <label>用户名</label>
+                                <div class="account-op">
+                                    <span>137186247@qq.com</span>
+                                </div>
+                            </div>
+                            <div class="account-box">
+                                <label>昵称</label>
+                                <div class="account-op">
+                                    <p>
+                                        <input type="text" value="jpg___" class="input user-name">
+                                        <a href="javascript:;" class="user-name-change">修改昵称</a>
+                                    </p>
+                                    <p class="hint"><span class="icon-delete iconfont"></span>2-40个字符，支持汉字、数字、英文、“-”、“_”等</p>
+                                    <p class="save-name"><button class="btn">保存</button></p>
+                                </div>
+                            </div>
+                            <div class="account-box">
+                                <label>手机号</label>
+                                <div class="account-op">
+                                    <span>180****4009</span>
+                                </div>
+                            </div>
+                            <div class="passwd-box">
+                                <div class="account-box">
+                                    <label>密码</label>
+                                    <div class="account-op">
+                                        <input type="password" placeholder="如果没有设置过密码，请在APP内设置" class="input password-old">
+                                        <a href="javascript:;" class="user-passwd-change">修改密码</a>
+                                        <p class="hint"><span class="icon-delete iconfont"></span>密码不正确</p>
+                                    </div>
+                                </div>
+                                <div class="account-box change-passwd">
+                                    <label>输入新密码</label>
+                                    <div class="account-op">
+                                        <input type="password" class="input password-new">
+                                        <p class="hint"><span class="icon-delete iconfont"></span>密码为5到18位数字、字母或字符</p>
+                                    </div>
+                                </div>
+                                <div class="account-box change-passwd">
+                                    <label>确认新密码</label>
+                                    <div class="account-op">
+                                        <input type="password" class="input password-again">
+                                        <p class="hint"><span class="icon-delete iconfont"></span>两次输入密码不一致</p>
+                                    </div>
+                                </div>
+                                <div class="account-box change-passwd change-passwd-last">
+                                    <label></label>
+                                    <div class="account-op">
+                                        <button data-user_email="137186247@qq.com" class="btn save-passwd">保存密码</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="userid">622097713</div>
+                        </div>
+                    </div>
+                <div class="nav-show">
+                    <ul class="subscribe-list">
+                        <li data-fromid="u13746" data-channelname="视频" data-channelid="17621792321" class="js-channel-subscribe-item subscribed">
+                            <a href="/channel/u13746" target="_blank">
+                                <div class="channel-img-box">
+                                    <img src="" data="http://i1.go2yd.com/image.php?url=http://s.go2yd.com/b/ipi515h0_7i0ud1d1.jpg&amp;type=thumbnail_200x200" width="90">
+                                </div>
+                                <p>视频</p>
+                            </a>
+                            <button class="unsubscribe js-unsubscribe-btn">已订阅</button>
+                            <button class="subscribe js-subscribe-btn">订阅</button>
+                        </li>
+                        <li data-fromid="u12131" data-channelname="段子" data-channelid="17621792113" class="js-channel-subscribe-item subscribed">
+                            <a href="/channel/u12131" target="_blank">
+                                <div class="channel-img-box">
+                                    <img src="" data="http://i1.go2yd.com/image.php?url=http://s.go2yd.com/b/id9y36w2_750ud1d1.jpg&amp;type=thumbnail_200x200" width="90">
+                                </div>
+                                <p>段子</p>
+                            </a>
+                            <button class="unsubscribe js-unsubscribe-btn">已订阅</button>
+                            <button class="subscribe js-subscribe-btn">订阅</button>
+                        </li>
+                        <li data-fromid="c11" data-channelname="汽车" data-channelid="17621792225" class="js-channel-subscribe-item subscribed">
+                            <a href="/channel/c11" target="_blank">
+                                <div class="channel-img-box">
+                                    <img src="" data="http://i1.go2yd.com/image.php?url=http://s.go2yd.com/b/icrhnazk_280gd1d1.jpg&amp;type=thumbnail_200x200" width="90">
+                                </div>
+                                <p>汽车</p>
+                            </a>
+                            <button class="unsubscribe js-unsubscribe-btn">已订阅</button>
+                            <button class="subscribe js-subscribe-btn">订阅</button>
+                        </li>
+                        <li data-fromid="c9" data-channelname="社会" data-channelid="17621791953" class="js-channel-subscribe-item subscribed">
+                            <a href="/channel/c9" target="_blank">
+                                <div class="channel-img-box">
+                                    <img src="" data="http://i1.go2yd.com/image.php?url=http://s.go2yd.com/b/icr46pzl_eq00d1d1.jpg&amp;type=thumbnail_200x200" width="90">
+                                </div>
+                                <p>社会</p>
+                            </a>
+                            <button class="unsubscribe js-unsubscribe-btn">已订阅</button>
+                            <button class="subscribe js-subscribe-btn">订阅</button>
+                        </li>
+                        <li data-fromid="c3" data-channelname="娱乐" data-channelid="17621791969" class="js-channel-subscribe-item subscribed">
+                            <a href="/channel/c3" target="_blank">
+                                <div class="channel-img-box">
+                                    <img src="" data="http://i1.go2yd.com/image.php?url=http://s.go2yd.com/b/id9xx2z4_3y00d1d1.jpg&amp;type=thumbnail_200x200" width="90">
+                                </div>
+                                <p>娱乐</p>
+                            </a>
+                            <button class="unsubscribe js-unsubscribe-btn">已订阅</button><button class="subscribe js-subscribe-btn">订阅</button>
+                        </li>
+                        <li data-fromid="c7" data-channelname="军事" data-channelid="17621791985" class="js-channel-subscribe-item subscribed">
+                            <a href="/channel/c7" target="_blank">
+                                <div class="channel-img-box">
+                                    <img src="" data="http://i1.go2yd.com/image.php?url=http://s.go2yd.com/b/icr98e88_7q00d1d1.jpg&amp;type=thumbnail_200x200" width="90">
+                                </div>
+                                <p>军事</p>
+                            </a>
+                            <button class="unsubscribe js-unsubscribe-btn">已订阅</button>
+                            <button class="subscribe js-subscribe-btn">订阅</button>
+                        </li>
+                        <li data-fromid="c2" data-channelname="体育" data-channelid="17621792001" class="js-channel-subscribe-item subscribed">
+                            <a href="/channel/c2" target="_blank">
+                                <div class="channel-img-box">
+                                    <img src="" data="http://i1.go2yd.com/image.php?url=http://s.go2yd.com/b/icrg5nas_3r0od1d1.jpg&amp;type=thumbnail_200x200" width="90">
+                                </div>
+                                <p>体育</p>
+                            </a>
+                            <button class="unsubscribe js-unsubscribe-btn">已订阅</button>
+                            <button class="subscribe js-subscribe-btn">订阅</button>
+                        </li>
+                        <li data-fromid="sc4" data-channelname="NBA" data-channelid="17621792017" class="js-channel-subscribe-item subscribed">
+                            <a href="/channel/sc4" target="_blank">
+                                <div class="channel-img-box">
+                                    <img src="" data="http://i1.go2yd.com/image.php?url=http://s.go2yd.com/b/icierynn_0x00d1d1.jpg&amp;type=thumbnail_200x200" width="90">
+                                </div>
+                                <p>NBA</p>
+                            </a>
+                            <button class="unsubscribe js-unsubscribe-btn">已订阅</button>
+                            <button class="subscribe js-subscribe-btn">订阅</button>
+                        </li>
+                        <li data-fromid="c5" data-channelname="财经" data-channelid="17621792033" class="js-channel-subscribe-item subscribed">
+                            <a href="/channel/c5" target="_blank">
+                                <div class="channel-img-box">
+                                    <img src="" data="http://i1.go2yd.com/image.php?url=http://s.go2yd.com/b/icr29o4j_a000d1d1.jpg&amp;type=thumbnail_200x200" width="90">
+                                </div>
+                                <p>财经</p>
+                            </a>
+                            <button class="unsubscribe js-unsubscribe-btn">已订阅</button>
+                            <button class="subscribe js-subscribe-btn">订阅</button>
+                        </li>
+                        <li data-fromid="c6" data-channelname="科技" data-channelid="17621792049" class="js-channel-subscribe-item subscribed">
+                            <a href="/channel/c6" target="_blank">
+                                <div class="channel-img-box">
+                                    <img src="" data="http://i1.go2yd.com/image.php?url=http://s.go2yd.com/b/icr65snw_7d01d1d1.jpg&amp;type=thumbnail_200x200" width="90">
+                                </div>
+                                <p>科技</p>
+                            </a>
+                            <button class="unsubscribe js-unsubscribe-btn">已订阅</button>
+                            <button class="subscribe js-subscribe-btn">订阅</button>
+                        </li>
+                        <li data-fromid="sc20" data-channelname="数码" data-channelid="17621793345" class="js-channel-subscribe-item subscribed">
+                            <a href="/channel/sc20" target="_blank">
+                                <div class="channel-img-box">
+                                    <img src="" data="http://i1.go2yd.com/image.php?url=http://s.go2yd.com/b/idgp7p8r_8100d1d1.jpg&amp;type=thumbnail_200x200" width="90">
+                                </div>
+                                <p>数码</p>
+                            </a>
+                            <button class="unsubscribe js-unsubscribe-btn">已订阅</button>
+                            <button class="subscribe js-subscribe-btn">订阅</button>
+                        </li>
+                        <li data-fromid="u241" data-channelname="美图" data-channelid="17621792081" class="js-channel-subscribe-item subscribed">
+                            <a href="/channel/u241" target="_blank">
+                                <div class="channel-img-box">
+                                    <img src="" data="http://i1.go2yd.com/image.php?url=http://s.go2yd.com/b/icwrp5iu_1g00d1d1.jpg&amp;type=thumbnail_200x200" width="90">
+                                </div>
+                                <p>美图</p>
+                            </a>
+                            <button class="unsubscribe js-unsubscribe-btn">已订阅</button>
+                            <button class="subscribe js-subscribe-btn">订阅</button>
+                        </li>
+                        <li data-fromid="c16" data-channelname="健康" data-channelid="17621792161" class="js-channel-subscribe-item subscribed">
+                            <a href="/channel/c16" target="_blank">
+                                <div class="channel-img-box">
+                                    <img src="" data="http://i1.go2yd.com/image.php?url=http://s.go2yd.com/b/icfy9zzs_8i00d1d1.jpg&amp;type=thumbnail_200x200" width="90">
+                                </div>
+                                <p>健康</p>
+                            </a>
+                            <button class="unsubscribe js-unsubscribe-btn">已订阅</button>
+                            <button class="subscribe js-subscribe-btn">订阅</button>
+                        </li>
+                        <li data-fromid="c15" data-channelname="时尚" data-channelid="17621792193" class="js-channel-subscribe-item subscribed">
+                            <a href="/channel/c15" target="_blank">
+                                <div class="channel-img-box">
+                                    <img src="" data="http://i1.go2yd.com/image.php?url=http://s.go2yd.com/b/icrgruix_7k00d1d1.jpg&amp;type=thumbnail_200x200" width="90">
+                                </div>
+                                <p>时尚</p>
+                            </a>
+                            <button class="unsubscribe js-unsubscribe-btn">已订阅</button>
+                            <button class="subscribe js-subscribe-btn">订阅</button>
+                        </li>
+                        <li data-fromid="s10671" data-channelname="搞笑" data-channelid="17621792289" class="js-channel-subscribe-item subscribed">
+                            <a href="/channel/s10671" target="_blank">
+                                <div class="channel-img-box">
+                                    <img src="" data="http://i1.go2yd.com/image.php?url=http://s.go2yd.com/b/icsul199_9800d1d1.jpg&amp;type=thumbnail_200x200" width="90">
+                                </div>
+                                <p>搞笑</p>
+                            </a>
+                            <button class="unsubscribe js-unsubscribe-btn">已订阅</button>
+                            <button class="subscribe js-subscribe-btn">订阅</button>
+                        </li>
+                        <li data-fromid="t19189" data-channelname="电台" data-channelid="17621792353" class="js-channel-subscribe-item subscribed">
+                            <a href="/channel/t19189" target="_blank">
+                                <div class="channel-img-box">
+                                    <img src="" data="http://i1.go2yd.com/image.php?url=http://s.go2yd.com/b/idpa6s58_0000d1d1.jpg&amp;type=thumbnail_200x200" width="90">
+                                </div>
+                                <p>电台</p>
+                            </a>
+                            <button class="unsubscribe js-unsubscribe-btn">已订阅</button>
+                            <button class="subscribe js-subscribe-btn">订阅</button>
+                        </li>
+                        <li data-fromid="c17" data-channelname="旅游" data-channelid="17621793521" class="js-channel-subscribe-item subscribed">
+                            <a href="/channel/c17" target="_blank">
+                                <div class="channel-img-box">
+                                    <img src="" data="http://i1.go2yd.com/image.php?url=http://s.go2yd.com/b/icre72ia_e90ud1d1.jpg&amp;type=thumbnail_200x200" width="90">
+                                </div>
+                                <p>旅游</p>
+                            </a>
+                            <button class="unsubscribe js-unsubscribe-btn">已订阅</button>
+                            <button class="subscribe js-subscribe-btn">订阅</button>
+                        </li>
+                    </ul>
+                    <div style="display:none" class="no-like">
+                        <img src="//staticimg.yidianzixun.com/modules/build/images/no_collection-80c23449.png">
+                        <p>暂无订阅，赶紧去看看吧</p>
+                    </div>
+                </div>
+                <div class="nav-show">
+                    <div style="display:block" class="no-like">
+                        <img src="//staticimg.yidianzixun.com/modules/build/images/no_collection-80c23449.png">
+                        <p>暂无@我的消息</p>
+                    </div>
+                </div>
+            </div>
+            <iframe id="avatar-iframe" name="avatar-iframe" class="hidden"></iframe>
+        </div>
+        <div class="footer-mini-wrapper">
+            <div class="footer-mini">
+                <p>
+                    <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010502033561">
+                        <span class="icon-jgw"></span>
+                        <span>京公网安备 11010502033561号</span>
+                    </a>
+                    <a href="http://static.yidianzixun.com/modules/docs/yidian_ypxxfw.pdf" target="_blank">互联网药品信息服务资格证书</a>
+                    <span>京网文[2015]0377-157号</span>
+                    <span>京ICP证140123号</span>
+                </p>
+                <p>
+                    <a href="mailto:tousu@yidian-inc.com">举报邮箱：tousu@yidian-inc.com</a>
+                    <span>公司名称：北京一点网聚科技有限公司</span>
+                </p>
+            </div>
+        </div>
+    
 
-
-
-{% endblock %} 
-{% block js %}
-<script data-main="index/index" src="/public/common/main.js"></script>
-{% endblock %}
+    
+    
+    <script src="/public/common/lib.js"></script>
+    <script data-main="profile/profile" src="/public/common/main.js"></script>
+</body>
+</html>
