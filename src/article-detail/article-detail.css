@@ -1,0 +1,554 @@
+.main {
+    width: 1080px;
+    margin: 0 auto;
+    margin-top: 90px;
+    position: relative;
+    color: #1d1d1d;
+}
+/*左侧*/
+.left-wrapper {
+    width: 650px;
+    float: left;
+    font-size: 17px;
+    position: relative;
+    top: -7px;
+}
+.left-wrapper h2 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 16px;
+    line-height: 1.5;
+}
+.meta {
+    width: 100%;
+    font-size: 14px;
+}
+.meta, .meta a.doc-source, .meta span {
+    display: inline-block;
+    color: #999;
+    line-height: 16px;
+}
+.meta a.doc-source, .meta span {
+    margin-right: 20px;
+}
+.meta .wm-copyright {
+    border: 1px solid #999;
+    padding: 0 2px;
+}
+.meta .wemedia-icon {
+    font-size: 45px;
+    color: #129aee;
+    vertical-align: -11px;
+    margin-left: -5px;
+}
+.share {
+    position: relative;
+    padding-right: 20px;
+    cursor: pointer;
+    height: 30px;
+}
+.share .icon-down {
+    position: absolute;
+    font-size: 12px;
+    line-height: 17px;
+    right: -20px;
+    top: 0;
+}
+.share-wrapper {
+    display: none;
+    position: absolute;
+    right: -25px;
+    top: 0;
+    height: 70px;
+}
+.share-list {
+    position: relative;
+    top: 22px;
+    width: 130px;
+    height: 40px;
+    text-align: center;
+    background: #fff;
+    border: 1px solid #f1f1f1;
+    border-radius: 10px;
+    padding-left: 15px;
+    z-index: 2;
+}
+.share-list .share-icon {
+    display: inline-block;
+    font-size: 25px;
+    margin-right: 15px;
+    line-height: 40px;
+}
+.share-list .share-icon.icon-weibo {
+    color: #fb673b;
+}
+.share-list .share-icon.icon-qzone {
+    color: #fdbc36;
+}
+.share-list .share-icon.icon-weixin {
+    color: #5ecb48;
+}
+.qrcode-wrapper {
+    display: none;
+    padding: 5px;
+    position: absolute;
+    top: 73px;
+    right: -40px;
+    z-index: 5;
+    background: #fff;
+    border: 1px solid #ececec;
+    border-radius: 2px;
+}
+.qrcode-wrapper .icon-up {
+    top: -10px;
+    border-top-right-radius: 40px;
+    color: #fff;
+}
+.qrcode-wrapper .icon-arrow-up, .qrcode-wrapper .icon-up {
+    position: absolute;
+    width: 10px;
+    right: 20px;
+    height: 10px;
+    font-size: 12px;
+}
+.qrcode-wrapper .icon-arrow-up, .qrcode-wrapper .icon-up {
+    position: absolute;
+    width: 10px;
+    right: 20px;
+    height: 10px;
+    font-size: 12px;
+}
+.qrcode-wrapper .icon-arrow-up {
+    top: -11px;
+    color: #ececec;
+}
+/*文章内容*/
+.content-bd {
+    text-align: justify;
+    padding-top: 10px;
+}
+.content-bd div, .content-bd p {
+    text-indent: 2em;
+    line-height: 1.8;
+    margin: 20px 0;
+}
+#imedia-article {
+    text-align: justify;
+}
+.content-bd div, .content-bd p {
+    text-indent: 2em;
+    line-height: 1.8;
+    margin: 20px 0;
+}
+.content-bd .a-image img {
+    max-width: 100%;
+    display: block;
+    margin: 0 auto 20px;
+    background: #e6e6e6 url(http://static.yidianzixun.com/apps/black_mamba_web_v1.0.0.177/black_mamba_web_main_pic_placeholder.png) no-repeat 50%;
+}
+.content-bd img {
+    max-width: 100%;
+    display: block;
+    margin: 0 auto 20px;
+    background: #e6e6e6 url(http://static.yidianzixun.com/apps/black_mamba_web_v1.0.0.177/black_mamba_web_main_pic_placeholder.png) no-repeat 50%;
+}
+.content-bd a {
+    font-size: 17px;
+    color: #129aee;
+}
+/*收藏投诉*/
+.interact {
+    width: 100%;
+    text-align: right;
+}
+.interact a {
+    color: #999;
+    font-size: 14px;
+}
+.interact .line {
+    width: 10px;
+    height: 14px;
+    display: inline-block;
+    vertical-align: middle;
+    border-right: 1px solid #d3d3d3;
+    margin-right: 10px;
+}
+/*评论*/
+.hd-comment {
+    display: inline-block;
+    width: 100%;
+    margin-top: 40px;
+}
+.hd-comment img {
+    float: left;
+    width: 42px;
+    height: 42px;
+    border-radius: 100%;
+    margin-right: 25px;
+}
+.hd-comment textarea {
+    width: 540px;
+    height: 95px;
+    padding: 10px 20px;
+    border: 1px solid #ddd;
+    float: right;
+    resize: none;
+    font-size: 14px;
+    overflow: hidden;
+}
+.hd-comment a.add-comment-btn {
+    float: right;
+    width: 90px;
+    height: 32px;
+    line-height: 32px;
+    background: #0098f1;
+    color: #fff;
+    text-align: center;
+    border-radius: 3px;
+    margin-top: 20px;
+}
+.comments h5 {
+    font-size: 14px;
+    line-height: 14px;
+    position: relative;
+    margin: 15px 0;
+}
+.comments h5 span {
+    background: #fff;
+    position: relative;
+    z-index: 2;
+    padding-right: 10px;
+}
+.comments h5 p {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 6px;
+    border-bottom: 1px solid #d3d3d3;
+}
+.comments-list {
+    font-size: 14px;
+}
+.comments-list li {
+    padding: 15px 0;
+    display: inline-block;
+    width: 100%;
+    border-bottom: 1px solid #f0f0f0;
+}
+.comments-list li img {
+    float: left;
+    width: 42px;
+    height: 42px;
+    border-radius: 100%;
+    margin-right: 25px;
+}
+.comments-list li .comment-box, .comments-list li p {
+    float: left;
+    width: 583px;
+}
+.reply-lists {
+    float: right;
+    width: 553px;
+    background: #f9f9f9;
+    color: #666;
+    padding: 15px;
+    margin-top: 15px;
+    position: relative;
+}
+.reply-lists span.arrow-up {
+    position: absolute;
+    left: 15px;
+    top: -14px;
+    font-size: 16px;
+    color: #f9f9f9;
+}
+.reply-lists div {
+    margin-bottom: 5px;
+}
+.ft_blue {
+    color: #275fbd;
+}
+.reply-lists .can_reply {
+    cursor: pointer;
+}
+
+
+.comment-nickname {
+    color: #275fbd;
+    margin-right: 10px;
+}
+.comment-date {
+    font-size: 12px;
+    color: #999;
+}
+.comment-delete, .comment-like, .comment-reply {
+    color: #999;
+}
+.comments-list li p {
+    margin-top: 10px;
+    margin-bottom: 0px;
+    font-size: 15px;
+    word-wrap: break-word;
+}
+.no-comment {
+    display: none;
+    width: 100%;
+    height: 160px;
+    text-align: center;
+    font-size: 14px;
+    color: #68a4f0;
+}
+.error-get-comments, .more-comments, .no-more-comments {
+    display: none;
+    width: 100%;
+    text-align: center;
+    line-height: 40px;
+    font-size: 14px;
+    color: #999;
+}
+.more-comments span {
+    font-size: 13px;
+    font-weight: 700;
+    margin-left: 3px;
+}
+.error-get-comments {
+    color: #68a4f0;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+/*右侧*/
+.right-wrapper {
+    width: 350px;
+    float: right;
+}
+.wemedia-wrapper {
+    width: 190px;
+    background: #fbfbfb;
+    padding: 30px 80px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.wemedia-wrapper .wemedia-image-box {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+.wemedia-wrapper img {
+    width: 77px;
+    height: 77px;
+    border-radius: 100%;
+    border: 1px solid #eee;
+}
+.wemedia-wrapper .wemedia-name {
+    font-size: 18px;
+    color: #1d1d1d;
+    font-weight: 700;
+    width: 100%;
+    display: inline-block;
+}
+.wemedia-wrapper .wemedia-summary {
+    font-size: 13px;
+    color: #999;
+    margin: 13px 0 25px;
+    line-height: 1.4;
+}
+.wemedia-wrapper .wemedia-summary.hide-summary {
+    max-height: 54px;
+    overflow: hidden;
+    -webkit-line-clamp: 3;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+}
+.wemedia-wrapper .wemedia-subscribe {
+    color: #fff;
+    background: #0098f1;
+    font-size: 16px;
+    height: 37px;
+    line-height: 36px;
+    padding: 0 17px 0 38px;
+    border-radius: 20px;
+    display: inline-block;
+    position: relative;
+}
+.wemedia-wrapper .wemedia-subscribe i {
+    font-style: normal;
+    font-size: 26px;
+    position: absolute;
+    left: 14px;
+    top: -1px;
+}
+.doc-channel-wrapper, .related-docs-wrapper {
+    width: 100%;
+    background: #fbfbfb;
+    padding: 25px 0 0;
+    margin-bottom: 20px;
+    color: #1d1d1d;
+    font-size: 14px;
+}
+.related-docs-wrapper {
+    display: none;
+}
+.doc-channel-wrapper h5, .related-docs-wrapper h5 {
+    font-size: 18px;
+    line-height: 18px;
+    font-weight: 700;
+    border-left: 5px solid #129aee;
+    padding-left: 25px;
+}
+.related-docs-list {
+    padding: 15px 30px;
+}
+.related-docs-list li {
+    border-bottom: 1px solid #ececec;
+    padding: 10px 0;
+}
+.related-docs-list h3 {
+    max-height: 46px;
+    overflow: hidden;
+}
+.related-docs-list h3 a {
+    font-size: 16px;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    -webkit-transition: color .5s;
+    transition: color .5s;
+}
+.related-docs-list h3 a:visited {
+    color: #999;
+}
+.related-docs-list p {
+    color: #999;
+    margin-top: 3px;
+}
+.widget-hot-channel {
+    width: 100%;
+    background: #fbfbfb;
+    padding: 25px 0 0;
+    margin-bottom: 20px;
+    color: #1d1d1d;
+    font-size: 14px;
+}
+.widget-hot-channel h5 {
+    font-size: 18px;
+    line-height: 18px;
+    font-weight: 700;
+    border-left: 5px solid #129aee;
+    padding-left: 25px;
+}
+.related-channels-list {
+    padding: 10px;
+}
+.related-channels-list li {
+    width: 78px;
+    display: inline-block;
+    margin: 15px 14px 15px 15px;
+    text-align: center;
+}
+.related-channels-list li a {
+    font-size: 16px;
+    display: inline-block;
+}
+.related-channels-list li img {
+    width: 67px;
+    height: 67px;
+}
+.related-channels-list li p {
+    margin: 8px 0 3px;
+    width: 78px;
+    height: 24px;
+    overflow: hidden;
+    display: block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: center;
+}
+.related-channels-list li .related-channels-subscribe {
+    width: 67px;
+    height: 29px;
+    line-height: 29px;
+    text-align: center;
+    font-size: 14px;
+    color: #129aee;
+    border: 1px solid #ececec;
+    border-radius: 15px;
+    float: left;
+    margin-left: 5px;
+}
+.related-channels-list li .subscribe {
+    display: block;
+}
+
+
+
+
+
+
+/*底部*/
+.footer-mini-wrapper {
+    width: 100%;
+    display: inline-block;
+    margin: 90px 0 20px;
+}
+.footer-mini-wrapper .footer-mini {
+    width: 1080px;
+    margin: 0 auto;
+    text-align: center;
+}
+.footer-mini-wrapper .footer-mini a, .footer-mini-wrapper .footer-mini span {
+    display: inline-block;
+    color: #999;
+    font-size: 13px;
+    margin-right: 10px;
+}
+.footer-mini-wrapper .footer-mini a, .footer-mini-wrapper .footer-mini span {
+    display: inline-block;
+    color: #999;
+    font-size: 13px;
+    margin-right: 10px;
+}
+.footer-mini-wrapper .footer-mini .icon-jgw {
+    width: 20px;
+    height: 29px;
+    margin-right: 5px;
+    background: url(//staticimg.yidianzixun.com/modules/build/images/jgw_icon-d0289dc0.jpg) no-repeat 50%;
+    vertical-align: middle;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -230,6 +230,10 @@ a, button {
     display: none;
     padding-top: 5px;
 }
+.header-mini .user-info-box .user-info-menu{
+    padding-top: 15px;
+    top:30px;
+}
 .header-channel-nav .user-info-box .user-info-menu a, .header-mini .user-info-box .user-info-menu a, .header-search .user-info-box .user-info-menu a, .header-top .user-info-box .user-info-menu a {
     display: block;
     color: #222;
@@ -1128,8 +1132,42 @@ element.style {
     margin: 15px 0;
 }
 
-
-
+/*工具栏*/
+.widget-tool {
+    position: fixed;
+    left: 50%;
+    bottom: 30px;
+    margin-left: 655px;
+    overflow: visible;
+}
+.widget-tool .item {
+    width: 44px;
+    height: 44px;
+    background: no-repeat 50%;
+    margin-bottom: 7px;
+    font-size: 44px;
+    line-height: 44px;
+}
+.widget-tool>.icon {
+    font-size: 19px;
+    color: #fff;
+    line-height: 44px;
+    text-align: center;
+    background: #e4e4e4;
+    border-radius: 100%;
+}
+.anim {
+    -webkit-transition: all .2s;
+    transition: all .2s;
+}
+.widget-tool .item.back-up {
+    font-size: 17px;
+    cursor: pointer;
+    line-height: 46px;
+    padding-left: 1px;
+    width: 43px;
+    opacity: 0;
+}
 
 /*字体图标*/
 
@@ -1188,37 +1226,11 @@ element.style {
 //   .icon-4:before { content: "\e604"; }
   
 //   .icon-52:before { content: "\e687"; }
-
-/*首页文章样式*/
-.post-index {
-    overflow: hidden;
+.icon-arrow-down, .icon-arrow-up, .icon-back-up, .icon-down, .icon-qrcode, .icon-refresh, .icon-search {
+    font-weight: 700;
 }
 
 
-/*文章详情*/
-.post-single {
-    width: 780px;
-    max-width: 95%;
-    margin: auto;
-}
-
-#singular-content {
-    margin: 12px 0;
-    padding: 40px;
-    background: #fff;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-}
-
-.post-single article {
-    margin: 0;
-    padding: 0;
-    display: block;
-}
-
-.post-single .entry-header h1 {
-    font-size: 24px;
-    margin-bottom: 24px;
-}
   
   
 

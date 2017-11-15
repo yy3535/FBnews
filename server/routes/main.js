@@ -52,18 +52,21 @@ router.get('/', (req, res, next) => {
             return  item;
         });
        
+        //console.log(user);
+
         res.render('index',{
             //articles:articles
             articles:articles,
             user: req.session.user
         });
+
     })
    
     
     request('http://www.jd.com', function (error, response, body) {
         if (!error && response.statusCode == 200) {
             $ = cheerio.load(body);
-            console.log($('.cate_menu_item').length);
+            //console.log($('.cate_menu_item').length);
             // res.json({
             //     cat: $('.cate_menu_item').length
             // });
@@ -130,6 +133,7 @@ router.get('/article/detail/:id', (req, res, next) => {
     //成功一定会进入then函数
     //失败一定会进入catch函数
     //promise写法
+    console.log(id);
     Article.findById(id).then(article=>{
         res.render('article-details',{
             article
@@ -223,6 +227,10 @@ router.get('/article/list',(req,res,next)=>{
  */
 router.get('/logout',(req, res, next) => {
     req.session.user=null;
+    
+    
+    
+    res.redirect(req.headers['referer']);
 });
 
 module.exports=router;

@@ -142,4 +142,16 @@ $(".user-info, .user-info-menu").on('mouseenter',function(){
 $(".user-info, .user-info-menu").on('mouseleave',function(){
     $(".user-info-menu").css('display','none');
 })
+//返回顶部工具条
+$(".icon-back-up").on('click',function(){
+    $(window).scrollTop(0);
+})
+$(window).scroll(function(){
+    if($(window).scrollTop()>=600){
+        $(".icon-back-up").css("opacity",1);
+    }
+    if($(window).scrollTop()<600){
+        $(".icon-back-up").css("opacity",0);
+    }
+})
 

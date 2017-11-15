@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}个人中心{% endblock%}</title>
+    {% if !isDev %}
+    <link rel="stylesheet" href="/public/css/lib.css">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    {% endif %}
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_464243_nc8ojtwp1fpnl8fr.css">
+</head>
+<body>
+    
+    <div class="header-channel-nav header-mini login">
+        <div class="content">
+            <a href="/" class="logo float-left anim iconfont icon-logo"></a>
+            <div class="float-right header-links anim">
+                <div class="icon-search btn-search iconfont"></div>
+                <div class="suggestion-search-box">
+                    <input placeholder="大家都在搜:言承旭林志玲复合" value="言承旭林志玲复合" class="input input-search" data-placeholder="大家都在搜:言承旭林志玲复合">
+                    <div class="suggestion hot-search-suggestion">
+                        <div class="inner-block-box">
+                            <a class="item item-1" href="/channel/w/言承旭林志玲复合?searchword=%E8%A8%80%E6%89%BF%E6%97%AD%E6%9E%97%E5%BF%97%E7%8E%B2%E5%A4%8D%E5%90%88">
+                                <div class="float-left index icon iconfont icon-1"></div>
+                                <div class="item-content">
+                                <div class="hot-search-word">言承旭林志玲复合</div>
+                                </div>
+                            </a>
+                            
+                            <a class="item item-2" href="/channel/w/马蓉现身机场?searchword=%E9%A9%AC%E8%93%89%E7%8E%B0%E8%BA%AB%E6%9C%BA%E5%9C%BA">
+                                <div class="float-left index icon iconfont icon-2"></div>
+                                <div class="item-content">
+                                <div class="hot-search-word">马蓉现身机场</div>
+                                </div>
+                            </a>
+                            
+                            <a class="item item-3" href="/channel/w/双11成交额?searchword=%E5%8F%8C11%E6%88%90%E4%BA%A4%E9%A2%9D">
+                                <div class="float-left index icon iconfont icon-3"></div>
+                                <div class="item-content">
+                                <div class="hot-search-word">双11成交额</div>
+                                </div>
+                            </a>
+                            
+                            <a class="item item-4" href="/channel/w/10万瓶假减肥药?searchword=10%E4%B8%87%E7%93%B6%E5%81%87%E5%87%8F%E8%82%A5%E8%8D%AF">
+                                <div class="float-left index icon iconfont icon-4"></div>
+                                <div class="item-content">
+                                <div class="hot-search-word">10万瓶假减肥药</div>
+                                </div>
+                            </a>
+                            
+                            <a class="item item-5" href="/channel/w/阿娇晒男友照?searchword=%E9%98%BF%E5%A8%87%E6%99%92%E7%94%B7%E5%8F%8B%E7%85%A7">
+                                <div class="float-left index icon iconfont icon-5"></div>
+                                <div class="item-content">
+                                <div class="hot-search-word">阿娇晒男友照</div>
+                                </div>
+                            </a>
+                            
+                            <a class="item item-6" href="/channel/w/孙红雷吓哭阿拉蕾?searchword=%E5%AD%99%E7%BA%A2%E9%9B%B7%E5%90%93%E5%93%AD%E9%98%BF%E6%8B%89%E8%95%BE">
+                                <div class="float-left index icon iconfont icon-6"></div>
+                                <div class="item-content">
+                                <div class="hot-search-word">孙红雷吓哭阿拉蕾</div>
+                                </div>
+                            </a>
+                            
+                            <a class="item item-7" href="/channel/w/亲子园虐童新视频?searchword=%E4%BA%B2%E5%AD%90%E5%9B%AD%E8%99%90%E7%AB%A5%E6%96%B0%E8%A7%86%E9%A2%91">
+                                <div class="float-left index icon iconfont icon-7"></div>
+                                <div class="item-content">
+                                <div class="hot-search-word">亲子园虐童新视频</div>
+                                </div>
+                            </a>
+                            
+                            <a class="item item-8" href="/channel/w/郑州破古墓被盗案?searchword=%E9%83%91%E5%B7%9E%E7%A0%B4%E5%8F%A4%E5%A2%93%E8%A2%AB%E7%9B%97%E6%A1%88">
+                                <div class="float-left index icon iconfont icon-8"></div>
+                                <div class="item-content">
+                                <div class="hot-search-word">郑州破古墓被盗案</div>
+                                </div>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+                <a href="http://mp.yidianzixun.com/" class="link link-ydhao">一点号</a>
+                {% if user === 'null' %}
+                    <button class="btn btn-login js-to-login">登录</button>
+                {% else %}
+                    <div class="user-info-box">
+                        <a href="/profile" class="user-info">
+                            <img src="http://s.go2yd.com/a/head_shatannan.png" class="profile">
+                            <span class="nickname">{{user.username}}</span>
+                            <span class="iconfont icon-down1"></span>
+                        </a>
+                        <div class="user-info-menu" style="display: none;">
+                            <a href="/profile">个人中心</a>
+                            <a href="/channellist">添加频道</a>
+                            <a href="/logout" class="logout-btn">退出</a>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="channel-nav">
+                <div class="down iconfont icon-arrow-down"></div>
+                <div class="list">
+                        <a data-index="0" href="/" data-channelid="best" class="item active">首页</a>
+                        <a data-index="0" href="/" data-channelid="best" class="item">要闻</a>
+                        <a data-index="0" href="/" data-channelid="best" class="item">一点号</a>
+                        <a data-index="0" href="/" data-channelid="best" class="item">视频</a>
+                        <a data-index="0" href="/" data-channelid="best" class="item">段子</a>
+                        <a data-index="0" href="/" data-channelid="best" class="item">汽车</a>
+                        <a data-index="0" href="/" data-channelid="best" class="item">社会</a>
+                        <a data-index="0" href="/" data-channelid="best" class="item">娱乐</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main">
+        {% block content %} {% endblock%}
+    </div>
+    <div class="footer-mini-wrapper">
+        <div class="footer-mini">
+            <p>
+                <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010502033561">
+                    <span class="icon-jgw"></span>
+                    <span>京公网安备 11010502033561号</span>
+                </a>
+                <a href="http://static.yidianzixun.com/modules/docs/yidian_ypxxfw.pdf" target="_blank">互联网药品信息服务资格证书</a>
+                <span>京网文[2015]0377-157号</span>
+                <span>京ICP证140123号</span>
+            </p>
+            <p>
+                <a href="mailto:tousu@yidian-inc.com">举报邮箱：tousu@yidian-inc.com</a>
+                <span>公司名称：北京一点网聚科技有限公司</span>
+            </p>
+        </div>
+    </div>
+    <div class="mask" style="display: none;"></div>
+    
+    <div class="dialog login-register-dialog login-dialog" style="display: none;">
+        <div class="close iconfont icon-close48"></div>
+        <div class="logo iconfont icon-logo"></div>
+        <form class="login-form">
+            <div class="input-box input-username-box">
+            <input type="text" class="input-username" name="username" placeholder="手机号/邮箱">
+            </div>
+            <div class="input-box input-password-box">
+            <input type="password" class="input-password" name="psw" placeholder="密码">
+            </div>
+            <p class="error-msg"></p>
+            <button type="submit" class="btn-login">登录</button>
+            <button type="button" class="btn-has-border btn-register">注册</button>
+        </form>
+        <p class="link-wrapper">
+            <a class="to-login-mobile">手机快捷登录</a>
+            <a class="forget-psw">忘记密码</a>
+        </p><p>
+        
+        </p><hr>
+        <p class="third-party-title">第三方平台登录</p>
+        <div class="third-party-box">
+            <a class="iconfont icon-weibo" href="https://api.weibo.com/oauth2/authorize?client_id=1290308714&amp;redirect_uri=http%3A%2F%2Fwww.yidianzixun.com%2Fhome%3Fpage%3Dindex-weibo%26callback%3Dhttp%253A%252F%252Fwww.yidianzixun.com%252Fchannel%252Fc3" target="_blank"></a>
+            <a class="iconfont icon-QQ1" href="https://graph.qq.com/oauth2.0/authorize?response_type=code&amp;client_id=100468103&amp;state=yidian&amp;redirect_uri=http%3A%2F%2Fwww.yidianzixun.com%2Fhome%3Fpage%3Dindex-qq%26callback%3Dhttp%253A%252F%252Fwww.yidianzixun.com%252Fchannel%252Fc3" target="_blank"></a>
+            <a class="iconfont icon-weixin" href="https://open.weixin.qq.com/connect/qrconnect?appid=wx9a0b25d53c37ed77&amp;redirect_uri=http%3A%2F%2Fwww.yidianzixun.com%2Fhome%3Fpage%3Dindex-weixin%26callback%3Dhttp%253A%252F%252Fwww.yidianzixun.com%252Fchannel%252Fc3&amp;response_type=code&amp;scope=snsapi_login&amp;state=12345#wechat_redirect" target="_blank"></a>
+            <a class="iconfont icon-mi" href="https://account.xiaomi.com/oauth2/authorize?client_id=2882303761517118382&amp;response_type=code&amp;redirect_uri=http%3A%2F%2Fwww.yidianzixun.com%2Fhome%3Fpage%3Dindex-xiaomi%26callback%3Dhttp%253A%252F%252Fwww.yidianzixun.com%252Fchannel%252Fc3" target="_blank"></a>
+        </div>
+    </div>
+    <div class="dialog login-register-dialog email-register-dialog" style="display: none;">
+        <div class="close iconfont icon-close"></div>
+        <div class="logo iconfont icon-logo"></div>
+        <form class="email-register-form">
+            <div class="input-box input-email-box">
+            <input type="text" class="input-email" name="email" placeholder="请输入邮箱账号">
+            </div>
+            <div class="input-box input-password-box">
+            <input type="password" class="input-password" name="psw" placeholder="请输入密码">
+            <span class="iconfont icon-see"></span>
+            </div>
+            <div class="input-box input-image-verification-code-box">
+            <input type="text" class="input-image-verification-code" name="verification-code" placeholder="请输入验证码">
+            <div class="verification-code">
+                <!-- <img src="/captcha"> -->
+            </div>
+            </div>
+            <p class="error-msg"></p>
+            <button type="submit" class="btn-register">注册</button>
+        </form>
+        <p class="declare">点击注册按钮，即表示你同意<a href="http://www.yidianzixun.com/landing_agreement" target="_blank">《一点资讯用户协议》</a></p>
+        <p class="link-wrapper">
+            <a class="link to-phone-register">使用手机号注册</a>
+            <a class="link to-login">已有账号</a>
+        </p>
+    </div>
+    <div class="widget-tool">
+        <div class="item refresh icon iconfont icon-refresh anim"></div>
+        <div class="item qrcode icon iconfont icon-qrcode anim"></div>
+        <div class="item back-up anim icon iconfont icon-back-up anim"></div>
+        <div class="qrcode-download anim">
+            <span class="qrcode iconfont icon-qrcode-detail"></span>
+            <p>扫描二维码</p>
+            <p>下载<a href="//download.yidianzixun.com">一点资讯</a></p>
+        </div>
+    </div>
+    <script src="/public/common/lib.js"></script>
+    {% block js %} {% endblock%}
+</body>
+</html>
