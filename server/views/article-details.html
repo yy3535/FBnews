@@ -2,6 +2,10 @@
 {% extends './layout2.html' %} 
 {% block title %} 【一点资讯】{{article.title}} {% endblock %} 
 {% block content%}
+<script>
+var userId="{{user._id}}";
+var articleId="{{article.id}}";
+</script>
 <div class="main">
     <div class="left-wrapper">
         <h2>{{article.title}}</h2>
@@ -45,6 +49,22 @@
             <a href="javascript:;" class="article-complain">投诉</a>
         </div>
         <div class="comments">
+            
+            <!--畅言评论框 -->
+            <div id="SOHUCS" sid="请将此处替换为配置SourceID的语句"></div>
+            <script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
+            <script type="text/javascript">
+            window.changyan.api.config({
+            appid: 'cytk6HpVa',
+            conf: 'prod_f602436fe4ba0599d1d075712563d917'
+            });
+            </script> 
+            <!--畅言评论框end -->
+            <!--友言评论框-->
+            <!-- UY BEGIN -->
+            <div id="uyan_frame"></div>
+            <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2149259"></script>
+            <!--友言评论框end-->
             <div class="hd-comment">
                 <img src="http://si1.go2yd.com/get-image/0IIM917KRcm">
                 <textarea placeholder="发表你的精彩评论" class="comment-input"></textarea>
@@ -52,440 +72,23 @@
             </div>
             <h5><span>最新评论</span><p></p></h5>
             <ul class="comments-list">
-    
+                {% for comment in article.comments %}
+
                 <li data-id="ozfopy-htlzavb">
                     <img src="http://fs.uc.nearme.com.cn/userImg/807/516/702/207615708.jpg">
                     <div class="comment-box">
-                    <span class="comment-nickname">正宗小伙子</span>
-                    <span class="comment-date">3分钟前</span>
+                    <span class="comment-nickname">{{comment.username}}</span>
+                    <span class="comment-date">{{comment.duration}}</span>
                     
                         <a href="javascript:;" class="float-right comment-reply">回复</a>
                         <a href="javascript:;" class="float-right comment-like ">0 赞</a>
                     
                     </div>
-                    <p>以后拍照拼命站中间</p>
+                    <p>{{comment.body}}</p>
                     
                 </li>
                 
-                <li data-id="ozfopg-l2u83tb">
-                    <img src="http://s.go2yd.com/a/thead_shatannan.png">
-                    <div class="comment-box">
-                    <span class="comment-nickname">U172869113</span>
-                    <span class="comment-date">3分钟前</span>
-                    
-                        <a href="javascript:;" class="float-right comment-reply">回复</a>
-                        <a href="javascript:;" class="float-right comment-like ">0 赞</a>
-                    
-                    </div>
-                    <p>不然努力的意义何在。</p>
-                    
-                </li>
-                
-                <li data-id="ozfoo1-kwqakyb">
-                    <img src="http://s.go2yd.com/a/thead_bajie.png">
-                    <div class="comment-box">
-                    <span class="comment-nickname">U110877635</span>
-                    <span class="comment-date">4分钟前</span>
-                    
-                        <a href="javascript:;" class="float-right comment-reply">回复</a>
-                        <a href="javascript:;" class="float-right comment-like ">0 赞</a>
-                    
-                    </div>
-                    <p>朋友悄悄告诉我，以后不要站在大个儿旁边合影</p>
-                    
-                </li>
-                
-                <li data-id="ozfojt-gn9n3tb">
-                    <img src="http://s.go2yd.com/a/thead_shatannan.png">
-                    <div class="comment-box">
-                    <span class="comment-nickname">U27885971</span>
-                    <span class="comment-date">7分钟前</span>
-                    
-                        <a href="javascript:;" class="float-right comment-reply">回复</a>
-                        <a href="javascript:;" class="float-right comment-like ">0 赞</a>
-                    
-                    </div>
-                    <p>妒世愤俗的都有心理问题，包括我自己</p>
-                    
-                </li>
-                
-                <li data-id="ozfohx-hv1yw2b">
-                    <img src="http://s.go2yd.com/a/thead_bajie.png">
-                    <div class="comment-box">
-                    <span class="comment-nickname">U24821828</span>
-                    <span class="comment-date">8分钟前</span>
-                    
-                        <a href="javascript:;" class="float-right comment-reply">回复</a>
-                        <a href="javascript:;" class="float-right comment-like ">0 赞</a>
-                    
-                    </div>
-                    <p>有钱就是爹</p>
-                    
-                </li>
-                
-                <li data-id="ozfo5y0x2ud9">
-                    <img src="http://s.go2yd.com/a/thead_xiongmao.png">
-                    <div class="comment-box">
-                    <span class="comment-nickname">大鹿站在房子里</span>
-                    <span class="comment-date">15分钟前</span>
-                    
-                        <a href="javascript:;" class="float-right comment-reply">回复</a>
-                        <a href="javascript:;" class="float-right comment-like ">1 赞</a>
-                    
-                    </div>
-                    <p>上学时都是班主任站中间，因为班主任最有钱！！！</p>
-                    
-                </li>
-                
-                <li data-id="ozfnza97hirw">
-                    <img src="http://i1.go2yd.com/image.php?url=http%3A%2F%2Fsi1.go2yd.com%2Fget-image%2Fh3rd%2F0DTqlTQh9kG&amp;type=_120x120">
-                    <div class="comment-box">
-                    <span class="comment-nickname">🔥</span>
-                    <span class="comment-date">19分钟前</span>
-                    
-                        <a href="javascript:;" class="float-right comment-reply">回复</a>
-                        <a href="javascript:;" class="float-right comment-like ">0 赞</a>
-                    
-                    </div>
-                    <p>不这样怎么给那些人鸡汤</p>
-                    
-                </li>
-                
-                <li data-id="ozfnx2-j2zo64b">
-                    <img src="http://s.go2yd.com/a/thead_bainiangzi.png">
-                    <div class="comment-box">
-                    <span class="comment-nickname">U129629217</span>
-                    <span class="comment-date">20分钟前</span>
-                    
-                        <a href="javascript:;" class="float-right comment-reply">回复</a>
-                        <a href="javascript:;" class="float-right comment-like ">0 赞</a>
-                    
-                    </div>
-                    <p>有钱什么懒觉事都能成</p>
-                    
-                </li>
-                
-                <li data-id="ozfnf59nei01">
-                    <img src="http://s.go2yd.com/a/thead_boshi.png">
-                    <div class="comment-box">
-                    <span class="comment-nickname">中野环</span>
-                    <span class="comment-date">31分钟前</span>
-                    
-                        <a href="javascript:;" class="float-right comment-reply">回复</a>
-                        <a href="javascript:;" class="float-right comment-like ">2 赞</a>
-                    
-                    </div>
-                    <p>一白遮三丑，一高遮五丑，一富遮所有    所以以后不要再期待大海带走你们的矮丑了，在KTV使劲唱也没用  兄弟们</p>
-                    
-                </li>
-                
-                <li data-id="ozfndw-hw1a0lb">
-                    <img src="http://i1.go2yd.com/image.php?url=http%3A%2F%2Fsi1.go2yd.com%2Fget-image%2Fh3rd%2F0HdLa5f8Ts8&amp;type=_120x120">
-                    <div class="comment-box">
-                    <span class="comment-nickname">祖国威武</span>
-                    <span class="comment-date">32分钟前</span>
-                    
-                        <a href="javascript:;" class="float-right comment-reply">回复</a>
-                        <a href="javascript:;" class="float-right comment-like ">0 赞</a>
-                    
-                    </div>
-                    <p>神经</p>
-                    
-                </li>
-                
-                <li data-id="ozfnah-m7cen2b">
-                    <img src="http://s.go2yd.com/a/thead_meiguoduizhang.png">
-                    <div class="comment-box">
-                    <span class="comment-nickname">U210736992</span>
-                    <span class="comment-date">34分钟前</span>
-                    
-                        <a href="javascript:;" class="float-right comment-reply">回复</a>
-                        <a href="javascript:;" class="float-right comment-like ">0 赞</a>
-                    
-                    </div>
-                    <p>干笑,人生</p>
-                    
-                </li>
-                
-                <li data-id="ozfn8l-m7cen2b">
-                    <img src="http://s.go2yd.com/a/thead_meiguoduizhang.png">
-                    <div class="comment-box">
-                    <span class="comment-nickname">U210736992</span>
-                    <span class="comment-date">35分钟前</span>
-                    
-                        <a href="javascript:;" class="float-right comment-reply">回复</a>
-                        <a href="javascript:;" class="float-right comment-like ">0 赞</a>
-                    
-                    </div>
-                    <p>马云，不出点声救助穷人</p>
-                    
-                </li>
-                
-                <li data-id="ozfmxl-kc0yi2b">
-                    <img src="http://s.go2yd.com/a/thead_haizeiwang.png">
-                    <div class="comment-box">
-                    <span class="comment-nickname">U154682327</span>
-                    <span class="comment-date">42分钟前</span>
-                    
-                        <a href="javascript:;" class="float-right comment-reply">回复</a>
-                        <a href="javascript:;" class="float-right comment-like ">1 赞</a>
-                    
-                    </div>
-                    <p>这和现实有什么关系，这叫价值</p>
-                    
-                </li>
-                
-                <li data-id="ozfmwm-lomsz2b">
-                    <img src="http://s.go2yd.com/a/thead_bajie.png">
-                    <div class="comment-box">
-                    <span class="comment-nickname">U203460851</span>
-                    <span class="comment-date">42分钟前</span>
-                    
-                        <a href="javascript:;" class="float-right comment-reply">回复</a>
-                        <a href="javascript:;" class="float-right comment-like ">0 赞</a>
-                    
-                    </div>
-                    <p>以前克刚</p>
-                    
-                </li>
-                
-                <li data-id="ozfmmt0o224y">
-                    <img src="http://i1.go2yd.com/avatar/group2/M00/F3/66/CmcRJ1jObtyAUYDZAACBcm5txn82504452.jpg?compress=7&amp;size=120x120">
-                    <div class="comment-box">
-                    <span class="comment-nickname">红尘悟道</span>
-                    <span class="comment-date">48分钟前</span>
-                    
-                        <a href="javascript:;" class="float-right comment-reply">回复</a>
-                        <a href="javascript:;" class="float-right comment-like ">0 赞</a>
-                    
-                    </div>
-                    <p>马云不占中间谁站，在村里一个小小的村长都能翻了天，何况是小马</p>
-                    
-                </li>
-                
-                <li data-id="ozfmdw36k0wy">
-                    <img src="http://s.go2yd.com/a/thead_meiguoduizhang.png">
-                    <div class="comment-box">
-                    <span class="comment-nickname">颛孙有</span>
-                    <span class="comment-date">54分钟前</span>
-                    
-                        <a href="javascript:;" class="float-right comment-reply">回复</a>
-                        <a href="javascript:;" class="float-right comment-like ">1 赞</a>
-                    
-                    </div>
-                    <p>马云没有我有钱，梦想总是要有的，万一实现了呢</p>
-                    
-                </li>
-                
-                <li data-id="ozfma9-js61omb">
-                    <img src="http://s.go2yd.com/a/thead_meiguoduizhang.png">
-                    <div class="comment-box">
-                    <span class="comment-nickname">U143338838</span>
-                    <span class="comment-date">56分钟前</span>
-                    
-                        <a href="javascript:;" class="float-right comment-reply">回复</a>
-                        <a href="javascript:;" class="float-right comment-like ">0 赞</a>
-                    
-                    </div>
-                    <p>有钱人拉的屎都是香的</p>
-                    
-                </li>
-                
-                <li data-id="ozfm9h-iozwaeb">
-                    <img src="http://i1.go2yd.com/image.php?url=http%3A%2F%2Fsi1.go2yd.com%2Fget-image%2Fh3rd%2F0IJntqYv7mi&amp;type=_120x120">
-                    <div class="comment-box">
-                    <span class="comment-nickname">心安散热器</span>
-                    <span class="comment-date">56分钟前</span>
-                    
-                        <a href="javascript:;" class="float-right comment-reply">回复</a>
-                        <a href="javascript:;" class="float-right comment-like ">2 赞</a>
-                    
-                    </div>
-                    <p>社会的价值观就是被这种无知小编们给弄坏了</p>
-                    
-                    <div class="reply-lists">
-                        <span class="arrow-up iconfont icon-up"></span>
-                    
-                        <div data-id="ozfmff-lzwh33b">
-                        
-                            <a class="ft_blue can_reply" title="点击回复他" href="javascript:;">U69896808</a>
-                        
-            
-                        
-                        ：无知的是你自己吧！
-                        </div>
-                    
-                        <div data-id="ozfo51-ha3gsfb">
-                        
-                            <a class="ft_blue can_reply" title="点击回复他" href="javascript:;">U70787744</a>
-                        
-            
-                        
-                            回复 <span class="ft_blue">U69896808</span>
-                        
-                        ：智障
-                        </div>
-                    
-                    
-                    </div>
-                    
-                </li>
-                
-                <li data-id="ozflxp-kwetl1b">
-                    <img src="http://s.go2yd.com/a/thead_xiongmao.png">
-                    <div class="comment-box">
-                    <span class="comment-nickname">U169878498</span>
-                    <span class="comment-date">1小时前</span>
-                    
-                        <a href="javascript:;" class="float-right comment-reply">回复</a>
-                        <a href="javascript:;" class="float-right comment-like ">0 赞</a>
-                    
-                    </div>
-                    <p>纯真的学生时代，希望永远不变现实的社会生活，就是那么现实</p>
-                    
-                </li>
-                
-                <li data-id="ozflx41n96rs">
-                    <img src="http://i1.go2yd.com/image.php?url=http%3A%2F%2Fsi1.go2yd.com%2Fget-image%2Fh3rd%2F0CqOb1TbsAq&amp;type=_120x120">
-                    <div class="comment-box">
-                    <span class="comment-nickname">幽蓝</span>
-                    <span class="comment-date">1小时前</span>
-                    
-                        <a href="javascript:;" class="float-right comment-reply">回复</a>
-                        <a href="javascript:;" class="float-right comment-like ">2 赞</a>
-                    
-                    </div>
-                    <p>人们尊重钱！</p>
-                    
-                </li>
-                
-                <li data-id="ozflnf1leb2i">
-                    <img src="http://s.go2yd.com/a/thead_bajie.png">
-                    <div class="comment-box">
-                    <span class="comment-nickname">990493979</span>
-                    <span class="comment-date">1小时前</span>
-                    
-                        <a href="javascript:;" class="float-right comment-reply">回复</a>
-                        <a href="javascript:;" class="float-right comment-like ">1 赞</a>
-                    
-                    </div>
-                    <p>有钱就是大爷</p>
-                    
-                </li>
-                
-                <li data-id="ozfllz0di2ge">
-                    <img src="http://s.go2yd.com/a/thead_zhanzhao.png">
-                    <div class="comment-box">
-                    <span class="comment-nickname">701105272主</span>
-                    <span class="comment-date">1小时前</span>
-                    
-                        <a href="javascript:;" class="float-right comment-reply">回复</a>
-                        <a href="javascript:;" class="float-right comment-like ">1 赞</a>
-                    
-                    </div>
-                    <p>现实啊</p>
-                    
-                </li>
-                
-                <li data-id="ozfl6w-igitrib">
-                    <img src="http://s.go2yd.com/a/thead_haizeiwang.png">
-                    <div class="comment-box">
-                    <span class="comment-nickname">U109342658</span>
-                    <span class="comment-date">1小时前</span>
-                    
-                        <a href="javascript:;" class="float-right comment-reply">回复</a>
-                        <a href="javascript:;" class="float-right comment-like ">0 赞</a>
-                    
-                    </div>
-                    <p>最后那张合影最明显，倒V型站位就是为了照顾马云那矮个子。摄影师好有心机</p>
-                    
-                </li>
-                
-                <li data-id="ozfl150efm3w">
-                    <img src="http://i1.go2yd.com/image.php?url=http%3A%2F%2Fsi1.go2yd.com%2Fget-image%2Fh3rd%2F0CzlzWkaZUm&amp;type=_120x120">
-                    <div class="comment-box">
-                    <span class="comment-nickname">711424721</span>
-                    <span class="comment-date">1小时前</span>
-                    
-                        <a href="javascript:;" class="float-right comment-reply">回复</a>
-                        <a href="javascript:;" class="float-right comment-like ">0 赞</a>
-                    
-                    </div>
-                    <p>什么都发来说事</p>
-                    
-                </li>
-                
-                <li data-id="ozfky7-i56an2b">
-                    <img src="http://fs.uc.nearme.com.cn/userImg/840/838/661/166838048.jpg">
-                    <div class="comment-box">
-                    <span class="comment-nickname">纪豪极好</span>
-                    <span class="comment-date">1小时前</span>
-                    
-                        <a href="javascript:;" class="float-right comment-reply">回复</a>
-                        <a href="javascript:;" class="float-right comment-like ">0 赞</a>
-                    
-                    </div>
-                    <p>是啊！有钱的话你说的话别人能听。没钱不好使。</p>
-                    
-                    <div class="reply-lists">
-                        <span class="arrow-up iconfont icon-up"></span>
-                    
-                        <div data-id="ozfm6i-lhihb7b">
-                        
-                            <a class="ft_blue can_reply" title="点击回复他" href="javascript:;">U169354571</a>
-                        
-            
-                        
-                        ：现实
-                        </div>
-                    
-                    
-                    </div>
-                    
-                </li>
-                
-                <li data-id="ozfkri-ks82gdb">
-                    <img src="http://s.go2yd.com/a/thead_xiongmao.png">
-                    <div class="comment-box">
-                    <span class="comment-nickname">U172256040</span>
-                    <span class="comment-date">1小时前</span>
-                    
-                        <a href="javascript:;" class="float-right comment-reply">回复</a>
-                        <a href="javascript:;" class="float-right comment-like ">4 赞</a>
-                    
-                    </div>
-                    <p>马云的钱也是靠他的人品换来的，关键还是得有人品。你很有钱，但你是个江洋大盗，试问你有资格站到中间吗？估计连别人合影的资格都没有。不要误导网友，德行永远别金钱重要。</p>
-                    
-                </li>
-                
-                <li data-id="ozfju40o5fy7">
-                    <img src="http://i1.go2yd.com/image.php?url=http%3A%2F%2Fsi1.go2yd.com%2Fget-image%2Fh3rd%2F0DNjvyARSS0&amp;type=_120x120">
-                    <div class="comment-box">
-                    <span class="comment-nickname">834927450</span>
-                    <span class="comment-date">1小时前</span>
-                    
-                        <a href="javascript:;" class="float-right comment-reply">回复</a>
-                        <a href="javascript:;" class="float-right comment-like ">1 赞</a>
-                    
-                    </div>
-                    <p>哪跟哪。瞎编！</p>
-                    
-                </li>
-                
-                <li data-id="ozfjri3rsh4y">
-                    <img src="http://i1.go2yd.com/avatar/group2/M05/CE/CD/CmcRJlhwgZqAVOv_AABfAsjx7704308408.jpg?compress=7&amp;size=120x120">
-                    <div class="comment-box">
-                    <span class="comment-nickname">……晖"</span>
-                    <span class="comment-date">1小时前</span>
-                    
-                        <a href="javascript:;" class="float-right comment-reply">回复</a>
-                        <a href="javascript:;" class="float-right comment-like ">1 赞</a>
-                    
-                    </div>
-                    <p>慢慢的有配角变为主角</p>
-                    
-                </li>
-                
+                {% endfor %}
                 <li data-id="ozfjqw42jluj">
                     <img src="http://s.go2yd.com/a/thead_wumai.png">
                     <div class="comment-box">
@@ -525,21 +128,6 @@
                     </div>
                     
                 </li>
-                
-                <li data-id="ozfjk7-hb17hyb">
-                    <img src="http://fs.uc.nearme.com.cn/userImg/948/662/002/200266849.jpg">
-                    <div class="comment-box">
-                    <span class="comment-nickname">U100260008</span>
-                    <span class="comment-date">1小时前</span>
-                    
-                        <a href="javascript:;" class="float-right comment-reply">回复</a>
-                        <a href="javascript:;" class="float-right comment-like ">1 赞</a>
-                    
-                    </div>
-                    <p>那个是马蓉么？</p>
-                    
-                </li>
-                
             </ul>
             <div class="no-comment">
                 <img src="//staticimg.yidianzixun.com/modules/build/images/no_comment-12628b2d.png">

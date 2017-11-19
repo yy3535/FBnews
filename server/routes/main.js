@@ -3,7 +3,21 @@ var request = require('request');
 var cheerio = require('cheerio');
 const router=express.Router();
 let Article = require('../dbModels/Article');
-
+let User = require('../dbModels/User');
+//后端响应给前端的数据格式
+let responseMesg;
+router.use((req, resp, next) => {
+    //初始化一下数据格式
+    responseMesg = {
+        success: false,
+        message: '',
+        data: {
+            total: 0,
+            rows: []
+        }
+    };
+    next();
+});
 /**
  * 判断是ajax请求还是  页面直接刷新的请求 的中间件
  * 如果是ajax请求则返回片段
@@ -75,39 +89,7 @@ router.get('/', (req, res, next) => {
 
 
 
-    function MillisecondToDate(msd,date) {
-		var time = parseFloat(msd) /1000;
-		if (null!= time &&""!= time) {
-			if (time >60&& time <60*60) {
-				time = parseInt(time /60.0) +"分钟前";
-			}else if (time >=60*60&& time <60*60*9) {
-				time = parseInt(time /3600.0) +"小时前";
-			}else if (time >=60*60*9&& time <60*60*36) {
-                time = "昨天";
-				//time = parseInt(time /(3600.0*24)) +"天"+parseInt((parseFloat(time /(3600.0*24)) -
-				//parseInt(time /(3600.0*24))) *24) +"小时"+ parseInt((parseFloat(time /3600.0) -parseInt(time /3600.0)) *60) +"分钟"+parseInt((parseFloat((parseFloat(time /3600.0) - parseInt(time /3600.0)) *60) -parseInt((parseFloat(time /3600.0) - parseInt(time /3600.0)) *60)) *60) +"秒";
-			}else if (time >=60*60*36&& time <60*60*60) {
-                time = "2天前";
-				//time = parseInt(time /(3600.0*24)) +"天"+parseInt((parseFloat(time /(3600.0*24)) -
-				//parseInt(time /(3600.0*24))) *24) +"小时"+ parseInt((parseFloat(time /3600.0) -parseInt(time /3600.0)) *60) +"分钟"+parseInt((parseFloat((parseFloat(time /3600.0) - parseInt(time /3600.0)) *60) -parseInt((parseFloat(time /3600.0) - parseInt(time /3600.0)) *60)) *60) +"秒";
-			}else if (time >=60*60*60&& time <60*60*84) {
-                time = "3天前";
-				//time = parseInt(time /(3600.0*24)) +"天"+parseInt((parseFloat(time /(3600.0*24)) -
-				//parseInt(time /(3600.0*24))) *24) +"小时"+ parseInt((parseFloat(time /3600.0) -parseInt(time /3600.0)) *60) +"分钟"+parseInt((parseFloat((parseFloat(time /3600.0) - parseInt(time /3600.0)) *60) -parseInt((parseFloat(time /3600.0) - parseInt(time /3600.0)) *60)) *60) +"秒";
-			}else if (time >=60*60*84) {
-                var y = date.getFullYear();  
-                var m = date.getMonth()+1;  
-                var d = date.getDate();
-				time = y+'年'+m+'月'+d+'日';
-			}else {
-				time = "刚刚";
-			}
-		}else{
-			time = "刚刚";
-		}
-		return time;
-
-	}
+    
 
 });
 
@@ -133,11 +115,25 @@ router.get('/article/detail/:id', (req, res, next) => {
     //成功一定会进入then函数
     //失败一定会进入catch函数
     //promise写法
-    console.log(id);
+    console.log("进入文章详情后台接口");
+    
+    
     Article.findById(id).then(article=>{
+        article.comments.map((item,index)=>{
+
+            console.log(item.userid);
+            User.findById(item.userid).then(user=>{
+                console.log("查询出来的用户：",user);
+                item.username=user.username;
+            })
+
+            var end = new Date().getTime();
+            item.duration=MillisecondToDate(end-item.time.getTime(),item.time);
+        })
         res.render('article-details',{
-            article
-        });  
+            article:article,
+            user:req.session.user
+        });
     }).catch(error=>{
         res.render('404');
     });
@@ -147,6 +143,42 @@ router.get('/article/detail/:id', (req, res, next) => {
 router.get('/index',(req,res,next)=>{
     res.render('index');
 });
+/**
+ * 发布评论
+ */
+router.post('/article/detail/saveComment',(req,res,next)=>{
+    let parms= req.body;
+    console.log(parms);
+    Article.update({'_id':parms.articleId},{$addToSet:{'comments':{
+        'userid':parms.userId,
+        'body':parms.body
+    }}}).then(comments=>{
+        console.log("插入评论完成");
+        if(comments){
+            console.log("评论：",comments);
+            responseMesg.success=true;
+            responseMesg.message='发表成功';
+            
+        }else{
+            responseMesg.message='发表失败';
+        }
+        res.json(responseMesg);
+    });
+    
+})
+
+// this.insertComment=function(from,to,content,time,theme_name,post_id){
+//     return themeModel.update({theme_name:theme_name,'posts.post_id':post_id},{$push:{'posts.$.comments':{
+//         from:from,
+//         to:to,
+//         content:content,
+//         time:time
+//     }}});
+// };
+
+
+
+
 
 /**
  * 跳转到登陆界面
@@ -232,5 +264,44 @@ router.get('/logout',(req, res, next) => {
     
     res.redirect(req.headers['referer']);
 });
+
+/**
+ * 工具类
+ * @param {毫秒数} msd 
+ * @param {日期对象} date 
+ */
+function MillisecondToDate(msd,date) {
+    var time = parseFloat(msd) /1000;
+    if (null!= time &&""!= time) {
+        if (time >60&& time <60*60) {
+            time = parseInt(time /60.0) +"分钟前";
+        }else if (time >=60*60&& time <60*60*9) {
+            time = parseInt(time /3600.0) +"小时前";
+        }else if (time >=60*60*9&& time <60*60*36) {
+            time = "昨天";
+            //time = parseInt(time /(3600.0*24)) +"天"+parseInt((parseFloat(time /(3600.0*24)) -
+            //parseInt(time /(3600.0*24))) *24) +"小时"+ parseInt((parseFloat(time /3600.0) -parseInt(time /3600.0)) *60) +"分钟"+parseInt((parseFloat((parseFloat(time /3600.0) - parseInt(time /3600.0)) *60) -parseInt((parseFloat(time /3600.0) - parseInt(time /3600.0)) *60)) *60) +"秒";
+        }else if (time >=60*60*36&& time <60*60*60) {
+            time = "2天前";
+            //time = parseInt(time /(3600.0*24)) +"天"+parseInt((parseFloat(time /(3600.0*24)) -
+            //parseInt(time /(3600.0*24))) *24) +"小时"+ parseInt((parseFloat(time /3600.0) -parseInt(time /3600.0)) *60) +"分钟"+parseInt((parseFloat((parseFloat(time /3600.0) - parseInt(time /3600.0)) *60) -parseInt((parseFloat(time /3600.0) - parseInt(time /3600.0)) *60)) *60) +"秒";
+        }else if (time >=60*60*60&& time <60*60*84) {
+            time = "3天前";
+            //time = parseInt(time /(3600.0*24)) +"天"+parseInt((parseFloat(time /(3600.0*24)) -
+            //parseInt(time /(3600.0*24))) *24) +"小时"+ parseInt((parseFloat(time /3600.0) -parseInt(time /3600.0)) *60) +"分钟"+parseInt((parseFloat((parseFloat(time /3600.0) - parseInt(time /3600.0)) *60) -parseInt((parseFloat(time /3600.0) - parseInt(time /3600.0)) *60)) *60) +"秒";
+        }else if (time >=60*60*84) {
+            var y = date.getFullYear();  
+            var m = date.getMonth()+1;  
+            var d = date.getDate();
+            time = y+'年'+m+'月'+d+'日';
+        }else {
+            time = "刚刚";
+        }
+    }else{
+        time = "刚刚";
+    }
+    return time;
+
+}
 
 module.exports=router;

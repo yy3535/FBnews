@@ -12,8 +12,9 @@ let userSchema= new mongoose.Schema({
     cover:String,//文章封面
     comments:[  //文章评论
         {
+            userid:String,//评论用户
             body:String,//评论内容
-            data:{
+            time:{//评论发表时间
                 type:Date,
                 default:Date.now
             }
@@ -23,7 +24,7 @@ let userSchema= new mongoose.Schema({
         type:Date,
         default:Date.now()
     },
-    duration:String
+    duration:String//间隔时间
 });
 
 module.exports= mongoose.model('Article', userSchema);

@@ -89,7 +89,7 @@ if(module.hot){
 
 
 
-//前台页面layout.html
+//前台页面
 /**
  * 绑定事件
  */
