@@ -3,6 +3,7 @@ var request = require('request');
 var cheerio = require('cheerio');
 const router=express.Router();
 let Article = require('../dbModels/Article');
+let Comment = require('../dbModels/Comment');
 let User = require('../dbModels/User');
 //后端响应给前端的数据格式
 let responseMesg;
@@ -119,19 +120,30 @@ router.get('/article/detail/:id', (req, res, next) => {
     
     
     Article.findById(id).then(article=>{
-        article.comments.map((item,index)=>{
+        console.log("查到的文章：",article);
+        Comment.find({"_id":{"$in":article["comments_ids"]}}).then(comments=>{
+            var comments=comments;
+        });
+        //Model.find({“age”:{ “$in”:[20,21,22.‘haha’]} } );
+        // article.comments.map((item,index)=>{
+        //     comment.findById(item).then(comment=>{
+        //         console.log('查询出来的评论：',comment);
+                
+        //     })
+            
+        //     console.log();
+        //     User.findById(item.userid).then(user=>{
+        //         console.log("查询出来的用户：",user);
+        //         item.username=user.username;
+        //     })
 
-            console.log(item.userid);
-            User.findById(item.userid).then(user=>{
-                console.log("查询出来的用户：",user);
-                item.username=user.username;
-            })
-
-            var end = new Date().getTime();
-            item.duration=MillisecondToDate(end-item.time.getTime(),item.time);
-        })
+        //     var end = new Date().getTime();
+        //     item.duration=MillisecondToDate(end-item.time.getTime(),item.time);
+        // })
+        console.log(comments);
         res.render('article-details',{
             article:article,
+            comments:comments,
             user:req.session.user
         });
     }).catch(error=>{
@@ -149,13 +161,45 @@ router.get('/index',(req,res,next)=>{
 router.post('/article/detail/saveComment',(req,res,next)=>{
     let parms= req.body;
     console.log(parms);
-    Article.update({'_id':parms.articleId},{$addToSet:{'comments':{
-        'userid':parms.userId,
-        'body':parms.body
-    }}}).then(comments=>{
-        console.log("插入评论完成");
-        if(comments){
-            console.log("评论：",comments);
+    new Comment({
+        userid: parms.userId,
+        body: parms.body
+    }).save().then(comment => {
+        responseMesg.success = true;
+        responseMesg.message = '保存成功！';
+        res.json(responseMesg);
+        Article.update({'_id':parms.articleId},{$addToSet:{
+            'comments_ids':comment._id
+        }}).then(comments=>{
+            console.log("插入评论完成");
+            if(comments){
+                console.log("评论：",comments);
+                responseMesg.success=true;
+                responseMesg.message='发表成功';
+                
+            }else{
+                responseMesg.message='发表失败';
+            }
+            res.json(responseMesg);
+        });
+    });
+    
+    
+})
+
+/**
+ * 评论回复提交
+ */
+router.post('/article/detail/saveReply',(req,res,next)=>{
+    let parms= req.body;
+    console.log(parms);
+    Article.update({'_id':parms.docid,'comments.comments_id':parms.commentid},{$addToSet:{'comments.$.replys':{
+        'from':parms.from,
+        'content':parms.content
+    }}}).then(replay=>{
+        console.log("插入回复完成");
+        if(replay){
+            console.log("回复：",replay);
             responseMesg.success=true;
             responseMesg.message='发表成功';
             

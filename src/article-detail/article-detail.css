@@ -248,6 +248,52 @@
     float: left;
     width: 583px;
 }
+.comments-list li .reply-input {
+    margin-top: 10px;
+    width: 581px;
+    float: right;
+    position: relative;
+    height: 40px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+}
+.comments-list li .reply-input textarea {
+    width: 541px;
+    height: 60px;
+    line-height: 20px;
+    padding: 10px 20px;
+    border: none;
+    resize: none;
+    font-size: 13px;
+    float: left;
+    display: inline-block;
+}
+.comments-list li p {
+    margin-top: 10px;
+    font-size: 15px;
+    word-wrap: break-word;
+}
+.comments-list li .reply-input p {
+    width: 100%;
+    background: #fbfbfb;
+    height: 35px;
+    position: relative;
+    margin: 0;
+    float: left;
+    display: inline-block;
+}
+.comments-list li .reply-input p span.add-reply-btn {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 70px;
+    height: 35px;
+    line-height: 35px;
+    background: #129aee;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+}
 .reply-lists {
     float: right;
     width: 553px;

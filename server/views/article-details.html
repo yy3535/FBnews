@@ -50,21 +50,6 @@ var articleId="{{article.id}}";
         </div>
         <div class="comments">
             
-            <!--畅言评论框 -->
-            <div id="SOHUCS" sid="请将此处替换为配置SourceID的语句"></div>
-            <script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
-            <script type="text/javascript">
-            window.changyan.api.config({
-            appid: 'cytk6HpVa',
-            conf: 'prod_f602436fe4ba0599d1d075712563d917'
-            });
-            </script> 
-            <!--畅言评论框end -->
-            <!--友言评论框-->
-            <!-- UY BEGIN -->
-            <div id="uyan_frame"></div>
-            <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2149259"></script>
-            <!--友言评论框end-->
             <div class="hd-comment">
                 <img src="http://si1.go2yd.com/get-image/0IIM917KRcm">
                 <textarea placeholder="发表你的精彩评论" class="comment-input"></textarea>
@@ -74,7 +59,7 @@ var articleId="{{article.id}}";
             <ul class="comments-list">
                 {% for comment in article.comments %}
 
-                <li data-id="ozfopy-htlzavb">
+                <li data-id="{{comment.comments_id}}">
                     <img src="http://fs.uc.nearme.com.cn/userImg/807/516/702/207615708.jpg">
                     <div class="comment-box">
                     <span class="comment-nickname">{{comment.username}}</span>
