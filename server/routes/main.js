@@ -121,9 +121,9 @@ router.get('/article/detail/:id', (req, res, next) => {
     
     Article.findById(id).then(article=>{
         console.log("查到的文章：",article);
-        Comment.find({"_id":{"$in":article["comments_ids"]}}).then(comments=>{
-            var comments=comments;
-        });
+        // Comment.find({"_id":{"$in":article["comments_ids"]}}).then(comments=>{
+        //     var comments=comments;
+        // });
         //Model.find({“age”:{ “$in”:[20,21,22.‘haha’]} } );
         // article.comments.map((item,index)=>{
         //     comment.findById(item).then(comment=>{
@@ -140,10 +140,10 @@ router.get('/article/detail/:id', (req, res, next) => {
         //     var end = new Date().getTime();
         //     item.duration=MillisecondToDate(end-item.time.getTime(),item.time);
         // })
-        console.log(comments);
+        //console.log(comments);
         res.render('article-details',{
             article:article,
-            comments:comments,
+            //comments:comments,
             user:req.session.user
         });
     }).catch(error=>{

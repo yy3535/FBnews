@@ -292,7 +292,11 @@
                     <span class="source">{{article.author}}</span>
                     
                     
-                    <span class="comment-count">110评</span>
+                    <span class="comment-count">
+                            <span id = "sourceId::{{article.id}}" class = "cy_cmt_count" ></span>评
+                            <script id="cy_cmt_num" src="https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cytk6HpVa">
+                            </script>
+                    </span>
                     <span class="date">{{ article.duration }}</span>
                     <!-- article.time.toISOString().substring(0,10) -->
                     <div class="doc-remove">不感兴趣<span class="iconfont icon-close-half"></span></div>

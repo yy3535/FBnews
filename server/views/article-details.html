@@ -49,8 +49,18 @@ var articleId="{{article.id}}";
             <a href="javascript:;" class="article-complain">投诉</a>
         </div>
         <div class="comments">
-            
-            <div class="hd-comment">
+            <!--畅言评论-->
+            <!--PC版-->
+            <div id="SOHUCS" sid="{{article.id}}"></div>
+            <script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
+            <script type="text/javascript">
+                window.changyan.api.config({
+                appid: 'cytk6HpVa',
+                conf: 'prod_f602436fe4ba0599d1d075712563d917'
+                });
+            </script>
+            <!--畅言评论end-->
+            <!-- <div class="hd-comment">
                 <img src="http://si1.go2yd.com/get-image/0IIM917KRcm">
                 <textarea placeholder="发表你的精彩评论" class="comment-input"></textarea>
                 <a href="javascript:;" class="add-comment-btn">发表</a>
@@ -120,7 +130,7 @@ var articleId="{{article.id}}";
             </div>
             <a href="#" class="more-comments comments-tip" style="display: inline-block;">查看更多评论<span class="arrow-down icon-arrow-down iconfont"></span></a>
             <div class="error-get-comments comments-tip" style="display: none;">加载失败，请点击重试</div>
-            <div class="no-more-comments">已加载全部评论</div>
+            <div class="no-more-comments">已加载全部评论</div> -->
         </div>
     </div>
     <div class="right-wrapper">
