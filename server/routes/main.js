@@ -297,17 +297,56 @@ router.get('/article/list',(req,res,next)=>{
 });
 
 
+/**
+ * 获取用户信息接口
+ */
+router.get('/getuserinfo',(req,res,next)=>{
+    if(req.session.user!=null){
+        var ret={     
+            "is_login": 1,
+            "user":  {
+                "img_url": "http://s1.bdstatic.com/r/www/cache/xmas2012/images/car.png",
+                "nickname": req.session.user.username,
+                "profile_url": "http://www.baidu.com",
+                "user_id": req.session.user._id,
+                "sign":"werdfasdfasdf"
+                }
+            };        
+    }else{
+        var ret={     
+            "is_login": 0
+        };
+    }
+    res.jsonp(ret);
+})
+
 
 /**
  * 退出
  */
 router.get('/logout',(req, res, next) => {
     req.session.user=null;
-    
-    
-    
-    res.redirect(req.headers['referer']);
+    if(req.session.user==null){
+        var ret={     
+            "code": 1,
+            "reload_page": 0
+            };
+    }else{
+        req.session.user=null;
+        res.redirect(req.headers['referer']);
+        var ret={     
+            "code": 1,
+            "reload_page": 1
+            };
+    }
 });
+// router.get('/logout',(req, res, next) => {
+//     req.session.user=null;
+    
+    
+    
+//     res.redirect(req.headers['referer']);
+// });
 
 /**
  * 工具类
