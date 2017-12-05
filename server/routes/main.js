@@ -78,16 +78,75 @@ router.get('/', (req, res, next) => {
     })
    
     
-    request('http://www.jd.com', function (error, response, body) {
+    // request('http://www.jianshu.com/users/53fb509bd05c/latest_articles', function (error, response, body) {
+    //     if (!error && response.statusCode == 200) {
+    //         $ = cheerio.load(body);
+    //         //console.log($('.cate_menu_item').length);
+    //         // res.json({
+    //         //     cat: $('.cate_menu_item').length
+    //         // });
+    //         console.log("进入爬虫");
+    //         var articleList = $('.note-list').children('li');
+
+    //         // 创建一个空数组，用来装载我们的文章对象
+    //         var articlesData = [];
+    //         articleList.each(function(item) {
+    //         // 以下 JQ 的方法，相信会一点 JQ 的人都能看懂啦，哈
+    //         var article = $(this);
+    //         var title = article.find('.content').find('.title').text();
+    //         var span =  article.find('.content').find('.meta').find('span');
+    //         var loveCount = span.text();
+    //         // .eq(i) 通过索引筛选匹配的元素。使用.eq(-i)就从最后一个元素向前数。
+    //         var readCount = span.parent().find('a').eq(0).text();
+    //         var readNum = parseFloat(readCount.substring(readCount.search('\n         ') + '\n         '.length),readCount.search('\n'));            
+    //         // 创建文章对象，JS 的对象确实跟 json 的很像呀
+    //         var articleData = {
+    //             title : title, 
+    //             love  : loveCount,
+    //             readCount : readNum
+    //         };
+    //         articlesData.push(articleData);
+    //         });
+    //         console.log(articlesData);
+    //     }
+    // });
+
+    request('http://www.yidianzixun.com/home/q/news_list_for_channel?channel_id=best&cstart=0&cend=10&infinite=true&refresh=1&__from__=pc&multi=5&appid=yidian&_=1512464145496', function (error, response, body) {
         if (!error && response.statusCode == 200) {
             $ = cheerio.load(body);
-            //console.log($('.cate_menu_item').length);
-            // res.json({
-            //     cat: $('.cate_menu_item').length
-            // });
-        }
-    })
+            console.log("进入一点资讯爬虫");
+            //console.log('获取文章列表：',body);
+            // 创建一个空数组，用来装载我们的文章对象
+            var articlesData = [];
+            
+            var jsonArticlesData=JSON.parse(body).result;
 
+            //console.log("共多少条数据：",JSON.parse(body).result.length);
+
+            for(var i=0;i<jsonArticlesData.length;i++){
+                var url=jsonArticlesData[i].url;
+                console.log(url);
+                request(url,function(error,response,body){
+                    if (!error && response.statusCode == 200) {
+                        $ = cheerio.load(body);
+                        //console.log(body);
+                        var title=$('.left-wrapper h2').text();
+                        //var content=$('.left-wrapper .content-bd').html();
+                        // 创建文章对象，JS 的对象确实跟 json 的很像呀
+                        var articleData = {
+                            title : title, 
+                            //content  : content
+                        };
+                        articlesData.push(articleData);
+                    }
+                    if(articlesData.length==jsonArticlesData.length){
+                        console.log('爬取的文章列表：',articlesData);
+                    }
+                });
+            }
+            
+        }
+    });
 
 
     
