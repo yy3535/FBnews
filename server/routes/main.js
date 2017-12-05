@@ -49,6 +49,7 @@ router.get('/', (req, res, next) => {
     Article.find().sort({
         '_id':-1
     }).skip(offset).limit(limit).then(articles => {
+        console.log(articles);
         articles = articles.map((item,index)=>{
             //获取body中的第一张图片地址作为封面
             let result = item.body.match(/<img [^>]*src=['"]([^'"]+)[^>]*>/);
@@ -110,43 +111,73 @@ router.get('/', (req, res, next) => {
     //         console.log(articlesData);
     //     }
     // });
+    // 创建一个空数组，用来装载我们的文章对象
+    var articlesData = [];
+    for(var j=0;j<1;j++){
+        var rand = Math.random()*10000000000000000;   
+        var articleListUrl='http://www.yidianzixun.com/home/q/news_list_for_channel?channel_id=best&cstart='+10*j+'&cend='+10*(j+1)+'&infinite=true&refresh=1&__from__=pc&multi=5&appid=yidian&_='+rand;
+        //console.log(articleListUrl);
+        request(articleListUrl, function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                $ = cheerio.load(body);
+                //console.log("进入一点资讯爬虫");
+                //console.log('获取文章列表：',body);
+                
+                
+                var jsonArticlesData=JSON.parse(body).result;
+    
+                //console.log("共多少条数据：",JSON.parse(body).result.length);
+    
+                for(var i=0;i<jsonArticlesData.length;i++){
+                    var url=jsonArticlesData[i].url;
+                    //console.log(url);
+                    request(url,function(error,response,body){
+                        if (!error && response.statusCode == 200) {
+                            $ = cheerio.load(body);
+                            //console.log(body);
+                            var title=$('.left-wrapper h2').text()==""?"无法获取标题":$('.left-wrapper h2').text();
+                            var content=$('.left-wrapper .content-bd').html()==null?"无法获取内容":$('.left-wrapper .content-bd').html();
+                            // 创建文章对象，JS 的对象确实跟 json 的很像呀
+                            var articleData = {
+                                title : title, 
+                                body  : content
+                            };
+                            articlesData.push(articleData);
+                        }
+                        if(articlesData.length==10){
+                            //console.log('爬取的文章列表：',articlesData);
 
-    request('http://www.yidianzixun.com/home/q/news_list_for_channel?channel_id=best&cstart=0&cend=10&infinite=true&refresh=1&__from__=pc&multi=5&appid=yidian&_=1512464145496', function (error, response, body) {
-        if (!error && response.statusCode == 200) {
-            $ = cheerio.load(body);
-            console.log("进入一点资讯爬虫");
-            //console.log('获取文章列表：',body);
-            // 创建一个空数组，用来装载我们的文章对象
-            var articlesData = [];
-            
-            var jsonArticlesData=JSON.parse(body).result;
+                            /**
+                             * 添加文章
+                             */
+                            // console.log(parms);
+                            // if (!parms.title || !parms.body) {
+                            //     responseMesg.message = '标题或者内容不能为空！';
+                            //     res.json(responseMesg);
+                            //     return;
+                            // }
+                            // new Article({
+                            //     title: parms.title,
+                            //     body: parms.body
+                            // }).save().then(article => {
+                            //     responseMesg.success = true;
+                            //     responseMesg.message = '保存成功！';
+                            //     res.json(responseMesg);
+                            // });
 
-            //console.log("共多少条数据：",JSON.parse(body).result.length);
+                            Article.insertMany(articlesData, function(err, docs){
+                                    if(err) console.log(err);
+                                    //console.log('保存成功：' + docs);
+                            });
 
-            for(var i=0;i<jsonArticlesData.length;i++){
-                var url=jsonArticlesData[i].url;
-                console.log(url);
-                request(url,function(error,response,body){
-                    if (!error && response.statusCode == 200) {
-                        $ = cheerio.load(body);
-                        //console.log(body);
-                        var title=$('.left-wrapper h2').text();
-                        //var content=$('.left-wrapper .content-bd').html();
-                        // 创建文章对象，JS 的对象确实跟 json 的很像呀
-                        var articleData = {
-                            title : title, 
-                            //content  : content
-                        };
-                        articlesData.push(articleData);
-                    }
-                    if(articlesData.length==jsonArticlesData.length){
-                        console.log('爬取的文章列表：',articlesData);
-                    }
-                });
+                        }
+                    });
+                }
+                
             }
-            
-        }
-    });
+        });
+    }
+    
 
 
     
