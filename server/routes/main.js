@@ -34,52 +34,11 @@ router.use((req, res, next) => {
     next();
 })
 
-
 /**
- * 首页
+ * 获取爬虫文章
  */
-router.get('/', (req, res, next) => {
-    //获取下前端传给后端的分页数据
-    
-    let page = Number(req.query.page)||1; //第几页
-    let limit = 9 ; //每页固定显示的数据条数
-
-    let offset = (page-1)*limit;
-
-    Article.find().sort({
-        '_id':-1
-    }).skip(offset).limit(limit).then(articles => {
-        console.log(articles);
-        articles = articles.map((item,index)=>{
-            //获取body中的第一张图片地址作为封面
-            let result = item.body.match(/<img [^>]*src=['"]([^'"]+)[^>]*>/);
-            if(result){
-                item.cover = result[1];
-            }else{
-                //如果匹配不到，给一个默认的封面
-                item.cover = 'http://o0xihan9v.qnssl.com/wp-content/themes/Always/images/thumb.jpg';
-            }
-            
-            //过滤html并且截取前76个字符
-            item.body = item.body.replace(/<[^>]+>/g,'').substring(0,77)+'...';
-            var end = new Date().getTime();
-            var duration=MillisecondToDate(end-item.time.getTime(),item.time);
-            item.duration=duration;
-            return  item;
-        });
-       
-        //console.log(user);
-
-        res.render('index',{
-            //articles:articles
-            articles:articles,
-            user: req.session.user
-        });
-
-    })
-   
-    
-    // request('http://www.jianshu.com/users/53fb509bd05c/latest_articles', function (error, response, body) {
+router.post('/getCrawlerArticles',(req,res,next)=>{
+        // request('http://www.jianshu.com/users/53fb509bd05c/latest_articles', function (error, response, body) {
     //     if (!error && response.statusCode == 200) {
     //         $ = cheerio.load(body);
     //         //console.log($('.cate_menu_item').length);
@@ -177,13 +136,89 @@ router.get('/', (req, res, next) => {
             }
         });
     }
-    
-
-
-    
-
 });
 
+
+/**
+ * 首页
+ */
+router.get('/', (req, res, next) => {
+    //获取下前端传给后端的分页数据
+    
+    let page = Number(req.query.page)||1; //第几页
+    let limit = 10 ; //每页固定显示的数据条数
+
+    let offset = (page-1)*limit;
+
+    Article.find().sort({
+        '_id':-1
+    }).skip(offset).limit(limit).then(articles => {
+        console.log(articles);
+        articles = articles.map((item,index)=>{
+            //获取body中的第一张图片地址作为封面
+            let result = item.body.match(/<img [^>]*src=['"]([^'"]+)[^>]*>/);
+            if(result){
+                item.cover = result[1];
+            }else{
+                //如果匹配不到，给一个默认的封面
+                item.cover = 'http://o0xihan9v.qnssl.com/wp-content/themes/Always/images/thumb.jpg';
+            }
+            
+            //过滤html并且截取前76个字符
+            item.body = item.body.replace(/<[^>]+>/g,'').substring(0,77)+'...';
+            var end = new Date().getTime();
+            var duration=MillisecondToDate(end-item.time.getTime(),item.time);
+            item.duration=duration;
+            return  item;
+        });
+
+        res.render('index',{
+            //articles:articles
+            articles:articles,
+            user: req.session.user
+        });
+
+    })
+   
+});
+
+/**
+ * 获取分页数据
+ */
+router.post('/getPageArticles',(req,res,next)=>{
+    //获取下前端传给后端的分页数据
+    
+    let page = Number(req.query.page)||1; //第几页
+    let limit = 10 ; //每页固定显示的数据条数
+
+    let offset = (page-1)*limit;
+
+    Article.find().sort({
+        '_id':-1
+    }).skip(offset).limit(limit).then(articles => {
+        console.log(articles);
+        articles = articles.map((item,index)=>{
+            //获取body中的第一张图片地址作为封面
+            let result = item.body.match(/<img [^>]*src=['"]([^'"]+)[^>]*>/);
+            if(result){
+                item.cover = result[1];
+            }else{
+                //如果匹配不到，给一个默认的封面
+                item.cover = 'http://o0xihan9v.qnssl.com/wp-content/themes/Always/images/thumb.jpg';
+            }
+            
+            //过滤html并且截取前76个字符
+            item.body = item.body.replace(/<[^>]+>/g,'').substring(0,77)+'...';
+            var end = new Date().getTime();
+            var duration=MillisecondToDate(end-item.time.getTime(),item.time);
+            item.duration=duration;
+            return  item;
+        });
+
+        res.json(articles);
+
+    })
+})
 
 /**
  * 个人中心
