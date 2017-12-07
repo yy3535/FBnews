@@ -100,3 +100,13 @@ $('#table').bootstrapTable({
     paginationPreText:'上一页',
     paginationNextText:'下一页'
 });
+
+$(".getcrawlerarticles").on('click',function(){
+    $.ajax({
+        type:'post',
+        url:'/admin/article/getCrawlerArticles',
+        success:function(res){
+            alert("爬取成功");
+        }
+    })
+})

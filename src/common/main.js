@@ -144,6 +144,7 @@ $(".user-info, .user-info-menu").on('mouseleave',function(){
 })
 //返回顶部工具条
 var page=1;
+var load=true;
 $(".icon-back-up").on('click',function(){
     $(window).scrollTop(0);
 })
@@ -154,21 +155,6 @@ $(window).scroll(function(){
     if($(window).scrollTop()<600){
         $(".icon-back-up").css("opacity",0);
     }
-    console.log("滚动距离：",$(window).scrollTop());
-    console.log("文章列表高度：",$(".channel-news").height()/2);
-    if($(window).scrollTop()>=$(".channel-news").height()/2&&$(window).scrollTop()<=$(".channel-news").height()/2+15){
-        $.ajax({
-            type:"post",
-            url:"/getPageArticles",
-            data:{
-                page:page
-            },
-            success:function(res){
-                console.log(res);
-                console.log("页码：",page);
-                page++;
-            }
-        })
-    }
-})
+    
+});
 

@@ -38,38 +38,6 @@ router.use((req, res, next) => {
  * 获取爬虫文章
  */
 router.post('/getCrawlerArticles',(req,res,next)=>{
-        // request('http://www.jianshu.com/users/53fb509bd05c/latest_articles', function (error, response, body) {
-    //     if (!error && response.statusCode == 200) {
-    //         $ = cheerio.load(body);
-    //         //console.log($('.cate_menu_item').length);
-    //         // res.json({
-    //         //     cat: $('.cate_menu_item').length
-    //         // });
-    //         console.log("进入爬虫");
-    //         var articleList = $('.note-list').children('li');
-
-    //         // 创建一个空数组，用来装载我们的文章对象
-    //         var articlesData = [];
-    //         articleList.each(function(item) {
-    //         // 以下 JQ 的方法，相信会一点 JQ 的人都能看懂啦，哈
-    //         var article = $(this);
-    //         var title = article.find('.content').find('.title').text();
-    //         var span =  article.find('.content').find('.meta').find('span');
-    //         var loveCount = span.text();
-    //         // .eq(i) 通过索引筛选匹配的元素。使用.eq(-i)就从最后一个元素向前数。
-    //         var readCount = span.parent().find('a').eq(0).text();
-    //         var readNum = parseFloat(readCount.substring(readCount.search('\n         ') + '\n         '.length),readCount.search('\n'));            
-    //         // 创建文章对象，JS 的对象确实跟 json 的很像呀
-    //         var articleData = {
-    //             title : title, 
-    //             love  : loveCount,
-    //             readCount : readNum
-    //         };
-    //         articlesData.push(articleData);
-    //         });
-    //         console.log(articlesData);
-    //     }
-    // });
     // 创建一个空数组，用来装载我们的文章对象
     var articlesData = [];
     for(var j=0;j<1;j++){
@@ -95,13 +63,19 @@ router.post('/getCrawlerArticles',(req,res,next)=>{
                             $ = cheerio.load(body);
                             //console.log(body);
                             var title=$('.left-wrapper h2').text()==""?"无法获取标题":$('.left-wrapper h2').text();
-                            var content=$('.left-wrapper .content-bd').html()==null?"无法获取内容":$('.left-wrapper .content-bd').html();
-                            // 创建文章对象，JS 的对象确实跟 json 的很像呀
-                            var articleData = {
-                                title : title, 
-                                body  : content
-                            };
-                            articlesData.push(articleData);
+                            Article.findOne({'title':title},article=>{
+                                if(article||title=="无法获取标题"){
+                                    console.log(title);
+                                }else{
+                                    var content=$('.left-wrapper .content-bd').html()==null?"无法获取内容":$('.left-wrapper .content-bd').html();
+                                    // 创建文章对象，JS 的对象确实跟 json 的很像呀
+                                    var articleData = {
+                                        title : title, 
+                                        body  : content
+                                    };
+                                    articlesData.push(articleData);
+                                }
+                            });
                         }
                         if(articlesData.length==10){
                             //console.log('爬取的文章列表：',articlesData);
@@ -146,14 +120,14 @@ router.get('/', (req, res, next) => {
     //获取下前端传给后端的分页数据
     
     let page = Number(req.query.page)||1; //第几页
-    let limit = 10 ; //每页固定显示的数据条数
+    let limit = 20 ; //每页固定显示的数据条数
 
     let offset = (page-1)*limit;
 
     Article.find().sort({
         '_id':-1
     }).skip(offset).limit(limit).then(articles => {
-        console.log(articles);
+        //console.log(articles);
         articles = articles.map((item,index)=>{
             //获取body中的第一张图片地址作为封面
             let result = item.body.match(/<img [^>]*src=['"]([^'"]+)[^>]*>/);
@@ -187,34 +161,34 @@ router.get('/', (req, res, next) => {
  */
 router.post('/getPageArticles',(req,res,next)=>{
     //获取下前端传给后端的分页数据
-    
-    let page = Number(req.query.page)||1; //第几页
-    let limit = 10 ; //每页固定显示的数据条数
+    let page = Number(req.body.page)||1; //第几页
+    let limit = 5 ; //每页固定显示的数据条数
 
     let offset = (page-1)*limit;
 
     Article.find().sort({
         '_id':-1
     }).skip(offset).limit(limit).then(articles => {
-        console.log(articles);
-        articles = articles.map((item,index)=>{
-            //获取body中的第一张图片地址作为封面
-            let result = item.body.match(/<img [^>]*src=['"]([^'"]+)[^>]*>/);
-            if(result){
-                item.cover = result[1];
-            }else{
-                //如果匹配不到，给一个默认的封面
-                item.cover = 'http://o0xihan9v.qnssl.com/wp-content/themes/Always/images/thumb.jpg';
-            }
-            
-            //过滤html并且截取前76个字符
-            item.body = item.body.replace(/<[^>]+>/g,'').substring(0,77)+'...';
-            var end = new Date().getTime();
-            var duration=MillisecondToDate(end-item.time.getTime(),item.time);
-            item.duration=duration;
-            return  item;
-        });
-
+        //console.log(articles);
+        if(articles){
+            articles = articles.map((item,index)=>{
+                //获取body中的第一张图片地址作为封面
+                let result = item.body.match(/<img [^>]*src=['"]([^'"]+)[^>]*>/);
+                if(result){
+                    item.cover = result[1];
+                }else{
+                    //如果匹配不到，给一个默认的封面
+                    item.cover = 'http://o0xihan9v.qnssl.com/wp-content/themes/Always/images/thumb.jpg';
+                }
+                
+                //过滤html并且截取前76个字符
+                item.body = item.body.replace(/<[^>]+>/g,'').substring(0,77)+'...';
+                var end = new Date().getTime();
+                var duration=MillisecondToDate(end-item.time.getTime(),item.time);
+                item.duration=duration;
+                return  item;
+            });
+        }
         res.json(articles);
 
     })

@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+var request = require('request');
+var cheerio = require('cheerio');
 
 let Article = require('../dbModels/Article');
 let User = require('../dbModels/User');
@@ -28,7 +30,65 @@ router.get('/index', (req, res, next) => {
     });
 });
 
+/**
+ * 获取爬虫文章
+ */
+router.post('/article/getCrawlerArticles',(req,res,next)=>{
+    // 创建一个空数组，用来装载我们的文章对象
+    var articlesData = [];
+    var isAdded=false;
+    for(var j=0;j<10;j++){
+        var rand = Math.random()*10000000000000000;   
+        var articleListUrl='http://www.yidianzixun.com/home/q/news_list_for_channel?channel_id=best&cstart='+10*j+'&cend='+10*(j+1)+'&infinite=true&refresh=1&__from__=pc&multi=5&appid=yidian&_='+rand;
+        //console.log(articleListUrl);
+        request(articleListUrl, function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                $ = cheerio.load(body);            
+                
+                var jsonArticlesData=JSON.parse(body).result;
+    
+                //console.log("共多少条数据：",jsonArticlesData);
+                var articleList=[];
+                for(var i=0;i<jsonArticlesData.length;i++){
+                    var url=jsonArticlesData[i].url;
+                    //console.log(url);
+                    request(url,function(error,response,body){
+                        console.log("进入文章详情页");
+                        if (!error && response.statusCode == 200) {
+                            $ = cheerio.load(body);
+                            var title=$('.left-wrapper h2').text()==""?"无法获取标题":$('.left-wrapper h2').text();
+                            var content=$('.left-wrapper>.content-bd').html()==null?"无法获取内容":$('.left-wrapper .content-bd').html();
+                            Article.findOne({'title':title},article=>{
+                                if(isAdded&&article){
+                                    console.log("重复文章：",article);
+                                }else if(title=="无法获取标题"||content=="无法获取内容"){
+                                    console.log("文章不可获取");
+                                }else{
+                                    // 创建文章对象，JS 的对象确实跟 json 的很像呀
+                                    var article = new Article({
+                                        title : title,
+                                        body: content
+                                    });
+                                    
+                                    article.save(function (err, res) {
+                                        if (err) {
+                                            console.log("获取失败");
+                                        }
+                                        else {
+                                            console.log("获取成功");
+                                        }
+                                    });
 
+                                }
+                            });
+                        }
+                    });
+                }
+                
+            }
+        });
+    }
+});
 
 
 /**
@@ -159,6 +219,8 @@ router.post('/article/save', (req, res, next) => {
 });
 
 
+
+
 /**
  * 跳转到用户管理
  */
@@ -280,5 +342,6 @@ router.get('/logout',(req, res, next) => {
     req.session.user=null;
     res.redirect('/login');
 });
+  
 
 module.exports = router;

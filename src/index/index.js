@@ -5,6 +5,8 @@ var index=0;
 var items=imgs=$(".slide-list .slide-item");
 var imgs=$(".slide-list").find("img");
 var flags=$(".flag-wrapper .flag");
+var page=2;
+var load=true;
 //自动播放
 isAutoPlay();
 /**
@@ -62,4 +64,78 @@ function hideShowImg(hideIndex,showIndex){
         opacity:1
     },1500);
 }
+
+//滚动加载文章
+$(window).scroll(function(){
+
+    // 当滚动到最底部以上100像素时， 加载新内容
+
+    if (load&&($(document).scrollTop()>=$(document).height()-$(window).height()-100)) {
+        console.log("页数：",page);
+        getart(page);
+        
+        page++;
+    }
+});
+
+function getart(page){
+    $.ajax({
+        type: "POST",
+        url: "/getPageArticles",
+        data: {
+            page:page
+        },
+        success: function(res){
+            var row=$('.channel-news');
+            if(res!=''){
+                var addNewsList="";
+                for(var i=0;i<res.length;i++){
+                    var addNews=`<a class="item doc style-small-image style-content-middle" href="/article/detail/`+res[i]._id+`" target="_blank" data-docid="0HcP5x1I">
+                                    <div class="doc-image-small-wrapper">
+                                        <div class="doc-image-box">
+                                            <img class="doc-image doc-image-small" src="`+res[i].cover+`">
+                                        </div>
+                                    </div>
+                                    <div class="doc-content">
+                                        <div class="doc-content-inline">
+                                        <div class="doc-title">`+res[i].title+`</div>
+                                        <div class="doc-info">
+                                            
+                                            <img class="source-profile" src="`+res[i].cover+`">
+                                            
+                                            
+                                            
+                                            <span class="source">`+res[i].author+`</span>
+                                            
+                                            
+                                            <span class="comment-count">
+                                                    <span id = "sourceId::`+res[i].id+`" class = "cy_cmt_count" ></span>评
+                                                    <script id="cy_cmt_num" src="https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cytk6HpVa">
+                                                    </script>
+                                            </span>
+                                            <span class="date">`+res[i].duration+`</span>
+                                            <div class="doc-remove">不感兴趣<span class="iconfont icon-close-half"></span></div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </a>`;
+                        addNewsList+=addNews;
+                }
+                //console.log(addNewsList);
+                row.append(addNewsList);
+                console.log("加载了第几页：",page);
+            }else{
+                load=false;
+                var noMoreNews=`<div class="loading-tip news-no-more">暂无更多新闻</div>`;
+                row.append(noMoreNews);
+            }
+        }
+    })
+            
+}
+$('.split-refresh-btn').bind("click", function(){
+    getart(page);
+    page++;
+});
+
 
