@@ -5,6 +5,7 @@
 require('bootstrap-table');
 require('bootstrap-table/dist/locale/bootstrap-table-zh-CN');
 require('BOOTSTRAP_TABLE_CSS');
+let MD5=require('md5.js');
 //格式化日期  yyyy-MM-dd hh:mm:ss
 Date.prototype.format = function (format) {
     var o = {
@@ -37,11 +38,22 @@ $('#table').bootstrapTable({
     columns: [
         {field: '_id',title: 'ID',width: 100,searchable:false},//visible:false,//默认隐藏该字段sortable:true,//允许该字段进行排序 
         {field: 'username',title: '用户名',sortable:true}, 
-        {field: 'password',title: '密码',searchable:false}, 
+        // {field: 'password',title: '密码',searchable:false,visible:false}, 
         {field: 'email',title: '邮箱',sortable:true}, 
         {field: 'level',title: '等级',sortable:true,
             formatter: function (value) {
-                return value==0?"管理员":"普通用户";
+                // return value==0?"管理员":"普通用户";
+                switch(value){
+                    case 0:
+                        return '管理员';
+                        break;
+                    case 1:
+                        return '普通用户';
+                        break;
+                    default:
+                        return '未设定';
+                        break;
+                }
             }
         }, 
         {field: '__v',title: '版本号',visible:false}, 
@@ -60,13 +72,12 @@ $('#table').bootstrapTable({
             'click [data-action="edit"]':function(e,value,row ,index){
                 $("#editid").val(row._id).attr("disabled","disabled");
                 $("#editusername").val(row.username);
-                $("#editpassword").val(row.password);
                 $("#editemail").val(row.email);
                 $("#editlevel").val(row.level);
                 //保存
                 $('#editModal').find("#editusersave").on('click',function(){
                     row.username=$("#editusername").val();
-                    row.password=$("#editpassword").val();
+                    //row.password=$("#editpassword").val();
                     row.email=$("#editemail").val();
                     row.level=$("#editlevel").val();
                     $.ajax({
@@ -109,14 +120,13 @@ $('#table').bootstrapTable({
         });
         $("#editid").val(row._id).attr("disabled","disabled");
         $("#editusername").val(row.username);
-        $("#editpassword").val(row.password);
         $("#editemail").val(row.email);
         $("#editlevel").val(row.level);
         console.log(this);
         //保存
         $('#editModal').find("#editusersave").on('click',function(){
             row.username=$("#editusername").val();
-            row.password=$("#editpassword").val();
+            //row.password=$("#editpassword").val();
             row.email=$("#editemail").val();
             row.level=$("#editlevel").val();
             $.ajax({
@@ -160,13 +170,13 @@ $("#insertusersave").on('click',function(){
         email:$("#insertemail").val(),
         level:Number($("#insertlevel").val())
     };
+    insertRow.password=new MD5().update(insertRow.password).digest('hex');
     $.ajax({
         url:'/admin/user/add',
         method: 'post',
         data:insertRow,
         success:function(resp){
             $('#insertModal').modal('hide');
-
             $('#table').bootstrapTable('refresh');
         }
     })

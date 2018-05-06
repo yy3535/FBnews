@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 var request = require('request');
+var superagent = require('superagent');
 var cheerio = require('cheerio');
-
+var iconv=require('iconv-lite');
 let Article = require('../dbModels/Article');
 let User = require('../dbModels/User');
 
@@ -31,35 +32,35 @@ router.get('/index', (req, res, next) => {
 });
 
 /**
- * 获取爬虫文章
+ * 获取今日头条爬虫文章
  */
 router.post('/article/getCrawlerArticles',(req,res,next)=>{
-    // 创建一个空数组，用来装载我们的文章对象
-    var articlesData = [];
-    var isAdded=false;
-    for(var j=0;j<10;j++){
-        var rand = Math.random()*10000000000000000;   
-        var articleListUrl='http://www.yidianzixun.com/home/q/news_list_for_channel?channel_id=best&cstart='+10*j+'&cend='+10*(j+1)+'&infinite=true&refresh=1&__from__=pc&multi=5&appid=yidian&_='+rand;
-        //console.log(articleListUrl);
-        request(articleListUrl, function (error, response, body) {
+    var baseUrl="https://www.toutiao.com";
+    //热点
+    var redianUrl='https://www.toutiao.com/api/pc/feed/?category=news_hot&utm_source=toutiao&widen=1&max_behot_time=0&max_behot_time_tmp=0&tadrequire=true&as=A1D50A5EAB2BFE3&cp=5AEBBB6F8E332E1&_signature=Turn1wAAFALxnBYxAR98K07q58';
+    //娱乐
+    var yuleUrl='https://www.toutiao.com/api/pc/feed/?category=news_entertainment&utm_source=toutiao&widen=1&max_behot_time=2245928322&max_behot_time_tmp=1525347649&tadrequire=true&as=A1C56ABEBBD0227&cp=5AEB9062E2278E1&_signature=DNkFZwAAVjezr.SBfxYXtAzZBX';
+
+    //getToutiaoArticles(redianUrl,'热点');
+    getToutiaoArticles(yuleUrl,'娱乐');
+
+    function getToutiaoArticles(url,group){
+        request.get(url,function (error, response, body) {
             if (!error && response.statusCode == 200) {
                 $ = cheerio.load(body);            
-                
-                var jsonArticlesData=JSON.parse(body).result;
-    
-                //console.log("共多少条数据：",jsonArticlesData);
-                var articleList=[];
-                for(var i=0;i<jsonArticlesData.length;i++){
-                    var url=jsonArticlesData[i].url;
-                    //console.log(url);
+                var jsonArticlesData=JSON.parse(body).data;
+                console.log("获取七条数据：");
+                jsonArticlesData.forEach(function(ele,index){
+                    var url=baseUrl+ele.source_url;
+                    console.log(ele.title);
                     request(url,function(error,response,body){
-                        console.log("进入文章详情页");
-                        if (!error && response.statusCode == 200) {
+                        console.log(url,error);
+                        if (!error) {
                             $ = cheerio.load(body);
-                            var title=$('.left-wrapper h2').text()==""?"无法获取标题":$('.left-wrapper h2').text();
-                            var content=$('.left-wrapper>.content-bd').html()==null?"无法获取内容":$('.left-wrapper .content-bd').html();
+                            var title=$('h1').text()==""?"无法获取标题":$('h1').text();
+                            var content=$('.article-content').html()==null?"无法获取内容":$('.article-content').html();
                             Article.findOne({'title':title},article=>{
-                                if(isAdded&&article){
+                                if(article){
                                     console.log("重复文章：",article);
                                 }else if(title=="无法获取标题"||content=="无法获取内容"){
                                     console.log("文章不可获取");
@@ -67,9 +68,10 @@ router.post('/article/getCrawlerArticles',(req,res,next)=>{
                                     // 创建文章对象，JS 的对象确实跟 json 的很像呀
                                     var article = new Article({
                                         title : title,
-                                        body: content
+                                        body: content,
+                                        author:'今日头条',
+                                        group:group
                                     });
-                                    
                                     article.save(function (err, res) {
                                         if (err) {
                                             console.log("获取失败");
@@ -78,18 +80,326 @@ router.post('/article/getCrawlerArticles',(req,res,next)=>{
                                             console.log("获取成功");
                                         }
                                     });
-
+    
                                 }
                             });
+                        
                         }
                     });
-                }
+                })
+                
+            }
+        });
+    }
+    
+    
+});
+
+/**
+ * 获取凤凰网爬虫文章
+ */
+router.post('/article/getFenghuangArticles',(req,res,next)=>{
+    var todayStr=new Date().toISOString().substr(0,10).replace(/-/g,"");
+    //社会
+    var societyUrl="http://news.ifeng.com/listpage/7837/"+todayStr+"/1/rtlist.shtml";
+    
+    getFenghuangArticles(societyUrl,'社会');
+
+    function getFenghuangArticles(url,group){
+        request.get(url,function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                $ = cheerio.load(body);            
+                var urlList=[];
+                $(".newsList a").each(function(index,ele){
+                    urlList.push($(ele).attr('href'));
+                })
+                urlList.forEach(function(url,index){
+                    superagent(url)
+                    .end(function(error,response){
+                        if (!error) {
+                            $ = cheerio.load(response.text, {decodeEntities: false});
+                            
+                            var title=$('#artical_topic').text()==""?"无法获取标题":$('#artical_topic').text();
+                            var content=$('#artical_real').html()==null?"无法获取内容":$('#artical_real').html();
+                            
+                            Article.findOne({'title':title},article=>{
+                                if(article){
+                                    console.log("重复文章：",article);
+                                }else if(title=="无法获取标题"||content=="无法获取内容"){
+                                    console.log("文章不可获取");
+                                }else{
+                                    // 创建文章对象，JS 的对象确实跟 json 的很像呀
+                                    var article = new Article({
+                                        title : title,
+                                        body: content,
+                                        author:'凤凰网',
+                                        group:group
+                                    });
+                                    article.save(function (err, res) {
+                                        if (err) {
+                                            console.log("获取失败");
+                                        }
+                                        else {
+                                            console.log("获取成功");
+                                        }
+                                    });
+    
+                                }
+                            });
+                        
+                        }
+                    })
+                })
                 
             }
         });
     }
 });
 
+/**
+ * 获取网易爬虫文章
+ */
+router.post('/article/getWangyiArticles',(req,res,next)=>{
+    //社会
+    var societyUrl="http://temp.163.com/special/00804KVA/cm_shehui.js?callback=data_callback";
+    console.log("进入网易新闻接口");
+    getWangyiArticles(societyUrl,'社会');
+
+    function getWangyiArticles(url,group){
+        request.get(url,function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                $ = cheerio.load(body); 
+
+                var data=JSON.parse(body.substring(body.indexOf('(')+1,body.lastIndexOf(')')));
+                data.forEach(function(item,index){
+                    var headers = {  
+                        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.65 Safari/537.36'
+                    }
+                    function request1 (url, callback) {  
+                        var options = {
+                            url: url,
+                            encoding: null,
+                            headers: headers
+                        }
+                        request(options, callback)
+                    }
+
+                    request1(item.tlink,function(error,response,body){
+                        if (!error) {
+                            var html=iconv.decode(body,'gb2312');
+                            $ = cheerio.load(html, {decodeEntities: false});
+                            var title=$('h1').text()==""?"无法获取标题":$('h1').text();
+                            var content=$('#endText').html()==null?"无法获取内容":$('#endText').html();
+                            
+                            Article.findOne({'title':title},article=>{
+                                if(article){
+                                    console.log("重复文章：",article);
+                                }else if(title=="无法获取标题"||content=="无法获取内容"){
+                                    console.log("文章不可获取");
+                                }else{
+                                    // 创建文章对象，JS 的对象确实跟 json 的很像呀
+                                    var article = new Article({
+                                        title : title,
+                                        body: content,
+                                        author:'网易新闻',
+                                        group:group
+                                    });
+                                    article.save(function (err, res) {
+                                        if (err) {
+                                            console.log("获取失败");
+                                        }
+                                        else {
+                                            console.log("获取成功");
+                                        }
+                                    });
+    
+                                }
+                            });
+                        
+                        }
+                    })
+                })
+                
+            }
+        });
+    }
+});
+
+/**
+ * 获取新浪爬虫文章
+ */
+router.post('/article/getXinlangArticles',(req,res,next)=>{
+    //娱乐
+    var yuleUrl="http://ent.sina.com.cn/interface/tianyi/feedData_news.js";
+    console.log("进入新浪接口");
+    getXinlangArticles(yuleUrl,'娱乐');
+
+    function getXinlangArticles(url,group){
+        request.get(url,function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                $ = cheerio.load(body); 
+                
+                var data=JSON.parse(body.substring(body.indexOf('=')+1,body.length)).data;
+                data.forEach(function(item,index){
+                    var headers = {  
+                        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.65 Safari/537.36'
+                    }
+                    function request1 (url, callback) {  
+                        var options = {
+                            url: url,
+                            encoding: null,
+                            headers: headers
+                        }
+                        request(options, callback)
+                    }
+
+                    request1(item.url,function(error,response,body){
+                        if (!error) {
+                            $ = cheerio.load(body, {decodeEntities: false});
+                            var title=$('#artibodyTitle').text()==""?"无法获取标题":$('#artibodyTitle').text();
+                            var content=$('#artibody').html()==null?"无法获取内容":$('#artibody').html();
+                            Article.findOne({'title':title},article=>{
+                                if(article){
+                                    console.log("重复文章：",article);
+                                }else if(title=="无法获取标题"||content=="无法获取内容"){
+                                    console.log("文章不可获取");
+                                }else{
+                                    // 创建文章对象，JS 的对象确实跟 json 的很像呀
+                                    var article = new Article({
+                                        title : title,
+                                        body: content,
+                                        author:'新浪网',
+                                        group:group
+                                    });
+                                    article.save(function (err, res) {
+                                        if (err) {
+                                            console.log("获取失败");
+                                        }
+                                        else {
+                                            console.log("获取成功");
+                                        }
+                                    });
+                                }
+                            });
+                        
+                        }
+                    })
+                })
+            }
+        });
+    }
+});
+
+/**
+ * 获取新华网爬虫娱乐文章
+ */
+router.post('/article/getXhwYuleArticles',(req,res,next)=>{
+    // 创建一个空数组，用来装载我们的文章对象
+    var articlesData = [];
+    var isAdded=false;
+    for(var j=1;j<10;j++){
+        var rand = Math.random()*100000000000000;   
+        //var articleListUrl='http://qc.wa.news.cn/nodeart/list?nid=116713&pgnum=2&cnt=10&tp=1&orderby=1?callback=jQuery17104505670552238503_1525269532607&_=1525269656048';
+        var articleListUrl='http://qc.wa.news.cn/nodeart/list?nid=116713&pgnum='+j+'&cnt=10&tp=1&orderby=1?callback=jQuery17104505670552238503_1525269532607&_='+rand;
+        request.get(articleListUrl, function (error, res, body) {
+            if (!error && res.statusCode == 200) {
+                console.log(typeof body);
+                $ = cheerio.load(body); 
+                body=body.replace("jQuery17104505670552238503_1525269532607(","");
+                body.substring(0,body.length-1);      
+                // var jsonArticlesData=body;
+                //console.log(JSON.parse(body).jQuery17104505670552238503_1525269532606);
+                console.log(JSON.parse(body));
+                // var articleList=[];
+                // for(var i=0;i<jsonArticlesData.length;i++){
+                //     var url=jsonArticlesData[i].url;
+                //     request(url,function(error,response,body){
+                //         if (!error && response.statusCode == 200) {
+                //             $ = cheerio.load(body);
+                //             var title=$('.left-wrapper h2').text()==""?"无法获取标题":$('.left-wrapper h2').text();
+                //             var content=$('.left-wrapper>.content-bd').html()==null?"无法获取内容":$('.left-wrapper .content-bd').html();
+                //             Article.findOne({'title':title},article=>{
+                //                 if(isAdded&&article){
+                //                 }else if(title=="无法获取标题"||content=="无法获取内容"){
+                //                 }else{
+                //                     // 创建文章对象，JS 的对象确实跟 json 的很像呀
+                //                     var article = new Article({
+                //                         title : title,
+                //                         body: content
+                //                     });
+                                    
+                //                     article.save(function (err, res) {
+                //                         if (err) {
+                //                             console.log("获取失败");
+                //                         }
+                //                         else {
+                //                             console.log("获取成功");
+                //                         }
+                //                     });
+
+                //                 }
+                //             });
+                //         }
+                //     });
+                // }
+                
+            }
+        });
+    }
+});
+
+/**
+ * 获取中国青年网爬虫文章
+ */
+router.post('/article/getQnwArticles',(req,res,next)=>{
+    // 创建一个空数组，用来装载我们的文章对象
+    var articlesData = [];
+    var isAdded=false;
+    var articleListUrl='http://t.m.youth.cn/jsonp/myouth.php?channel=qwtx&callback=post_data';
+    request.get(articleListUrl, function (error, res, body) {
+        if (!error && res.statusCode == 200) {
+            //console.log(body);
+            $ = cheerio.load(body); 
+             
+            // var jsonArticlesData=body;
+            console.log(JSON.parse(body));
+            console.log(JSON.parse(body));
+            // var articleList=[];
+            // for(var i=0;i<jsonArticlesData.length;i++){
+            //     var url=jsonArticlesData[i].url;
+            //     request(url,function(error,response,body){
+            //         if (!error && response.statusCode == 200) {
+            //             $ = cheerio.load(body);
+            //             var title=$('.left-wrapper h2').text()==""?"无法获取标题":$('.left-wrapper h2').text();
+            //             var content=$('.left-wrapper>.content-bd').html()==null?"无法获取内容":$('.left-wrapper .content-bd').html();
+            //             Article.findOne({'title':title},article=>{
+            //                 if(isAdded&&article){
+            //                 }else if(title=="无法获取标题"||content=="无法获取内容"){
+            //                 }else{
+            //                     // 创建文章对象，JS 的对象确实跟 json 的很像呀
+            //                     var article = new Article({
+            //                         title : title,
+            //                         body: content
+            //                     });
+                                
+            //                     article.save(function (err, res) {
+            //                         if (err) {
+            //                             console.log("获取失败");
+            //                         }
+            //                         else {
+            //                             console.log("获取成功");
+            //                         }
+            //                     });
+
+            //                 }
+            //             });
+            //         }
+            //     });
+            // }
+            
+        }
+    });
+});
 
 /**
  * 查询列表（一次性查出所有数据）
@@ -304,7 +614,7 @@ router.post('/user/update',(request,response,next)=>{
     console.log(parms);
     User.findByIdAndUpdate(parms._id,{
         username:parms.username,
-        password:parms.password,
+        //password:parms.password,
         email:parms.email,
         level:parms.level
     }).then(user=>{

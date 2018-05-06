@@ -57,19 +57,53 @@ router.post('/user/check',(request,response,next)=>{
 });
 
 /**
- * 注册（注册完成后记得注释这个代码）
+ * 注册
  */
-// router.get('/user/registe',(request,response,next)=>{
-//     new User({
-//         username:"yy",
-//         password:'c1096d2671f98c869e72b0c4b35c7894',//yinyiyy01
-//         email:"137186247@qq.com"
-//     }).save().then(user=>{
-//         response.json(user);
-//     }).catch(error=>{
-//         console.log('报错了',error);
-//     })
-// });
+router.post('/user/registe',(request,response,next)=>{
+    let parms = request.body;
+    //首先判断前端传的参数是否正确(后端必须做参数的正确性校验，考虑最坏的情况)
+    if (!parms.username || !parms.password || !parms.email) {
+        //返回给前端一个错误消息
+        responseMesg.message = '用户名、密码或邮箱不能为空！'
+        response.json(responseMesg);
+        return;
+    }
+
+    User.findOne({
+        username: parms.username
+    })
+    .then((user) => {
+        if (user) {
+            responseMesg.message = '用户名已存在！';
+            response.json(responseMesg);
+            return;
+        } else {
+            new User({
+                username:parms.username,
+                password:parms.password,
+                email:parms.email,
+                level:1
+            }).save().then(user=>{
+                responseMesg.success = true;
+                responseMesg.message = '注册成功';
+                request.session.user=user;
+                response.json(responseMesg);
+            }).catch(error=>{
+                console.log('报错了',error);
+            })
+
+        }
+    })
+    // new User({
+    //     username:"yy",
+    //     password:'c1096d2671f98c869e72b0c4b35c7894',//yinyiyy01
+    //     email:"137186247@qq.com"
+    // }).save().then(user=>{
+    //     response.json(user);
+    // }).catch(error=>{
+    //     console.log('报错了',error);
+    // })
+});
 
 
 /**

@@ -338,6 +338,12 @@ router.get('/login',(req,res,next)=>{
     res.render('login');
 });
 
+/**
+ * 跳转到注册页面
+ */
+router.get('/regist',(req,res,next)=>{
+    res.render('regist');
+})
 
 
 /**

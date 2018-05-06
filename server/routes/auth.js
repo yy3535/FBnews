@@ -5,12 +5,12 @@
  module.exports=(req,resp,next)=>{
     //如果是开发模式，则自己伪造一个user对象放到session中，以此来跳过登陆鉴权
     //req.app 可以获取到 app.js里面的express()产生的实例（对象）
-    // if(req.app.locals.isDev){
-    //     req.session.user = {
-    //         _id:'599ed834e0510be9d781cec3',
-    //         username: '张三'
-    //     }
-    // }
+    if(req.app.locals.isDev){
+        req.session.user = {
+            _id:'5ae85068f1df750a1911c130',
+            username: 'ckl'
+        }
+    }
     console.log('所有的请求都被我拦截掉',req.url);
     //有些请求是不应该被拦截的  登陆注册不能被拦截
     //  /admin/index

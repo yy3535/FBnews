@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>注册</title>
+    {% if !isDev %}
+    <link rel="stylesheet" href="/public/css/admin-lib.css">
+    {% endif %}
+</head>
+<body class="regist">
+    
+    <div class="container">
+       <div class="row">
+           <h1>
+               <a class="avatar" href="/"></a>
+           </h1>
+           
+           <div id="errorMesg" style="display:none;" class="alert alert-danger col-sm-4 col-sm-offset-4">
+            
+           </div>
+           
+           <form class="col-sm-4 col-sm-offset-4">
+           
+               <div class="form-group">
+                   <label for="username">用户名：</label>
+                   <input type="text" class="form-control" id="username" name="username">
+               </div>
+               <div class="form-group">
+                    <label for="password">密码：</label>
+                    <input type="password" class="form-control" id="password" name="password">
+                </div>
+                <div class="form-group">
+                    <label for="passwordConfirm">确认密码：</label>
+                    <input type="password" class="form-control" id="password-confirm" name="passwordConfirm">
+                </div>
+                <div class="form-group">
+                    <label for="email">邮箱</label>
+                    <input type="text" class="form-control" id="email" name="email">
+                </div>
+               <button type="submit" class="btn btn-primary pull-right">注册</button>
+           </form>
+           
+       </div> 
+    </div>
+    
+
+    
+    
+    <script src="/public/common/admin-lib.js"></script>
+    <script data-main="regist/regist" src="/public/common/main.js"></script>
+</html>

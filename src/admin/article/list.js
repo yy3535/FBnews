@@ -35,18 +35,33 @@ $('#table').bootstrapTable({
         field: '_id',
         title: 'ID',
         width: 100,
-        //visible:false,//默认隐藏该字段
+        visible:false,//默认隐藏该字段
         sortable:true,//允许该字段进行排序
     }, {
         field: 'title',
         title: '标题'
+    }, {
+        field: 'author',
+        title: '来源',
+        align: 'center',
+        sortable:true,
+        formatter: function (value) {
+            return value?value:"无";
+        }
+    }, {
+        field: 'group',
+        title: '分组',
+        align: 'center',
+        sortable:true,
+        formatter: function (value) {
+            return value?value:"未分组";
+        }
     }, {
         field: 'time',
         title: '发布时间',
         align: 'center',
         sortable:true,
         formatter: function (value) {
-            //value   该字段的值
             if(!value)return '';
             return new Date(value).format('yyyy-MM-dd hh:mm:ss');
         }
@@ -105,6 +120,56 @@ $(".getcrawlerarticles").on('click',function(){
     $.ajax({
         type:'post',
         url:'/admin/article/getCrawlerArticles',
+        success:function(res){
+            alert("爬取成功");
+        }
+    })
+})
+
+$("#getFenghuang").on('click',function(){
+    $.ajax({
+        type:'post',
+        url:'/admin/article/getFenghuangArticles',
+        success:function(res){
+            alert("爬取成功");
+        }
+    })
+})
+
+$("#getWangyi").on('click',function(){
+    $.ajax({
+        type:'post',
+        url:'/admin/article/getWangyiArticles',
+        success:function(res){
+            alert("爬取成功");
+        }
+    })
+})
+
+$("#getXinlang").on('click',function(){
+    $.ajax({
+        type:'post',
+        url:'/admin/article/getXinlangArticles',
+        success:function(res){
+            alert("爬取成功");
+        }
+    })
+})
+
+$("#getXhwYule").on('click',function(){
+    $.ajax({
+        type:'post',
+        url:'/admin/article/getXhwYuleArticles',
+        success:function(res){
+            alert("爬取成功");
+        }
+    })
+})
+
+$("#getQnw").on('click',function(){
+    $.ajax({
+        type:'post',
+        url:'/admin/article/getQnwArticles',
         success:function(res){
             alert("爬取成功");
         }

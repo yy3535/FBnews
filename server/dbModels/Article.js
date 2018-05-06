@@ -9,6 +9,7 @@ let userSchema= new mongoose.Schema({
         default:"佚名"
     },//文章作者
     body:String,//文章内容
+    group:String,//文章分组
     cover:String,//文章封面
     comments_ids:[  //文章评论
     ],
